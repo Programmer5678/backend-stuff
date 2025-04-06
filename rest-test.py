@@ -1,20 +1,37 @@
 import requests 
 from fastapi import FastAPI, Response, status, HTTPException
 from fastapi.params import Body
-from pydantic import BaseModel
+from pydantic import BaseModel , EmailStr
 
 import pandas as pd
 from sqlalchemy import create_engine
 
-
 engine = create_engine("mysql+pymysql://ruz:p123@localhost:3306/db")
 c = engine.connect() 
+
+# c.execute("""create table users(id int primary key auto_increment, create_time timestamp default current_timestamp,
+#           email varchar(100) not null , password varchar(100) not null)""")
+
+# sql_query = pd.DataFrame(pd.read_sql_query('show create table users', c) )
+# pd.set_option("display.max_rows", None)    # Show all rows
+# pd.set_option("display.max_columns", None) # Show all columns
+# pd.set_option("display.width", None)       # No fixed width
+# pd.set_option("display.max_colwidth", None) # Don't truncate column contents
+# print(sql_query)
 
 app = FastAPI()
 
 class Post( BaseModel ):
     title: str
     con: str
+
+class UserCreate ( BaseModel ):
+    email: EmailStr
+    password: str
+    
+class UserOut ( BaseModel ):
+    id: int
+    email: EmailStr
 
 @app.get("/")
 def root():
@@ -48,10 +65,8 @@ def f( x : Post ):
 # use db;
 # select * from posts;
 # """)
-    
-    query_result = c.execute(f"select id from posts order by id desc limit 1; ")
-    
-    return { "id" : query_result.fetchall()[0][0], "title" : x.title, "con" : x.con  }
+        
+    return c.execute(f"select * from posts order by id desc limit 1; ").fetchall()[0]
 
 
 @app.put("/posts/{id}")
@@ -89,3 +104,19 @@ def f3(id: int):
 
     raise HTTPException( status_code = status.HTTP_404_NOT_FOUND ,
         detail="no post with such id..."  )
+
+
+class UserOut ( BaseModel ):
+    id: int
+    email: EmailStr
+# , response_model=UserOut
+@app.post("/users", status_code=status.HTTP_201_CREATED, response_model=UserOut )
+def user_create(user : UserCreate):
+    
+    c.execute(f"insert into users(email, password) values('{user.email}' , '{user.password}' )" )
+    
+    x = c.execute("select id, email from users where id = (select last_insert_id()) ").fetchall()[0]
+    
+    print(type(x))
+    
+    return x
