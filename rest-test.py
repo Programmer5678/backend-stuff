@@ -4,7 +4,7 @@ from fastapi.params import Body
 from pydantic import BaseModel , EmailStr
 
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 engine = create_engine("mysql+pymysql://ruz:p123@localhost:3306/db")
 c = engine.connect() 
@@ -109,14 +109,21 @@ def f3(id: int):
 class UserOut ( BaseModel ):
     id: int
     email: EmailStr
+    
 # , response_model=UserOut
 @app.post("/users", status_code=status.HTTP_201_CREATED, response_model=UserOut )
 def user_create(user : UserCreate):
     
-    c.execute(f"insert into users(email, password) values('{user.email}' , '{user.password}' )" )
     
-    x = c.execute("select id, email from users where id = (select last_insert_id()) ").fetchall()[0]
+    qry = """
+                INSERT INTO users (email, password) VALUES( 'email@email.com' , 'password' )
+             """
+    params = { 'password': 'password' }
+
+    c.execute( qry )
     
-    print(type(x))
-    
-    return x
+    # c.execute( text("""insert into users(email, password) values( :email, :password )""") , { "email" : "email@email.com", "password" : "password" } )
+    # .inserted_primary_key[0]
+    # x = c.execute("select * from users where id = %i", id).fetchone()
+        
+    return {"msg" : "hola"}
