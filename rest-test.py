@@ -1,5 +1,5 @@
 import requests 
-from fastapi import FastAPI, Response, status
+from fastapi import FastAPI, Response, status, HTTPException
 from fastapi.params import Body
 from pydantic import BaseModel
 import mysql.connector
@@ -56,8 +56,8 @@ def blah(param : int, response : Response):
     if len( ret ):
         return { "id" : param, "title" : ret[0][0], "con" : ret[0][1] }
     
-    response.status_code = status.HTTP_404_NOT_FOUND
-    return { "message" : "no post with such id..." } # should redirect!
+    raise HTTPException( status_code = status.HTTP_404_NOT_FOUND ,
+        detail="no post with such id..."  )
 
 @app.post("/posts")
 def f( x : Post ):
@@ -91,9 +91,9 @@ def f2(x: Post, id: int, response: Response):
 
         return {"message": "modified post!"}
 
-    response.status_code = status.HTTP_404_NOT_FOUND
-    
-    return {"message": "no post with such id..."}
+    raise HTTPException( status_code = status.HTTP_404_NOT_FOUND ,
+        detail="no post with such id..."  )
+
 
 
 
@@ -115,6 +115,5 @@ def f3(id: int, response : Response):
 
         return {"message": "deleted post!"}  
 
-    response.status_code = status.HTTP_404_NOT_FOUND
-
-    return {"message": "no post with such id..."}  # should redirect?
+    raise HTTPException( status_code = status.HTTP_404_NOT_FOUND ,
+        detail="no post with such id..."  )
