@@ -47,6 +47,14 @@ class Post( BaseModel ):
 def root():
     return {"message" : "helloworld"}
 
+@app.get("/posts")
+def get_all_posts():
+    
+    c.execute(f"select * from posts")
+    posts = [ { "id" : p[0], "title" : p[1], "con" : p[2] } for p in c.fetchall() ]
+    
+    return {"data" : posts}
+
 @app.get("/posts/{param}")
 def blah(param : int, response : Response):
     
@@ -95,13 +103,8 @@ def f2(x: Post, id: int, response: Response):
         detail="no post with such id..."  )
 
 
-
-
-
-
 @app.delete("/posts/{id}")
-def f3(id: int, response : Response):
-    
+def f3(id: int):
         
     c.execute("SELECT title, con FROM posts WHERE id = %s", (id,))  
     if len(c.fetchall()):  
@@ -113,7 +116,7 @@ def f3(id: int, response : Response):
         # SELECT * FROM posts;
         # """)
 
-        return {"message": "deleted post!"}  
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
 
     raise HTTPException( status_code = status.HTTP_404_NOT_FOUND ,
         detail="no post with such id..."  )
