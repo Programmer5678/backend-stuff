@@ -2,40 +2,13 @@ import requests
 from fastapi import FastAPI, Response, status, HTTPException
 from fastapi.params import Body
 from pydantic import BaseModel
-import mysql.connector
-from prettytable import PrettyTable 
 
-cnx = mysql.connector.connect(user = 'ruz',
-                               host = 'localhost',
-                              password= 'p123',
-                              database='db',
-                              ssl_disabled=True)
-
-c = cnx.cursor()
+import pandas as pd
+from sqlalchemy import create_engine
 
 
-def pretty_print_mysql(out):
-    
-    print(out)
-
-    if out.with_rows:  # Only fetch results for SELECT queries
-
-        table = PrettyTable()
-
-        table.field_names = [ i[0] for i in c.description ]
-
-        for row in out:
-            table.add_row(row)
-
-        print( table )
-    else:
-        print("no output")
-
-    print("")
-    
-def mysql_run_and_pretty_print(commands):
-    for out in c.execute(commands , multi=True):
-        pretty_print_mysql(out)
+engine = create_engine("mysql+pymysql://ruz:p123@localhost:3306/db")
+c = engine.connect() 
 
 app = FastAPI()
 
@@ -50,16 +23,16 @@ def root():
 @app.get("/posts")
 def get_all_posts():
     
-    c.execute(f"select * from posts")
-    posts = [ { "id" : p[0], "title" : p[1], "con" : p[2] } for p in c.fetchall() ]
+    query_result = c.execute(f"select * from posts")
+    posts = [ { "id" : p[0], "title" : p[1], "con" : p[2] } for p in query_result.fetchall() ]
     
     return {"data" : posts}
 
 @app.get("/posts/{param}")
 def blah(param : int, response : Response):
     
-    c.execute(f"select title, con from posts where id = {param};")
-    ret = c.fetchall()
+    query_result = c.execute(f"select title, con from posts where id = {param};")
+    ret = query_result.fetchall()
     
     if len( ret ):
         return { "id" : param, "title" : ret[0][0], "con" : ret[0][1] }
@@ -76,21 +49,18 @@ def f( x : Post ):
 # select * from posts;
 # """)
     
-    cnx.commit()
+    query_result = c.execute(f"select id from posts order by id desc limit 1; ")
     
-    c.execute(f"select id from posts order by id desc limit 1; ")
-    
-    return { "id" : c.fetchall()[0][0], "title" : x.title, "con" : x.con  }
+    return { "id" : query_result.fetchall()[0][0], "title" : x.title, "con" : x.con  }
 
 
 @app.put("/posts/{id}")
 def f2(x: Post, id: int, response: Response):
     # print(x, id)
 
-    c.execute(f"SELECT title, con FROM posts WHERE id = {id};")
-    if len(c.fetchall()):
+    query_result = c.execute(f"SELECT title, con FROM posts WHERE id = {id};")
+    if len(query_result.fetchall()):
         c.execute(f"UPDATE posts SET title='{x.title}', con = '{x.con}' WHERE id = {id}")
-        cnx.commit()
 
         # mysql_run_and_pretty_print("""
         # USE db;
@@ -106,10 +76,9 @@ def f2(x: Post, id: int, response: Response):
 @app.delete("/posts/{id}")
 def f3(id: int):
         
-    c.execute("SELECT title, con FROM posts WHERE id = %s", (id,))  
-    if len(c.fetchall()):  
+    query_result = c.execute("SELECT title, con FROM posts WHERE id = %s", (id,))  
+    if len(query_result.fetchall()):  
         c.execute("DELETE FROM posts WHERE id = %s", (id,))  
-        cnx.commit()
 
         # mysql_run_and_pretty_print("""
         # USE db;
