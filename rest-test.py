@@ -1,5 +1,5 @@
 import requests 
-from fastapi import FastAPI
+from fastapi import FastAPI, Response, status
 from fastapi.params import Body
 from pydantic import BaseModel
 import mysql.connector
@@ -48,23 +48,25 @@ def root():
     return {"message" : "helloworld"}
 
 @app.get("/posts/{param}")
-def blah(param : int):
+def blah(param : int, response : Response):
     
     c.execute(f"select title, con from posts where id = {param};")
     ret = c.fetchall()
     
     if len( ret ):
         return { "id" : param, "title" : ret[0][0], "con" : ret[0][1] }
-    return { "you say what?" : "what am i supposed to write here hehe" }
+    
+    response.status_code = status.HTTP_404_NOT_FOUND
+    return { "message" : "no post with such id..." } # should redirect!
 
 @app.post("/posts")
 def f( x : Post ):
         
     c.execute(f"insert into posts( title , con ) values ( '{ x.title }', '{ x.con }' ) ;")
-    mysql_run_and_pretty_print("""
-use db;
-select * from posts;
-""")
+#     mysql_run_and_pretty_print("""
+# use db;
+# select * from posts;
+# """)
     
     cnx.commit()
     
@@ -74,36 +76,45 @@ select * from posts;
 
 
 @app.put("/posts/{id}")
-def f2( x : Post, id : int):
-    
-	print(x, id )
+def f2(x: Post, id: int, response: Response):
+    # print(x, id)
 
-	c.execute( f"select title, con from posts where id = {id};" )
-	if len(c.fetchall()) :
-		c.execute(f"update posts set title='{x.title}', con = '{x.con}' where id={id} ")
-		cnx.commit()
-  
-		mysql_run_and_pretty_print("""
-use db;
-select * from posts;
-""")
-  
-		return { "message" : "modified post!" } 
+    c.execute(f"SELECT title, con FROM posts WHERE id = {id};")
+    if len(c.fetchall()):
+        c.execute(f"UPDATE posts SET title='{x.title}', con = '{x.con}' WHERE id = {id}")
+        cnx.commit()
+
+        # mysql_run_and_pretty_print("""
+        # USE db;
+        # SELECT * FROM posts;
+        # """)
+
+        return {"message": "modified post!"}
+
+    response.status_code = status.HTTP_404_NOT_FOUND
     
-	return { "message" : "no post with such id..." } # should redirect!
+    return {"message": "no post with such id..."}
+
+
+
+
 
 @app.delete("/posts/{id}")
-def f3(id: int):  
+def f3(id: int, response : Response):
+    
+        
     c.execute("SELECT title, con FROM posts WHERE id = %s", (id,))  
     if len(c.fetchall()):  
         c.execute("DELETE FROM posts WHERE id = %s", (id,))  
         cnx.commit()
 
-        mysql_run_and_pretty_print("""
-        USE db;
-        SELECT * FROM posts;
-        """)
+        # mysql_run_and_pretty_print("""
+        # USE db;
+        # SELECT * FROM posts;
+        # """)
 
         return {"message": "deleted post!"}  
+
+    response.status_code = status.HTTP_404_NOT_FOUND
 
     return {"message": "no post with such id..."}  # should redirect?
