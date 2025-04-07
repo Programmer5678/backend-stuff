@@ -32,6 +32,13 @@ c = engine.connect()
 
 app = FastAPI()
 
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl = 'login')   
+
+def get_user_id( jwt_token : str = Depends(oauth2_scheme) ) :
+    
+    return verify_user( jwt_token )
+
+
 class Post( BaseModel ):
     title: str
     con: str
@@ -59,6 +66,13 @@ class TokenAuth ( BaseModel ):
 class Test ( BaseModel ):
     id : int
 
+class ReturnPost ( BaseModel ):
+    id : int
+    title : str
+    con : str
+    owner_id : str
+    
+
 @app.get("/")
 def root():
     return {"message" : "helloworld"}
@@ -66,33 +80,41 @@ def root():
 @app.get("/posts")
 def get_all_posts():
     
-    query_result = c.execute(f"select * from posts")
-    posts = [ { "id" : p[0], "title" : p[1], "con" : p[2] } for p in query_result.fetchall() ]
+    query_result = c.execute("""select posts.id,title,con, owner_id, users.email as owner_email,
+                             users.create_time as owner_create_time   from posts join users on owner_id = users.id;""")
     
+    # print(query_result, list(query_result.keys()) )
+    
+    posts = [ { key : val for (key, val) in zip(list(query_result.keys()), p) } for p in query_result.fetchall() ]
+        
     return {"data" : posts}
 
-@app.get("/posts/{param}")
+@app.get("/posts/{param}", response_model=ReturnPost)
 def blah(param : int, response : Response):
     
-    query_result = c.execute(f"select title, con from posts where id = {param};")
-    ret = query_result.fetchall()
+    query_result = c.execute(f"select title, con, owner_id from posts where id = {param};")
+    ret = query_result.fetchone()
     
     if len( ret ):
-        return { "id" : param, "title" : ret[0][0], "con" : ret[0][1] }
+        return ReturnPost( id = param, title=ret[0], con=ret[1], owner_id = ret[2] )
     
     raise HTTPException( status_code = status.HTTP_404_NOT_FOUND ,
         detail="no post with such id..."  )
 
-@app.post("/posts")
-def f( x : Post ):
+@app.post("/posts"   , response_model=ReturnPost    )
+def f( x : Post , owner_id : int = Depends(get_user_id)):
+    
+    print( "get_user_id :", get_user_id.id )
         
-    c.execute(f"insert into posts( title , con ) values ( '{ x.title }', '{ x.con }' ) ;")
+    lastId = c.execute(text("insert into posts( title , con , owner_id) values ( :title , :con, :owner_id );")
+              , { "title" : x.title, "con" : x.con, "owner_id" : owner_id } ).lastrowid
+    
 #     mysql_run_and_pretty_print("""
 # use db;
 # select * from posts;
 # """)
-        
-    return c.execute(f"select * from posts order by id desc limit 1; ").fetchall()[0]
+    # return ReturnPost()
+    return c.execute(f"select * from posts where id = {lastId} ").fetchone()
 
 
 @app.put("/posts/{id}")
@@ -115,21 +137,24 @@ def f2(x: Post, id: int, response: Response):
 
 
 @app.delete("/posts/{id}")
-def f3(id: int):
+def f3(id: int, owner_id : int = Depends(get_user_id)):
+    
         
-    query_result = c.execute("SELECT title, con FROM posts WHERE id = %s", (id,))  
-    if len(query_result.fetchall()):  
-        c.execute("DELETE FROM posts WHERE id = %s", (id,))  
-
-        # mysql_run_and_pretty_print("""
-        # USE db;
-        # SELECT * FROM posts;
-        # """)
+    query_result = c.execute("SELECT title, con, owner_id  FROM posts WHERE id = %s", (id,)).fetchone()
+    
+    if query_result:  
+        
+        if owner_id == query_result[2]:
+            c.execute(f"DELETE FROM posts WHERE id = {id}" )  
+            
+        else: 
+            return Response(status_code=status.HTTP_403_FORBIDDEN )
 
         return Response(status_code=status.HTTP_204_NO_CONTENT)
 
     raise HTTPException( status_code = status.HTTP_404_NOT_FOUND ,
         detail="no post with such id..."  )
+    
 
 class UserOut ( BaseModel ):
     id: int
@@ -176,30 +201,22 @@ def login( user : OAuth2PasswordRequestForm = Depends() ):
                               , "ds982983eodj3jwkldfldskldfsj89fdf8", algorithm="HS256" ) 
         
     return { "access_token" : token, "token_type" : "bearer" }
-    
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl = 'login')   
 
-def verify_user( jwt_token : str = Depends(oauth2_scheme)  ):
+
+def verify_user( jwt_token ):
     
     try: 
         data = jwt.decode(jwt_token, "ds982983eodj3jwkldfldskldfsj89fdf8", algorithms=["HS256"])
-                
-        expiary_date = datetime.fromtimestamp(data['exp'] , timezone.utc)
-                
-        print( datetime.now(timezone.utc) , expiary_date  , datetime.now(timezone.utc) > expiary_date )
-        
-        if datetime.now(timezone.utc) > expiary_date:
-            raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="token expired. please log in again." ,
-                                headers = {"WWW-Authenticate" : "Bearer"})
-                
+                                
         return data['id']
     
-    except JWTError:
-        raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid access token" ,
+    except JWTError as e:
+        
+        raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail= ("invalid access token: " + str(e)) ,
                             headers = {"WWW-Authenticate" : "Bearer"})
 
 @router.get("/protected" )
-def login( test : Test , token_id : int = Depends(verify_user) ):
+def login( test : Test , token_id : int = Depends( get_user_id ) ):
 
     if not test.id == token_id:
         raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="user id doesnt match access token",

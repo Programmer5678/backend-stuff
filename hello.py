@@ -36,7 +36,7 @@ def mysql_run_and_pretty_print(commands):
     
 mysql_run_and_pretty_print("""
 use db;
-select * from posts;
+show create table posts;
 """)
 
 cnx.commit()
