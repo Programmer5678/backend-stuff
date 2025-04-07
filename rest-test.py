@@ -1,10 +1,20 @@
 import requests 
-from fastapi import FastAPI, Response, status, HTTPException
+
+from typing import Optional
+
+from fastapi import FastAPI, Response, status, HTTPException , APIRouter, Depends
 from fastapi.params import Body
 from pydantic import BaseModel , EmailStr
-
 import pandas as pd
 from sqlalchemy import create_engine, text
+from passlib.context import CryptContext
+
+from jose import JWTError, jwt
+from datetime import datetime, timedelta , timezone
+
+from fastapi.security.oauth2 import OAuth2PasswordRequestForm,  OAuth2PasswordBearer
+
+pwd_context = CryptContext(schemes = ["bcrypt"], deprecated="auto" )
 
 engine = create_engine("mysql+pymysql://ruz:p123@localhost:3306/db")
 c = engine.connect() 
@@ -19,6 +29,7 @@ c = engine.connect()
 # pd.set_option("display.max_colwidth", None) # Don't truncate column contents
 # print(sql_query)
 
+
 app = FastAPI()
 
 class Post( BaseModel ):
@@ -29,9 +40,24 @@ class UserCreate ( BaseModel ):
     email: EmailStr
     password: str
     
+class UserLogin ( BaseModel ): #how to combine the schema with OAuthPasswordForm ???
+    email: EmailStr
+    password: str
+    
 class UserOut ( BaseModel ):
     id: int
     email: EmailStr
+    
+class Token ( BaseModel ):
+    access_token: str
+    token_type: str
+    
+class TokenAuth ( BaseModel ):
+    id: int
+    token: str
+    
+class Test ( BaseModel ):
+    id : int
 
 @app.get("/")
 def root():
@@ -105,25 +131,112 @@ def f3(id: int):
     raise HTTPException( status_code = status.HTTP_404_NOT_FOUND ,
         detail="no post with such id..."  )
 
-
 class UserOut ( BaseModel ):
     id: int
     email: EmailStr
     
 # , response_model=UserOut
-@app.post("/users", status_code=status.HTTP_201_CREATED, response_model=UserOut )
+@app.post("/users", status_code=status.HTTP_201_CREATED, response_model=UserOut)
 def user_create(user : UserCreate):
-    
-    
-    qry = """
-                INSERT INTO users (email, password) VALUES( 'email@email.com' , 'password' )
-             """
-    params = { 'password': 'password' }
 
-    c.execute( qry )
+    print(" hashing: ", user.password, "= ", pwd_context.hash(user.password))
+    print(" hashing: ", user.password, "= ", pwd_context.hash(user.password))
+
+    lastId = c.execute( text("insert into users(email, password) values( :email , :password )") , 
+    {"email" : user.email , "password" : pwd_context.hash( user.password ) } ).lastrowid    
+    # c.execute(f"insert into users(email, password) values('{user.email}' , '{user.password}' )" )
     
     # c.execute( text("""insert into users(email, password) values( :email, :password )""") , { "email" : "email@email.com", "password" : "password" } )
     # .inserted_primary_key[0]
-    # x = c.execute("select * from users where id = %i", id).fetchone()
+    #      
+    return c.execute( text("select * from users where id = :lastId"), {"lastId" : lastId} ).fetchone() 
+
+
+router = APIRouter(  tags=["change tag in APIRouter to categorize docs"])
+
+@router.get("/users/{id}",  response_model=UserOut)
+def get_user(id : int):
+    
+    
+    res = c.execute( text("select * from users where id = :id ") , {"id" : id} ).fetchone()
+    if not res:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"no user with id = {id}" )
+    
+    return res
+    
+@router.post("/login" , status_code=status.HTTP_201_CREATED)
+def login( user : OAuth2PasswordRequestForm = Depends() ):
+    
+    query_res = c.execute( text("select password, id from users where email = :email") , {"email" : user.username} ).fetchone()
+    
+    if not query_res or not pwd_context.verify(user.password, query_res[0] ):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="invalid credentials")
+    
+    token = jwt.encode( {"id" : query_res[1], "exp" : ( datetime.now(timezone.utc) + timedelta(minutes=100) ) }
+                              , "ds982983eodj3jwkldfldskldfsj89fdf8", algorithm="HS256" ) 
         
-    return {"msg" : "hola"}
+    return { "access_token" : token, "token_type" : "bearer" }
+    
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl = 'login')   
+
+def verify_user( jwt_token : str = Depends(oauth2_scheme)  ):
+    
+    try: 
+        data = jwt.decode(jwt_token, "ds982983eodj3jwkldfldskldfsj89fdf8", algorithms=["HS256"])
+                
+        expiary_date = datetime.fromtimestamp(data['exp'] , timezone.utc)
+                
+        print( datetime.now(timezone.utc) , expiary_date  , datetime.now(timezone.utc) > expiary_date )
+        
+        if datetime.now(timezone.utc) > expiary_date:
+            raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="token expired. please log in again." ,
+                                headers = {"WWW-Authenticate" : "Bearer"})
+                
+        return data['id']
+    
+    except JWTError:
+        raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid access token" ,
+                            headers = {"WWW-Authenticate" : "Bearer"})
+
+@router.get("/protected" )
+def login( test : Test , token_id : int = Depends(verify_user) ):
+
+    if not test.id == token_id:
+        raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="user id doesnt match access token",
+                            headers = {"WWW-Authenticate" : "Bearer"} )
+
+    return {"msg" : "secret message"}
+
+
+    
+    
+    
+
+    
+# def verify_user( tokendata : TokenAuth ):
+    
+#     if not c.execute( text("select * from users where id = :id" ), tokendata.dict() ).fetchone() :
+#         raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid user id" )
+    
+#     try: 
+#         data = jwt.decode(tokendata.token, "ds982983eodj3jwkldfldskldfsj89fdf8", algorithms=["HS256"])
+                
+#         expiary_date = datetime.fromtimestamp(data['exp'] , timezone.utc)
+                
+#         print( datetime.now(timezone.utc) , expiary_date  , datetime.now(timezone.utc) > expiary_date )
+        
+#         if not data['id'] == tokendata.id:
+#             raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="user id doesnt match access token" )
+        
+#         if datetime.now(timezone.utc) > expiary_date:
+#             raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="token expired. please log in again." )
+                
+#         return True
+    
+#     except JWTError:
+#         raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid access token" )
+    
+    
+app.include_router(router)
+
+ 
