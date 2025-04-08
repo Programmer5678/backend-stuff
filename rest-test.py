@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 
 from typing import Optional
 
@@ -16,7 +17,9 @@ from fastapi.security.oauth2 import OAuth2PasswordRequestForm,  OAuth2PasswordBe
 
 pwd_context = CryptContext(schemes = ["bcrypt"], deprecated="auto" )
 
-engine = create_engine("mysql+pymysql://ruz:p123@localhost:3306/db")
+load_dotenv()
+jwt_encrypt =  os.getenv("JWT_ENCRYPT")
+engine = create_engine("mysql+pymysql://ruz:" +  os.getenv("MYSQL_PASS") + "@localhost:3306/db"  )
 c = engine.connect() 
 
 # c.execute("""create table users(id int primary key auto_increment, create_time timestamp default current_timestamp,
@@ -29,8 +32,6 @@ c = engine.connect()
 # pd.set_option("display.max_colwidth", None) # Don't truncate column contents
 # print(sql_query)
 
-
-print( os.getenv("path") )
 
 app = FastAPI()
 
@@ -113,9 +114,7 @@ def blah(param : int, response : Response):
 
 @app.post("/posts"   , response_model=ReturnPost    )
 def f( x : Post , owner_id : int = Depends(get_user_id)):
-    
-    print( "get_user_id :", get_user_id.id )
-        
+            
     lastId = c.execute(text("insert into posts( title , con , owner_id) values ( :title , :con, :owner_id );")
               , { "title" : x.title, "con" : x.con, "owner_id" : owner_id } ).lastrowid
     
@@ -208,7 +207,7 @@ def login( user : OAuth2PasswordRequestForm = Depends() ):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="invalid credentials")
     
     token = jwt.encode( {"id" : query_res[1], "exp" : ( datetime.now(timezone.utc) + timedelta(minutes=100) ) }
-                              , "ds982983eodj3jwkldfldskldfsj89fdf8", algorithm="HS256" ) 
+                              , jwt_encrypt , algorithm="HS256" ) 
         
     return { "access_token" : token, "token_type" : "bearer" }
 
@@ -216,7 +215,7 @@ def login( user : OAuth2PasswordRequestForm = Depends() ):
 def verify_user( jwt_token ):
     
     try: 
-        data = jwt.decode(jwt_token, "ds982983eodj3jwkldfldskldfsj89fdf8", algorithms=["HS256"])
+        data = jwt.decode(jwt_token, jwt_encrypt , algorithms=["HS256"])
                                 
         return data['id']
     
