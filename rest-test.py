@@ -1,4 +1,4 @@
-import requests 
+import os
 
 from typing import Optional
 
@@ -29,6 +29,8 @@ c = engine.connect()
 # pd.set_option("display.max_colwidth", None) # Don't truncate column contents
 # print(sql_query)
 
+
+print( os.getenv("path") )
 
 app = FastAPI()
 
@@ -78,12 +80,20 @@ def root():
     return {"message" : "helloworld"}
 
 @app.get("/posts")
-def get_all_posts():
-    
-    query_result = c.execute("""select posts.id,title,con, owner_id, users.email as owner_email,
-                             users.create_time as owner_create_time   from posts join users on owner_id = users.id;""")
-    
-    # print(query_result, list(query_result.keys()) )
+def get_all_posts(limit : Optional[int] = None , offset : Optional[int] = None ,
+                  search : str = ""):
+        
+        
+    q = ("""select posts.id,title,con, owner_id, users.email as owner_email,
+                             users.create_time as owner_create_time from posts join users on owner_id = users.id """ 
+    + """where posts.title like concat('%', :search ,'%') """ 
+    + "order by posts.id " 
+    + (" limit :limit " if limit else "" )
+    #  + (" offset :offset ;" if offset else ";" )
+    # + "offset 4;" 
+    )
+                              
+    query_result = c.execute( text(q), { "limit" : limit, "offset": offset , "search" : search} )
     
     posts = [ { key : val for (key, val) in zip(list(query_result.keys()), p) } for p in query_result.fetchall() ]
         
