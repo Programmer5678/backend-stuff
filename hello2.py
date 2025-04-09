@@ -1,8 +1,10 @@
 import pandas as pd
-
+import os
 from sqlalchemy import create_engine
+from dotenv import load_dotenv
+load_dotenv()
 
-engine = create_engine("mysql+pymysql://ruz:p123@localhost:3306/db")
+engine = create_engine("mysql+pymysql://ruz:" + os.getenv("MYSQL_PASS")  + "localhost:3306/db")
 c = engine.connect() 
 
 c.execute(text("""update posts set id = 12 where id = 13; update posts set id = 15 where id = 19; """) )

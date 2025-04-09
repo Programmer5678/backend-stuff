@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 
 from typing import Optional
 
@@ -93,7 +92,12 @@ def get_all_posts(limit : Optional[int] = None , offset : Optional[int] = None ,
         
         
     q = ("""select posts.id,title,con, owner_id, users.email as owner_email,
-                             users.create_time as owner_create_time from posts join users on owner_id = users.id """ 
+                             users.create_time as owner_create_time,
+                             like_count
+                             from posts 
+                             left join users on owner_id = users.id 
+                             left join like_count_table on posts.id = post_id 
+                             """ 
     + """where posts.title like concat('%', :search ,'%') """ 
     + "order by posts.id " 
     + (" limit :limit " if limit else "" )
@@ -241,33 +245,28 @@ def login( test : Test , token_id : int = Depends( get_user_id ) ):
     return {"msg" : "secret message"}
 
 
+@router.post("/posts/{post_id}/like")
+def like(post_id : int ,  user_id : int = Depends(get_user_id)  ):
+    print(user_id , post_id)
     
-    
-    
+    posts_query_res = c.execute(text("select * from posts where id = :post_id"), {"post_id" : post_id} ).fetchone()
+    if not posts_query_res:
+        raise HTTPException( status_code=status.HTTP_404_NOT_FOUND  )
 
+
+    likes_query_res = c.execute(text("select * from likes where user_id = :user_id and post_id = :post_id"),
+              {"user_id" : user_id, "post_id" : post_id} ).fetchone()
     
-# def verify_user( tokendata : TokenAuth ):
-    
-#     if not c.execute( text("select * from users where id = :id" ), tokendata.dict() ).fetchone() :
-#         raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid user id" )
-    
-#     try: 
-#         data = jwt.decode(tokendata.token, "ds982983eodj3jwkldfldskldfsj89fdf8", algorithms=["HS256"])
-                
-#         expiary_date = datetime.fromtimestamp(data['exp'] , timezone.utc)
-                
-#         print( datetime.now(timezone.utc) , expiary_date  , datetime.now(timezone.utc) > expiary_date )
+    if likes_query_res:
+        raise HTTPException( status_code=status.HTTP_409_CONFLICT , detail=f"""hello user with {user_id}, it seems you have already
+                            liked post with id {post_id}""")
         
-#         if not data['id'] == tokendata.id:
-#             raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="user id doesnt match access token" )
-        
-#         if datetime.now(timezone.utc) > expiary_date:
-#             raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="token expired. please log in again." )
-                
-#         return True
+    c.execute(text("insert into likes (user_id , post_id) values ( :user_id , :post_id ) " ),
+              {"user_id" : user_id, "post_id" : post_id} )
     
-#     except JWTError:
-#         raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid access token" )
+    # c.execute("insert into likes (user_id , post_id) values ( 68, 32 ) ")
+    
+    return {"message" : f"hello user with id {user_id}. successfuly liked post with id {post_id} " }
     
     
 app.include_router(router)

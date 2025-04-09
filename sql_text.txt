@@ -1,0 +1,22 @@
+delimiter $$
+
+create trigger my_triga
+after insert on likes 
+for each row 
+begin
+
+    if exists ( select 1 from like_count_table where post_id = new.post_id ; ) then
+
+        update like_count_table
+        set like_count = like_count + 1
+        where post_id = new.post_id;
+
+    else 
+        insert into like_count_table
+        values( new.post_id , 1 );
+
+    end if;
+
+end$$
+
+delimiter ;

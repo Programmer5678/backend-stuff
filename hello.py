@@ -1,9 +1,14 @@
 import mysql.connector
+import os
 from prettytable import PrettyTable
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 cnx = mysql.connector.connect(user = 'ruz',
                                host = 'localhost',
-                              password= 'p123',
+                              password=os.getenv("MYSQL_PASS") ,
                               database='db',
                               ssl_disabled=True)
 
@@ -36,7 +41,8 @@ def mysql_run_and_pretty_print(commands):
     
 mysql_run_and_pretty_print("""
 use db;
-show create table posts;
+CREATE TABLE likes (     id INT PRIMARY KEY AUTO_INCREMENT,     user_id INT,     post_id INT,     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE );
+
 """)
 
 cnx.commit()
