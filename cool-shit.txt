@@ -1,0 +1,53 @@
+Access to fetch at 'http://127.0.0.1:8000/' from origin 'https://www.google.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+
+
+
+
+
+Two ways for CORS middleware(one custom, one using fastapi add_middleware, CORSMiddleware)
+
+1.
+
+
+class MyMiddleware ( BaseHTTPMiddleware ):
+    
+    async def dispatch(self, request, call_next): 
+        print("FUKY YUKY")
+        
+        response = await call_next(request)
+        
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Headers"] = ""
+        response.headers['Access-Control-Allow-Methods'] = "POST"
+        ... allow-credentials etc.
+
+        return response
+    
+app.add_middleware( MyMiddleware )
+
+2.
+middleware = [ 
+
+    Middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=[],
+        allow_headers=[]
+    )
+    
+]
+
+app = FastAPI( middleware=middleware )
+
+
+3. 
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[],
+    allow_credentials=True,
+    allow_methods=[],
+    allow_headers=[]
+)

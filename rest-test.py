@@ -14,6 +14,8 @@ from datetime import datetime, timedelta , timezone
 
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm,  OAuth2PasswordBearer
 
+from starlette.middleware.cors import CORSMiddleware
+
 pwd_context = CryptContext(schemes = ["bcrypt"], deprecated="auto" )
 
 # c.execute("""create table users(id int primary key auto_increment, create_time timestamp default current_timestamp,
@@ -26,7 +28,18 @@ pwd_context = CryptContext(schemes = ["bcrypt"], deprecated="auto" )
 # pd.set_option("display.max_colwidth", None) # Don't truncate column contents
 # print(sql_query)
 
+# logging.basicConfig( level=logging.INFO )
+# logging.info()
+    
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=[],
+    allow_headers=[]
+)
 
 class Settings(BaseSettings):
     jwt_encrypt : str
