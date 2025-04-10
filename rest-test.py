@@ -26,7 +26,6 @@ pwd_context = CryptContext(schemes = ["bcrypt"], deprecated="auto" )
 # pd.set_option("display.max_colwidth", None) # Don't truncate column contents
 # print(sql_query)
 
-
 app = FastAPI()
 
 class Settings(BaseSettings):
