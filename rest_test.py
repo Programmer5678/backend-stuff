@@ -76,6 +76,10 @@ class UserOut ( BaseModel ):
     id: int
     email: EmailStr
     
+class LoginOut ( BaseModel ):
+    access_token : str 
+    token_type : str
+    
 class Token ( BaseModel ):
     access_token: str
     token_type: str
@@ -84,7 +88,7 @@ class TokenAuth ( BaseModel ):
     id: int
     token: str
     
-class Test ( BaseModel ):
+class Testy ( BaseModel ):
     id : int
 
 class ReturnPost ( BaseModel ):
@@ -196,8 +200,8 @@ class UserOut ( BaseModel ):
 @app.post("/users", status_code=status.HTTP_201_CREATED, response_model=UserOut)
 def user_create(user : UserCreate):
 
-    print(" hashing: ", user.password, "= ", pwd_context.hash(user.password))
-    print(" hashing: ", user.password, "= ", pwd_context.hash(user.password))
+    # print(" hashing: ", user.password, "= ", pwd_context.hash(user.password))
+    # print(" hashing: ", user.password, "= ", pwd_context.hash(user.password))
 
     lastId = c.execute( text("insert into users(email, password) values( :email , :password )") , 
     {"email" : user.email , "password" : pwd_context.hash( user.password ) } ).lastrowid    
@@ -221,7 +225,7 @@ def get_user(id : int):
     
     return res
     
-@router.post("/login" , status_code=status.HTTP_201_CREATED)
+@router.post("/login" , status_code=status.HTTP_201_CREATED, response_model=LoginOut)
 def login( user : OAuth2PasswordRequestForm = Depends() ):
     
     query_res = c.execute( text("select password, id from users where email = :email") , {"email" : user.username} ).fetchone()
@@ -248,7 +252,7 @@ def verify_user( jwt_token ):
                             headers = {"WWW-Authenticate" : "Bearer"})
 
 @router.get("/protected" )
-def login( test : Test , token_id : int = Depends( get_user_id ) ):
+def login( test : Testy , token_id : int = Depends( get_user_id ) ):
 
     if not test.id == token_id:
         raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="user id doesnt match access token",
