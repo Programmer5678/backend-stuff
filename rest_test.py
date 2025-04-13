@@ -57,10 +57,13 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl = 'login')
 
 def get_user_id( jwt_token : str = Depends(oauth2_scheme) ) :
     
+    # print("In get_user_id, jwt_token = ", jwt_token)
+    
     return verify_user( jwt_token )
 
 
 class Post( BaseModel ):
+    
     title: str
     con: str
 
@@ -139,7 +142,7 @@ def blah(param : int, response : Response):
     raise HTTPException( status_code = status.HTTP_404_NOT_FOUND ,
         detail="no post with such id..."  )
 
-@app.post("/posts"   , response_model=ReturnPost    )
+@app.post("/posts"   , response_model=ReturnPost , status_code=status.HTTP_201_CREATED )
 def f( x : Post , owner_id : int = Depends(get_user_id)):
             
     lastId = c.execute(text("insert into posts( title , con , owner_id) values ( :title , :con, :owner_id );")
@@ -154,17 +157,16 @@ def f( x : Post , owner_id : int = Depends(get_user_id)):
 
 
 @app.put("/posts/{id}")
-def f2(x: Post, id: int, response: Response):
-    # print(x, id)
+def f2(x: Post, id: int, response: Response, user_id : int = Depends(get_user_id) ):
 
-    query_result = c.execute(f"SELECT title, con FROM posts WHERE id = {id};")
-    if len(query_result.fetchall()):
+    query_result = c.execute(f"SELECT owner_id, title, con FROM posts WHERE id = {id};").fetchone()
+        
+    if query_result:
+        
+        if query_result[0] != user_id:
+            raise HTTPException( status_code = status.HTTP_403_FORBIDDEN )
+        
         c.execute(f"UPDATE posts SET title='{x.title}', con = '{x.con}' WHERE id = {id}")
-
-        # mysql_run_and_pretty_print("""
-        # USE db;
-        # SELECT * FROM posts;
-        # """)
 
         return {"message": "modified post!"}
 
@@ -231,7 +233,7 @@ def login( user : OAuth2PasswordRequestForm = Depends() ):
     query_res = c.execute( text("select password, id from users where email = :email") , {"email" : user.username} ).fetchone()
     
     if not query_res or not pwd_context.verify(user.password, query_res[0] ):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="invalid credentials")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid credentials")
     
     token = jwt.encode( {"id" : query_res[1], "exp" : ( datetime.now(timezone.utc) + timedelta(minutes=100) ) }
                               , settings.jwt_encrypt , algorithm="HS256" ) 
@@ -251,8 +253,10 @@ def verify_user( jwt_token ):
         raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail= ("invalid access token: " + str(e)) ,
                             headers = {"WWW-Authenticate" : "Bearer"})
 
-@router.get("/protected" )
+@router.post("/protected" )
 def login( test : Testy , token_id : int = Depends( get_user_id ) ):
+
+    print(test.id, token_id)
 
     if not test.id == token_id:
         raise HTTPException( status_code=status.HTTP_401_UNAUTHORIZED, detail="user id doesnt match access token",
