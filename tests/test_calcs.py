@@ -5,6 +5,7 @@ from jose import jwt
 from rest_test import app, UserOut, settings, LoginOut, c, ReturnPost
 from sqlalchemy import text
 import random
+import re
 
 # @pytest.fixture
 # def my_fixture():
@@ -174,7 +175,6 @@ def test_protected(create_users, authorized_clients):
 
         assert res.json()['msg'] == "secret message"
 
-
 # @pytest.mark.parametrize("title, con" ,
 #     [ ("this is a title", "this is contents") 
 #      , ("this is a title 2", "this is contents 2") 
@@ -282,3 +282,39 @@ def test_update_post_other_user(authorized_clients, create_post_for_update, titl
     id = create_post_for_update.json()['id']
     res = other_user_client.put( f"/posts/{id}", json={"title": title, "con" : con} )
     assert res.status_code == status.HTTP_403_FORBIDDEN
+    
+def test_like_post(create_users, create_posts, authorized_clients):
+    
+    authorized_client = authorized_clients[0]
+    
+    user_id = create_users[0].get_id_from_response()
+    
+    post_id = create_posts["body_response"][0].json()["id"]
+    
+    res = authorized_client.post(f"/posts/{post_id}/like" )
+    
+    assert res.status_code == status.HTTP_201_CREATED
+    
+    msg = res.json()['message']
+    assert msg == f"hello user with id {user_id}. successfuly liked post with id {post_id} "
+    
+def remove_whitespaces(st):
+    return re.sub( r"\s+", "" , st)
+
+def test_double_like_post_fail(create_posts, authorized_clients):
+    
+    post_id = create_posts["body_response"][0].json()["id"]
+
+    other_client= authorized_clients[1]
+    
+    other_client.post(f"/posts/{post_id}/like"  )
+    res = other_client.post(f"/posts/{post_id}/like" )
+    
+    assert res.status_code == status.HTTP_409_CONFLICT
+    assert "alreadyliked" in remove_whitespaces(res.json()['detail'])
+    
+def test_like_post_not_exist(authorized_clients):
+    authorized_client = authorized_clients[0]
+    
+    authorized_client.post("/posts/" + str(random.randint(1000, 10000)) + "/like" )
+    

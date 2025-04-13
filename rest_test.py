@@ -265,7 +265,7 @@ def login( test : Testy , token_id : int = Depends( get_user_id ) ):
     return {"msg" : "secret message"}
 
 
-@router.post("/posts/{post_id}/like")
+@router.post("/posts/{post_id}/like", status_code=status.HTTP_201_CREATED)
 def like(post_id : int ,  user_id : int = Depends(get_user_id)  ):
     print(user_id , post_id)
     
