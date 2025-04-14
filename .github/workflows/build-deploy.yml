@@ -10,3 +10,11 @@ jobs:
       - name: First Step - lets just print something
         run: echo "hello world"
 
+      - name: Another step - just print another thing
+        run: echo "when am i gonna print something of use?"
+
+  job2:
+    runs-on: ubuntu-latest
+
+    steps:
+      -run: echo "nameless step"
