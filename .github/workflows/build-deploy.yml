@@ -71,7 +71,9 @@ jobs:
 
       - run: echo ${{ vars.VAR }}
 
-      - run: npm ci
+      - run: | 
+          npm install
+          npm ci
 
       - run: node postgres_client.js
 
