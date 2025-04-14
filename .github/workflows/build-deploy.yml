@@ -1,6 +1,8 @@
 name: Hi. This should build and deploy code
 
-on: []
+on: 
+  push:
+    branch: nonExistingBranch
 
 jobs:
   job1:
