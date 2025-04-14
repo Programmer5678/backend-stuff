@@ -13,6 +13,10 @@ jobs:
       - name: Another step - just print another thing
         run: echo "when am i gonna print something of use?"
 
+      - run: ls
+
+      - run: pwd
+
   job2:
     runs-on: ubuntu-latest
 
