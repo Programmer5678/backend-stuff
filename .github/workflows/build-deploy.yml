@@ -9,6 +9,10 @@ on:
 
 jobs:
   job1:
+
+    env:
+      MY-ENV : 5
+
     runs-on: ubuntu-latest
     
     steps:
@@ -32,15 +36,7 @@ jobs:
     
       - run: git status
 
-  job2:
-    runs-on: ubuntu-latest
-
-    steps:
-      - run: echo "nameless step"
-
-      - run: python -c "print(911)"
-
-      - run: git status
+      - run: 
 
   job3:
     runs-on: windows-latest
