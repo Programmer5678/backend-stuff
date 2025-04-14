@@ -11,7 +11,7 @@ jobs:
   job1:
 
     env:
-      MY-ENV : 5
+      MY_ENV : 5
 
     runs-on: ubuntu-latest
     
