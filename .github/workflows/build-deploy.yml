@@ -13,7 +13,7 @@ jobs:
       - name: Another step - just print another thing
         run: echo "when am i gonna print something of use?"
 
-      - run: /bin/ls -la
+      - run: /bin/ls -l
 
       - run: pwd
 
