@@ -47,6 +47,8 @@ jobs:
 
       - run: echo ${{ secrets.S }} 
 
+      - run: echo ${{ secrets.SECRET1 }}
+
   job3:
     runs-on: windows-latest
     
