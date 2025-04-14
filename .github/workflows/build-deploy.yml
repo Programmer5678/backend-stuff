@@ -12,6 +12,7 @@ jobs:
 
     env:
       MY_ENV : 5
+      MY_ENV2: ${{ secrets.SECRET }}
 
     runs-on: ubuntu-latest
     
@@ -39,6 +40,8 @@ jobs:
       - run: echo $MY_ENV
 
       - run: echo ${{ secrets.SECRET }} | base64
+
+      - run: echo $MY_ENV2
 
   job3:
     runs-on: windows-latest
