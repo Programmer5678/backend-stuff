@@ -1,6 +1,8 @@
 name: Hi. This should build and deploy code
 
-on: push
+on: 
+  - push
+  - pull-request
 
 jobs:
   job1:
