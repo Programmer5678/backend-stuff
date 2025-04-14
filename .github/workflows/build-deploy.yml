@@ -2,7 +2,8 @@ name: Hi. This should build and deploy code
 
 on: 
   push:
-    branch: nonExistingBranch
+    branches:
+      - nonExistingBranch
 
 jobs:
   job1:
