@@ -43,6 +43,8 @@ jobs:
 
       - run: echo $MY_ENV2
 
+      - run: echo 123
+
   job3:
     runs-on: windows-latest
     
