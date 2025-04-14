@@ -21,6 +21,8 @@ jobs:
       - run: /bin/ls -l
 
       - run: pwd
+
+      - uses: actions/checkout@v2
       
       - run: cat sql_text.txt
 
