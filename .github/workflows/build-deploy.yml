@@ -73,6 +73,8 @@ jobs:
 
       - run: echo ${{ vars.VAR }}
 
+      - run: npm install pg
+
       - run: node postgres_client.js
 
   job3:
