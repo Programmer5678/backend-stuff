@@ -1,6 +1,6 @@
 name: Hi. This should build and deploy code
 
-on: [push, pull_request]
+on: pull_request
 
 jobs:
   job1:
