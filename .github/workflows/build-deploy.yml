@@ -10,6 +10,9 @@ on:
 jobs:
   job1:
 
+    environment: 
+      name: env123
+
     env:
       MY_ENV : 5
       MY_ENV2: ${{ secrets.SECRET }}
