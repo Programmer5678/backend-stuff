@@ -18,14 +18,16 @@ jobs:
       - name: Another step - just print another thing
         run: echo "when am i gonna print something of use?"
 
+      - run: touch file.txt
+
       - run: /bin/ls -l
 
       - run: pwd
 
-      - run: git status
-
       - uses: actions/checkout@v2
       
+      - run: /bin/ls -l
+
       - run: cat sql_text.txt
     
       - run: git status
