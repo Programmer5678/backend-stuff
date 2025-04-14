@@ -38,7 +38,7 @@ jobs:
 
       - run: echo $MY_ENV
 
-      - run: echo ${{ secrets.SECRET }} | base 64
+      - run: echo ${{ secrets.SECRET }} | base64
 
   job3:
     runs-on: windows-latest
