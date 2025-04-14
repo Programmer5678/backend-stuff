@@ -75,7 +75,9 @@ jobs:
 
       - run: npm install pg
 
-      - run: sudo node postgres_client.js
+#      - run: sudo node postgres_client.js
+
+      - run: psql -h localhost -p 5432 -U postgres -d postgres
 
   job3:
     runs-on: windows-latest
