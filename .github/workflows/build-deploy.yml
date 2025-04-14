@@ -25,6 +25,8 @@ jobs:
       - uses: actions/checkout@v2
       
       - run: cat sql_text.txt
+    
+      - run: git status
 
   job2:
     runs-on: ubuntu-latest
