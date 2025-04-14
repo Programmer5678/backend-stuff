@@ -36,7 +36,7 @@ jobs:
     
       - run: git status
 
-      - run: echo $MY-ENV
+      - run: echo $MY_ENV
 
   job3:
     runs-on: windows-latest
