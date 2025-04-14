@@ -2,6 +2,9 @@ name: Hi. This should build and deploy code
 
 on: 
   push:
+    branches:
+      - main
+
   pull_request:
 
 jobs:
