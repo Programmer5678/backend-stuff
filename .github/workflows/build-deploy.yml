@@ -1,9 +1,6 @@
 name: Hi. This should build and deploy code
 
-on: 
-  push:
-    branches:
-
+on: []
 
 jobs:
   job1:
