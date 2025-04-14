@@ -3,7 +3,7 @@ name: Hi. This should build and deploy code
 on: 
   push:
     branches:
-      - kaboot
+      - main
 
   pull_request:
 
