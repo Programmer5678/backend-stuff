@@ -1,13 +1,26 @@
 import pytest
-from fastapi.testclient import TestClient
-from rest_test import app, Post, ReturnPost
+from fastapi.testclient import TestClient 
+from rest_test import app, Post, ReturnPost, SessionLocal
 
 import random
 
+@pytest.fixture()
+def session():
+        
+    s = SessionLocal()
+
+    try: 
+        yield s
+    finally:
+        s.close()
+ 
+
 @pytest.fixture(scope="session")
 def client():
+    
+    
+    
     return TestClient(app)
-
 
 class CreateUser():
     
@@ -69,18 +82,23 @@ def authorized_clients( log_in_responses_users):
 @pytest.fixture( scope="session")
 def create_posts(authorized_clients):
     
+    
     authorized_client = authorized_clients[0]
     
     test_posts = [ Post(title = "my-title1", con = "contents1"), 
                   Post(title= "my-title2", con = "contents2"),
                   Post(title = "my-title3", con = "contents3"),
                   Post(title = "my-title4", con = "contents4") ]
+
+
+    authorized_client.post("/protected", json={"id" : 5} )
+    authorized_client.post( "/posts", json={"title": "my-title1", "con" : "contents1"} )
     
     res_posts = list(map( 
                          lambda post : authorized_client.post( "/posts", json=post.__dict__ )
                         , test_posts
                         ))
-    
+        
     return { "body_request" : test_posts , "body_response" : res_posts }
 
 @pytest.fixture

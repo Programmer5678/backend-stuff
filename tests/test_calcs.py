@@ -2,95 +2,11 @@ import pytest
 from fastapi.testclient import TestClient
 from fastapi import status
 from jose import jwt
-from rest_test import app, UserOut, settings, LoginOut, c, ReturnPost
+from rest_test import app, UserOut, settings, LoginOut,  ReturnPost
 from sqlalchemy import text
 import random
 import re
 
-# @pytest.fixture
-# def my_fixture():
-#     print("in my_fixture")
-#     return 5
-
-# def add(x, y):
-#     return x + y
-
-# @pytest.mark.parametrize ( "x, y, r" ,  [
-#     ( 3, 4, 7 ),
-#     ( 1, 9, 10),
-#     ( 2, 2, 4)
-# ] )
-# def test_add(x, y, r):
-#     print("SIUU")
-#     assert x + y == r
-    
-    
-# @pytest.mark.parametrize ( "x, y, r" , [
-#     ( 3, 4, 7 ),
-#     ( 1, 9, 10),
-#     ( 2, 2, 4)
-# ] )
-# def test_mul(x, y, r):
-#     assert x*y == r
-    
-# class Bank:
-
-#     def __init__(self, amount = 0):
-#         self.amount = amount
-        
-#     def deposit(self, n):
-#         self.amount += n
-        
-#     def withdraw(self, n):
-#         self.amount -= n
-        
-        
-# def test_default_amount():
-#     b = Bank()
-#     assert b.amount == 0
-    
-
-# @pytest.mark.parametrize( "start, dep, expected", 
-#                          [
-#                              (20, 9, 29),
-#                              (3, 0, 3),
-#                              (100, 100, 200)
-#                          ])
-# def test_deposit_amount(start, dep, expected):
-#     b = Bank(start)
-#     b.deposit( dep )
-    
-#     assert b.amount == expected
-    
-    
-    
-# @pytest.mark.parametrize( "start, withdrawal, expected", 
-#                          [
-#                              (20, 9, 11),
-#                              (3, 0, 11),
-#                              (100, 100, 0)
-#                          ])
-# def test_withdraw_amount(start, withdrawal, expected):
-#     b = Bank(start)
-#     b.withdraw( withdrawal )
-    
-#     assert b.amount == expected
-    
-    
-# def test_example( my_fixture ):
-#     print("in test_example")
-#     assert my_fixture == 5
-    
-# class Exy(Exception):
-#     pass
-    
-# def test_expecting_error() :
-    
-#     with pytest.raises(Exy):
-#         raise Exy("tsup")        
-
-# def test_root() :
-#     assert client.get('/').json().get('message') == 'helloworld'
     
 def test_get_all_posts(client) :
      
@@ -103,20 +19,7 @@ def test_get_all_posts(client) :
         ))[0]['title'] == 'my title 2 :)'
     # assert client.get('/').json().get('message') == 'helloworld'
     
-# @pytest.mark.parametrize( "email", [ ("email"), (5), ("neineleven"), (100), ("email@.co"), ("") ] )    
-# def test_user_create_invalid_email(email):
-    
-#     res = client.post( "/users", json={"email" : email, "password" : "mypassword123"} )
-    
-#     assert res.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
-    
-# @pytest.mark.parametrize( "email", [ ("newemail@email.com") , ("mamymail@email.com"), ("seewee@gmail.com") ] )    
-# def test_user_create_successfully_and_valid_email(email) :
-    
-#     res = client.post( "/users", json={"email" : email, "password" : "mypassword123"} )
-    
-#     assert UserOut( **res.json() )
-#     assert (res.status_code == status.HTTP_201_CREATED and res.json().get('email') == email )
+
 
 def test_user_create( create_users ):
     
@@ -186,18 +89,13 @@ def test_protected(create_users, authorized_clients):
 #     res = authorized_client.post( "/posts", json={"title" : title, "con" : con } )
     
 #     post_details_from_resposne = ReturnPost( **res.json() )
-#     post_details_from_sql = ReturnPost( **c.execute(text("select * from posts where id = :id"), 
+#     post_details_from_sql = ReturnPost( **s.execute(text("select * from posts where id = :id"), 
 #                                                     {"id" : post_details_from_resposne.id}).fetchone()  )
 #     assert post_details_from_resposne == post_details_from_sql
 
-# def test_get_post(client, ):
-#     client.get("/post/")
 
-
-
-
-def test_create_post(create_posts):
-    
+def test_create_post(create_posts, session):
+        
     for (req, res) in zip(create_posts["body_request"] , create_posts["body_response"]):
         
         post_details_from_resposne = ReturnPost( **res.json() )
@@ -205,8 +103,8 @@ def test_create_post(create_posts):
         assert req.title == post_details_from_resposne.title
         assert req.con == post_details_from_resposne.con 
         
-        post_details_from_sql = ReturnPost( **c.execute(text("select * from posts where id = :id"), 
-                                                    {"id" : post_details_from_resposne.id}).fetchone()  )
+        post_details_from_sql = ReturnPost( **session.execute(text("select * from posts where id = :id"), 
+                                                    {"id" : post_details_from_resposne.id}).fetchone()._asdict() )
         
         assert res.status_code == status.HTTP_201_CREATED
         assert post_details_from_resposne == post_details_from_sql
@@ -215,6 +113,7 @@ def test_create_post(create_posts):
 def test_get_post(client, create_posts):
     
     for res_create_post in create_posts['body_response']:
+        
         
         res_get_post = client.get("/posts/" + str( res_create_post.json()['id'] ) )
         
@@ -233,7 +132,7 @@ def test_unauthorized_delete_post(client):
     assert res.json()['detail'] == "Not authenticated"
         
     
-def test_delete_post(authorized_clients, create_post_for_delete):
+def test_delete_post(authorized_clients, create_post_for_delete, session):
         
     print(authorized_clients)
     authorized_client = authorized_clients[0]
@@ -241,7 +140,7 @@ def test_delete_post(authorized_clients, create_post_for_delete):
     id = create_post_for_delete.json()['id']
     res = authorized_client.delete( f"/posts/{id}" )
     assert res.status_code == status.HTTP_204_NO_CONTENT    
-    assert c.execute(text("select * from posts where id = :id"), {"id" : id}).fetchone() == None
+    assert session.execute(text("select * from posts where id = :id"), {"id" : id}).fetchone() == None
     
 def test_delete_post_not_exist(authorized_clients):
     
@@ -261,7 +160,7 @@ def test_delete_other_user_post(authorized_clients, create_posts ):
 @pytest.mark.parametrize( "title, con", [ ("title juan", "con juan"),
                                          ("title dva", "con juan"), 
                                          ("title juan", "con dva") ] )
-def test_update_post(authorized_clients, create_post_for_update, title, con):
+def test_update_post(authorized_clients, create_post_for_update, title, con, session):
         
     authorized_client = authorized_clients[0]
     
@@ -269,7 +168,7 @@ def test_update_post(authorized_clients, create_post_for_update, title, con):
     res = authorized_client.put( f"/posts/{id}", json={"title": title, "con" : con} )
     assert res.status_code == status.HTTP_200_OK
     assert res.json()['message'] == 'modified post!'
-    assert c.execute(text("select title, con from posts where id = :id"), {"id" : id}).fetchone() == (title, con)
+    assert session.execute(text("select title, con from posts where id = :id"), {"id" : id}).fetchone() == (title, con)
     
     
 @pytest.mark.parametrize( "title, con", [ ("title juan", "con juan"),
@@ -316,5 +215,6 @@ def test_double_like_post_fail(create_posts, authorized_clients):
 def test_like_post_not_exist(authorized_clients):
     authorized_client = authorized_clients[0]
     
-    authorized_client.post("/posts/" + str(random.randint(1000, 10000)) + "/like" )
+    res = authorized_client.post("/posts/" + str(random.randint(1000, 10000)) + "/like" )
     
+    assert res.status_code == 404
