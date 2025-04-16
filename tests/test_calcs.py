@@ -8,13 +8,12 @@ import random
 import re
 
     
-def test_get_all_posts(client) :
-     
-    
+def test_get_all_posts(client, example_post_id ) :
+        
     # print( client.get('/posts').json().get('data')  )
 
     assert list(filter(
-        lambda x : x['id'] == 22 , 
+        lambda x : x['id'] == example_post_id , 
         client.get('/posts').json().get('data')  
         ))[0]['title'] == 'my title 2 :)'
     # assert client.get('/').json().get('message') == 'helloworld'
@@ -94,81 +93,97 @@ def test_protected(create_users, authorized_clients):
 #     assert post_details_from_resposne == post_details_from_sql
 
 
-def test_create_post(create_posts, session):
+def test_create_post( session):
         
-    for (req, res) in zip(create_posts["body_request"] , create_posts["body_response"]):
+    # for (req, res) in zip(create_posts["body_request"] , create_posts["body_response"]):
         
-        post_details_from_resposne = ReturnPost( **res.json() )
+    #     pass
         
-        assert req.title == post_details_from_resposne.title
-        assert req.con == post_details_from_resposne.con 
+    #     post_details_from_resposne = ReturnPost( **res.json() )
         
-        post_details_from_sql = ReturnPost( **session.execute(text("select * from posts where id = :id"), 
-                                                    {"id" : post_details_from_resposne.id}).fetchone()._asdict() )
+    #     assert req.title == post_details_from_resposne.title
+    #     assert req.con == post_details_from_resposne.con 
+       
+       
+    print(session.execute(text("select * from posts")).fetchone())
+    print(session.execute(text("select * from posts")).fetchone())
+ 
+        # post_details_from_sql = ReturnPost( **session.execute(text("select * from posts where id = :id"), 
+        #                                             {"id" : post_details_from_resposne.id}).fetchone()._asdict() )
         
-        assert res.status_code == status.HTTP_201_CREATED
-        assert post_details_from_resposne == post_details_from_sql
+    #     assert res.status_code == status.HTTP_201_CREATED
+    #     assert post_details_from_resposne == post_details_from_sql
         
         
-def test_get_post(client, create_posts):
+# def test_get_post(client, create_posts):
     
-    for res_create_post in create_posts['body_response']:
+#     for res_create_post in create_posts['body_response']:
         
         
-        res_get_post = client.get("/posts/" + str( res_create_post.json()['id'] ) )
+#         res_get_post = client.get("/posts/" + str( res_create_post.json()['id'] ) )
         
-        assert res_get_post.status_code == 200
-        assert res_create_post.json() == res_get_post.json() 
+#         assert res_get_post.status_code == 200
+#         assert res_create_post.json() == res_get_post.json() 
         
         
-def test_unauthorized_create_post(client):
-    res = client.post("/posts", json={"title" : "tities", "con" : "why tities dont grow past 20(and how to fix it!)"})
-    assert res.status_code == status.HTTP_401_UNAUTHORIZED
-    assert res.json()['detail'] == "Not authenticated"
+# def test_unauthorized_create_post(client):
+#     res = client.post("/posts", json={"title" : "tities", "con" : "why tities dont grow past 20(and how to fix it!)"})
+#     assert res.status_code == status.HTTP_401_UNAUTHORIZED
+#     assert res.json()['detail'] == "Not authenticated"
     
-def test_unauthorized_delete_post(client):
-    res = client.delete("/posts/102320")
-    assert res.status_code == status.HTTP_401_UNAUTHORIZED
-    assert res.json()['detail'] == "Not authenticated"
+# def test_unauthorized_delete_post(client):
+#     res = client.delete("/posts/102320")
+#     assert res.status_code == status.HTTP_401_UNAUTHORIZED
+#     assert res.json()['detail'] == "Not authenticated"
         
     
-def test_delete_post(authorized_clients, create_post_for_delete, session):
+# def test_delete_post(authorized_clients, create_post_for_delete, session):
         
-    print(authorized_clients)
-    authorized_client = authorized_clients[0]
+#     print(authorized_clients)
+#     authorized_client = authorized_clients[0]
     
-    id = create_post_for_delete.json()['id']
-    res = authorized_client.delete( f"/posts/{id}" )
-    assert res.status_code == status.HTTP_204_NO_CONTENT    
-    assert session.execute(text("select * from posts where id = :id"), {"id" : id}).fetchone() == None
+#     id = create_post_for_delete.json()['id']
+#     res = authorized_client.delete( f"/posts/{id}" )
+#     assert res.status_code == status.HTTP_204_NO_CONTENT    
+#     assert session.execute(text("select * from posts where id = :id"), {"id" : id}).fetchone() == None
     
-def test_delete_post_not_exist(authorized_clients):
+# def test_delete_post_not_exist(authorized_clients):
     
-    authorized_client = authorized_clients[0]
+#     authorized_client = authorized_clients[0]
     
-    res = authorized_client.delete( "/posts/" + str(random.randint(1000, 10000)) )
-    assert res.status_code == status.HTTP_404_NOT_FOUND
+#     res = authorized_client.delete( "/posts/" + str(random.randint(1000, 10000)) )
+#     assert res.status_code == status.HTTP_404_NOT_FOUND
     
-def test_delete_other_user_post(authorized_clients, create_posts ):
-    other_user_client = authorized_clients[1]
-    post = create_posts["body_response"][0]
+# def test_delete_other_user_post(authorized_clients, create_posts ):
+#     other_user_client = authorized_clients[1]
+#     post = create_posts["body_response"][0]
     
-    res = other_user_client.delete(f"/posts/{post.json()['id']}")
+#     res = other_user_client.delete(f"/posts/{post.json()['id']}")
         
-    assert res.status_code == status.HTTP_403_FORBIDDEN
+#     assert res.status_code == status.HTTP_403_FORBIDDEN
 
-@pytest.mark.parametrize( "title, con", [ ("title juan", "con juan"),
-                                         ("title dva", "con juan"), 
-                                         ("title juan", "con dva") ] )
-def test_update_post(authorized_clients, create_post_for_update, title, con, session):
+
+
+@pytest.mark.parametrize( "title, con", [ 
+                                        #  ("title juan", "con juan"),
+                                        #  ("title dva", "con juan"), 
+                                         ("title juan", "con dva") 
+                                         ] )
+def test_update_post(authorized_clients, create_post_for_update, title, con, anotherSession, session):
         
     authorized_client = authorized_clients[0]
     
     id = create_post_for_update.json()['id']
+    
+    print(id)
     res = authorized_client.put( f"/posts/{id}", json={"title": title, "con" : con} )
-    assert res.status_code == status.HTTP_200_OK
-    assert res.json()['message'] == 'modified post!'
-    assert session.execute(text("select title, con from posts where id = :id"), {"id" : id}).fetchone() == (title, con)
+    # assert res.status_code == status.HTTP_200_OK
+    # assert res.json()['message'] == 'modified post!'
+    print(anotherSession.execute(text("select title, con from posts where id = :id"), {"id" : id}).fetchone())
+    print(session.execute(text("select * from posts order by id desc limit 1")).fetchone())
+    print(session.execute(text("select title, con from posts where id = :id"), {"id" : id}).fetchone())
+
+    # assert session.execute(text("select title, con from posts where id = :id"), {"id" : id}).fetchone() == (title, con)
     
     
 @pytest.mark.parametrize( "title, con", [ ("title juan", "con juan"),

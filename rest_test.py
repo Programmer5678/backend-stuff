@@ -5,7 +5,7 @@ from typing import Optional
 from fastapi import FastAPI, Response, status, HTTPException , APIRouter, Depends
 from fastapi.params import Body
 from pydantic import BaseModel , EmailStr
-from sqlalchemy import create_engine, text, String
+from sqlalchemy import create_engine, text, String, Integer, ForeignKey, Text, MetaData
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -40,22 +40,76 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-engine = create_engine("mysql+pymysql://ruz:" +  settings.mysql_pass + "@localhost:3306/db" 
-                    #    , echo=True
+engine = create_engine("mysql+pymysql://ruz:" +  settings.mysql_pass + "@localhost:3306/db2" 
+                       , echo=True
                        )
 
     
 class Base(DeclarativeBase):
-    pass    
+    pass
+    # metadata = MetaData(naming_convention={
+    #     "ix": "ix_%(column_0_label)s",
+    #     "uq": "uq_%(table_name)s_%(column_0_name)s",
+    #     "ck": "ck_%(table_name)s_`%(constraint_name)s`",
+    #     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+    #     "pk": "pk_%(table_name)s"
+    # })  
 
-class Author(Base):
-    __tablename__ = "shmuel"
+class Users(Base):
+    __tablename__ = "users"
     
-    id : Mapped[int] = mapped_column(primary_key = True)
-    name : Mapped[str] = mapped_column(String(30))
+    id : Mapped[int] = mapped_column(Integer, primary_key = True, autoincrement = True)
+    create_time: Mapped[datetime] = mapped_column(server_default=text("CURRENT_TIMESTAMP"), nullable = True )
+    # nullable=True make sure this changed!
+    email : Mapped[str] = mapped_column(String(100) ,nullable = False )
+    password : Mapped[str] = mapped_column(String(100) ,nullable = False )
     
-Base.metadata.create_all(engine)
-  
+class Posts(Base):
+    __tablename__ = "posts"
+    
+    id : Mapped[int] = mapped_column(Integer, primary_key = True, autoincrement = True)
+    title: Mapped[str] = mapped_column(String(20))
+    con: Mapped[str] = mapped_column(Text)
+    owner_id: Mapped[int] = mapped_column(Integer
+                            ,ForeignKey("users.id", use_alter = True,
+                                       ondelete="SET NULL")
+                            , nullable = True
+                            )
+    
+class Likes(Base):
+    __tablename__ = "likes"
+    
+    id : Mapped[int] = mapped_column(Integer, primary_key = True, autoincrement = True)
+    
+    user_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("users.id", ondelete="SET NULL", use_alter=True), # where is that ??? why wasnt added?
+        nullable=True,
+        server_default=text("NULL")
+    )
+
+    post_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("posts.id", ondelete="CASCADE", use_alter=True),
+        nullable=False
+    )
+    
+class LikeCountTable(Base):
+    __tablename__ = "like_count_table"
+    
+    post_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("posts.id", ondelete="CASCADE", use_alter=True),
+        primary_key=True
+    )
+    
+    like_count: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False
+    )
+
+# Base.metadata.create_all(engine)
+
 # with engine.connect() as c:
 #     c.execute(text("insert into yummy(s) values(100)"))
 #     c.commit()  
@@ -63,6 +117,7 @@ Base.metadata.create_all(engine)
 SessionLocal = sessionmaker(engine)
 
 def get_session():
+    
     
     s = SessionLocal()
 
@@ -125,10 +180,13 @@ class ReturnPost ( BaseModel ):
 def root():
     return {"message" : "helloworld"}
 
+def random_func():
+    print("MA(GAY)A")
+
 @app.get("/posts")
 def get_all_posts(limit : Optional[int] = None , offset : Optional[int] = None ,
-                  search : str = "", s : Session = Depends(get_session) ):
-        
+                  search : str = "", s : Session = Depends(get_session) ,
+                  blah = Depends(random_func) ):    
         
     q = ("""select posts.id,title,con, owner_id, users.email as owner_email,
                              users.create_time as owner_create_time,
