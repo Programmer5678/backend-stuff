@@ -1,26 +1,64 @@
 import pytest
 from fastapi.testclient import TestClient 
-from rest_test import app, Post, ReturnPost, SessionLocal
-
+from rest_test import app, Post, ReturnPost, settings, get_session, Base
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import sessionmaker
 import random
 
-@pytest.fixture()
+testEngine = create_engine("mysql+pymysql://ruz:" +  settings.mysql_pass + "@localhost:3306/db_test" 
+                    #    , echo=True
+                       )
+
+TestSessionLocal = sessionmaker( testEngine )
+
+
+@pytest.fixture(scope="session")
 def session():
         
-    s = SessionLocal()
+    s = TestSessionLocal()
 
     try: 
         yield s
     finally:
         s.close()
- 
+        
+def override_get_session():
+        
+    s = TestSessionLocal()
+
+    try: 
+        yield s
+    finally:
+        s.close()
+
+
+# Base.metadata.drop_all(testEngine)
+Base.metadata.create_all(testEngine)
+app.dependency_overrides[get_session] = override_get_session
+
+@pytest.fixture
+def anotherSession():
+        
+    s = TestSessionLocal()
+
+    try: 
+        yield s
+    finally:
+        s.close()
 
 @pytest.fixture(scope="session")
-def client():
-    
-    
-    
+def client(session):  
+          
     return TestClient(app)
+
+
+@pytest.fixture(scope="session")
+def example_post_id(session):
+    id = session.execute(text("insert into posts(title, con) values('my title 2 :)', 'contents') ")).lastrowid
+    
+    session.commit()
+    
+    return id
 
 class CreateUser():
     
@@ -91,7 +129,7 @@ def create_posts(authorized_clients):
                   Post(title = "my-title4", con = "contents4") ]
 
 
-    authorized_client.post("/protected", json={"id" : 5} )
+    # authorized_client.post("/protected", json={"id" : 5} )
     authorized_client.post( "/posts", json={"title": "my-title1", "con" : "contents1"} )
     
     res_posts = list(map( 
