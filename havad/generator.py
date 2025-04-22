@@ -1,5 +1,20 @@
-with open("/home/ruz/backend-stuff/havad/file.txt", "r") as file:
-    for line in file:
-        words = line.split()
-        for word in words:
-            print(word)
+import re
+
+def html_to_js_string(filename):
+    output = '"'
+
+    with open(filename, "r", encoding="utf-8") as file:
+        for index, line in enumerate(file):
+            if index != 0:
+                output += ' + "'
+
+            trimmed_line = line[:-1] if line.endswith('\n') else line
+
+            processed_line = re.sub('<', '<" + "', re.sub('"', '\\"', trimmed_line))
+
+            output += (processed_line + ' \\n"\n')
+
+    return output
+
+
+        
