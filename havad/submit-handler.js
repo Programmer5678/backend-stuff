@@ -23,6 +23,8 @@ function submitAndEmail(e) {
         + script_str
         + "\ndocument.querySelector('fieldset').disabled = true;\n "
         + "\ndocument.getElementById('send-form').style.display = 'none';\n "
+        + "\nsetCanvasElFromHiddenInput()\n;"
+        + "\ncanvas.style.pointerEvents='none' \n"
         + "\n<" + "/script>\n"
         + htmlEnd
 
