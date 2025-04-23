@@ -364,32 +364,6 @@
 
   <script>
 
-    // טבלת מאפיינים ודירוגים
-    // const traits = [
-    //   "עצמאות בביצוע משימות",
-    //   "תפקוד יעיל בלחץ ובעומס",
-    //   "קבלת החלטות",
-    //   "משמעת והסתגלות לצרכי המערכת",
-    //   "יכולת חשיבה ולמידה עצמית",
-    //   "עבודת צוות",
-    //   "אומץ איתנות וקור רוח (רק לקרביים)",
-    //   "אסרטיביות ויכולת הובלה",
-    //   "אחריות והשקעה בהתמדה",
-    //   "קבלת ביקורת"
-    // ];
-    // const tableBody = document.getElementById("traits-table");
-    // traits.forEach((trait, i) => {
-    //   const row = document.createElement("tr");
-    //   const tdTrait = document.createElement("td"); tdTrait.textContent = trait; row.appendChild(tdTrait);
-    //   const tdRating = document.createElement("td");
-    //   const select = document.createElement("select");
-    //   select.name = `rating_${i}`; select.required = true;["", "לא ניתן להעריך", "נמוך מאוד", "נמוך", "בינוני", "גבוה", "גבוה מאוד"].forEach(val => {
-    //     const opt = document.createElement("option"); opt.value = val; opt.textContent = val === "" ? "בחר" : val; select.appendChild(opt);
-    //   });
-    //   tdRating.appendChild(select); row.appendChild(tdRating);
-    //   tableBody.appendChild(row);
-    // });
-
     // פונקציה לניקוי חתימה
     function clearSignature() {
       const canvas = document.getElementById("signature-pad");
@@ -401,6 +375,7 @@
 
   <script>
 
+
     var canvas = document.getElementById('signature');
     var ctx = canvas.getContext("2d");
     var drawing = false;
@@ -409,27 +384,49 @@
     var signature = document.getElementsByName('signature')[0];
 
     canvas.addEventListener("mousemove", draw);
-    canvas.addEventListener("mouseup", stop);
+    document.addEventListener("mouseup", stop);
     canvas.addEventListener("mousedown", start);
+
+    // function blah(e) {
+    //   setCanvasElFromHiddenInput()
+    // }
+
+    function setCanvasElFromHiddenInput(){
+      const img = new Image()
+      img.src=signature.value
+
+      img.addEventListener("load", () => {
+        canvas.getContext('2d').drawImage(img, 0, 0)
+      })
+    }
+
 
     function start(e) {
 
-      console.log("starting to draw", signature.value)
+      console.log("starting to draw", signature.value[0], signature.value[1])
       drawing = true;
     }
 
     function stop() {
-      console.log("stopping drawing")
-      drawing = false;
-      prevX = prevY = null;
-      signature.value = canvas.toDataURL();
+
+      if(drawing){
+
+        console.log("stopping drawing")
+        drawing = false;
+        prevX = prevY = null;
+        signature.value = canvas.toDataURL();
+
+      }
     }
 
     function draw(e) {
-      console.log("well... drawing")
+      
       if (!drawing) {
         return;
       }
+
+      console.log("well... drawing")
+
       // Test for touchmove event, this requires another property.
       var clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
       var clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
@@ -844,32 +841,6 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "  <" + "script> \n"
  + " \n"
- + "    // טבלת מאפיינים ודירוגים \n"
- + "    // const traits = [ \n"
- + "    //   \"עצמאות בביצוע משימות\", \n"
- + "    //   \"תפקוד יעיל בלחץ ובעומס\", \n"
- + "    //   \"קבלת החלטות\", \n"
- + "    //   \"משמעת והסתגלות לצרכי המערכת\", \n"
- + "    //   \"יכולת חשיבה ולמידה עצמית\", \n"
- + "    //   \"עבודת צוות\", \n"
- + "    //   \"אומץ איתנות וקור רוח (רק לקרביים)\", \n"
- + "    //   \"אסרטיביות ויכולת הובלה\", \n"
- + "    //   \"אחריות והשקעה בהתמדה\", \n"
- + "    //   \"קבלת ביקורת\" \n"
- + "    // ]; \n"
- + "    // const tableBody = document.getElementById(\"traits-table\"); \n"
- + "    // traits.forEach((trait, i) => { \n"
- + "    //   const row = document.createElement(\"tr\"); \n"
- + "    //   const tdTrait = document.createElement(\"td\"); tdTrait.textContent = trait; row.appendChild(tdTrait); \n"
- + "    //   const tdRating = document.createElement(\"td\"); \n"
- + "    //   const select = document.createElement(\"select\"); \n"
- + "    //   select.name = `rating_${i}`; select.required = true;[\"\", \"לא ניתן להעריך\", \"נמוך מאוד\", \"נמוך\", \"בינוני\", \"גבוה\", \"גבוה מאוד\"].forEach(val => { \n"
- + "    //     const opt = document.createElement(\"option\"); opt.value = val; opt.textContent = val === \"\" ? \"בחר\" : val; select.appendChild(opt); \n"
- + "    //   }); \n"
- + "    //   tdRating.appendChild(select); row.appendChild(tdRating); \n"
- + "    //   tableBody.appendChild(row); \n"
- + "    // }); \n"
- + " \n"
  + "    // פונקציה לניקוי חתימה \n"
  + "    function clearSignature() { \n"
  + "      const canvas = document.getElementById(\"signature-pad\"); \n"
@@ -881,6 +852,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "  <" + "script> \n"
  + " \n"
+ + " \n"
  + "    var canvas = document.getElementById('signature'); \n"
  + "    var ctx = canvas.getContext(\"2d\"); \n"
  + "    var drawing = false; \n"
@@ -889,27 +861,49 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "    var signature = document.getElementsByName('signature')[0]; \n"
  + " \n"
  + "    canvas.addEventListener(\"mousemove\", draw); \n"
- + "    canvas.addEventListener(\"mouseup\", stop); \n"
+ + "    document.addEventListener(\"mouseup\", stop); \n"
  + "    canvas.addEventListener(\"mousedown\", start); \n"
+ + " \n"
+ + "    // function blah(e) { \n"
+ + "    //   setCanvasElFromHiddenInput() \n"
+ + "    // } \n"
+ + " \n"
+ + "    function setCanvasElFromHiddenInput(){ \n"
+ + "      const img = new Image() \n"
+ + "      img.src=signature.value \n"
+ + " \n"
+ + "      img.addEventListener(\"load\", () => { \n"
+ + "        canvas.getContext('2d').drawImage(img, 0, 0) \n"
+ + "      }) \n"
+ + "    } \n"
+ + " \n"
  + " \n"
  + "    function start(e) { \n"
  + " \n"
- + "      console.log(\"starting to draw\", signature.value) \n"
+ + "      console.log(\"starting to draw\", signature.value[0], signature.value[1]) \n"
  + "      drawing = true; \n"
  + "    } \n"
  + " \n"
  + "    function stop() { \n"
- + "      console.log(\"stopping drawing\") \n"
- + "      drawing = false; \n"
- + "      prevX = prevY = null; \n"
- + "      signature.value = canvas.toDataURL(); \n"
+ + " \n"
+ + "      if(drawing){ \n"
+ + " \n"
+ + "        console.log(\"stopping drawing\") \n"
+ + "        drawing = false; \n"
+ + "        prevX = prevY = null; \n"
+ + "        signature.value = canvas.toDataURL(); \n"
+ + " \n"
+ + "      } \n"
  + "    } \n"
  + " \n"
  + "    function draw(e) { \n"
- + "      console.log(\"well... drawing\") \n"
+ + "       \n"
  + "      if (!drawing) { \n"
  + "        return; \n"
  + "      } \n"
+ + " \n"
+ + "      console.log(\"well... drawing\") \n"
+ + " \n"
  + "      // Test for touchmove event, this requires another property. \n"
  + "      var clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX; \n"
  + "      var clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY; \n"
@@ -984,6 +978,8 @@ function submitAndEmail(e) {
         + script_str
         + "\ndocument.querySelector('fieldset').disabled = true;\n "
         + "\ndocument.getElementById('send-form').style.display = 'none';\n "
+        + "\nsetCanvasElFromHiddenInput()\n;"
+        + "\ncanvas.style.pointerEvents='none' \n"
         + "\n<" + "/script>\n"
         + htmlEnd
 
