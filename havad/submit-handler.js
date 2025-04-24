@@ -25,6 +25,8 @@ function submitAndEmail(e) {
         + "\ndocument.getElementById('send-form').style.display = 'none';\n "
         + "\nsetCanvasElFromHiddenInput()\n;"
         + "\ncanvas.style.pointerEvents='none' \n"
+        + '\nrestoreSelectionsFromInputs()\n'
+        + '\ndisableSelecting()\n'
         + "\n<" + "/script>\n"
         + htmlEnd
 
