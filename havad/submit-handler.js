@@ -15,7 +15,15 @@ function submitAndEmail(e) {
     script_str = ""
 
     for (const [name, val] of formData.entries()) {
-        script_str += ("document.getElementsByName('" + name + "')[0].value = '" + val + "';\n")
+
+        const element = document.querySelector(`[name="${name}"]`);
+        if (element.type === 'checkbox') {
+            script_str += (`document.getElementById("${name}").querySelector('input[value="${val}"]').checked = true;\n`)
+        }
+        else{
+            script_str += ("document.getElementsByName('" + name + "')[0].value = '" + val + "';\n")
+        }
+        console.log(name, val)
     }
 
     htmlFile = htmlStart

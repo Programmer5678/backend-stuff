@@ -106,6 +106,11 @@
 
       <h1>חוות דעת של מועמד/ת לקורס קצונה</h1>
 
+      <div>
+        כמפקד, חוות הדעת שלך אודות המועמד מהווה כלי חשוב בעיצוב דור הקצינים הבא של צה"ל. לכן, ככל שהערכותיך יהיו מדויקות
+        יותר, כך תתאפשר קבלת החלטות נכונה ואחראית, הן כלפי המערכת והן כלפי הפרט עצמו.
+      </div>
+
       <span>פרטי המועמד/ת</span>
 
       <label>שם פרטי בלבד:</label>
@@ -122,11 +127,11 @@
       </label>
 
       <label>החו"ד נכתב יחד עם מפקד קודם:
-        <input>
+        <input type="checkbox" name="writtenUnderLast">
         <span>(סמן אם כן) </span>
       </label>
 
-      <label>מידת היכרות עם החייל:</label>
+      <label>מידת היכרות עם החייל/ת:</label>
       <select name="familiarity">
         <option value="">בחר</option>
         <option>טובה מאוד</option>
@@ -135,11 +140,48 @@
         <option>קלושה</option>
       </select>
 
-      <label>תפקיד נוכחי של החייל\ת (פירוט ברמת בלמ"ס בלבד):</label>
+      <label>תפקידו/ה הנוכחי של החייל\ת (פירוט ברמת בלמ"ס בלבד):</label>
       <input type="text" name="role">
 
-      <label>תאר את המועמד/ת בטבלה הבאה, תוך התייחסות ל-2 נקודות חוזק ו-2 נקודות חולשה וכיצד הן באות לידי ביטוי על ידי
+      <label>1. תאר את המועמד/ת בטבלה הבאה, תוך התייחסות ל-2 נקודות חוזק ו-2 נקודות חולשה וכיצד הן באות לידי ביטוי על ידי
         הסבר או דוגמה.</label>
+      <table style="border-collapse: collapse; text-align: right;">
+        <thead>
+          <tr>
+            <th></th>
+            <th>מאפייני החייל/ת</th>
+            <th>הסבר/דוגמה</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>נקודות חוזק</td>
+            <td>
+              <div style="display: flex; flex-direction: column;">
+                <input type="text" name="strength1" placeholder="מאפיין ראשון">
+                <hr style="width: 100%;">
+                <input type="text" name="strength2" placeholder="מאפיין שני">
+              </div>
+            </td>
+            <td><input type="text" name="strengthExample" style="width: 100%;" placeholder="הסבר או דוגמה"></td>
+          </tr>
+          <tr>
+            <td>נקודות חולשה</td>
+            <td>
+              <div style="display: flex; flex-direction: column;">
+                <input type="text" name="weakness1" placeholder="מאפיין ראשון">
+                <hr style="width: 100%;">
+                <input type="text" name="weakness2" placeholder="מאפיין שני">
+              </div>
+            </td>
+            <td><input type="text" name="weaknessExample" style="width: 100%;" placeholder="הסבר או דוגמה"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <label>2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה): שים לב! ניתן לבחור עד שלושה מאפיינים בקטגוריה
+        "גבוה מאוד" ועד שלושה מאפיינים בקטגוריה "גבוה"
+      </label>
       <table class="eval-table" id="eval-table">
         <thead>
           <tr>
@@ -303,92 +345,110 @@
       </table>
 
 
-      <label>מה מידת המוטיבציה של החייל לצאת לקצונה:</label>
-      <select name="motivation">
-        <option value="">בחר</option>
-        <option>גבוהה מאוד</option>
-        <option>גבוהה</option>
-        <option>בינונית</option>
-        <option>נמוכה</option>
-        <option>איני רוצה לצאת</option>
-      </select>
+      <label>3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה:</label>
+      <div id="motivation">
+        <label><input type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה מאוד</label>
+        <label><input type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
+        <label><input type="checkbox" name="motivation" value="בינונית"> בינונית</label>
+        <label><input type="checkbox" name="motivation" value="נמוכה"> נמוכה</label>
+        <label><input type="checkbox" name="motivation" value="איני רוצה לצאת"> איני רוצה לצאת</label>
+      </div>
 
-      <label>תחומים בהם החייל עלול להתקשות בקורס קצינים / בתפקיד:</label>
+      <label>4. תחומים בהם החייל/ת עלול/ה להתקשות בקורס קצינים / בתפקיד:</label>
       <textarea name="difficultyAreas" rows="3"></textarea>
 
-      <label>עד כמה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים בתפקידים דומים?</label>
-      <select name="suitabilityCompared">
-        <option value="">בחר</option>
-        <option>יותר מרוב החיילים</option>
-        <option>כמו רוב החיילים</option>
-        <option>פחות מרוב החיילים</option>
-        <option>אינו מתאים כלל</option>
-      </select>
+      <label>5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?</label>
+      <div id="suitabilityCompared">
+        <label><input type="checkbox" name="suitabilityCompared" value="יותר מרוב החיילים בתפקידים דומים"> יותר מרוב
+          החיילים בתפקידים דומים</label>
+        <label><input type="checkbox" name="suitabilityCompared" value="כמו רוב החיילים בתפקידים דומים"> כמו רוב החיילים
+          בתפקידים דומים</label>
+        <label><input type="checkbox" name="suitabilityCompared" value="פחות מרוב החיילים בתפקידים דומים"> פחות מרוב
+          החיילים בתפקידים דומים</label>
+        <label><input type="checkbox" name="suitabilityCompared" value="אינו מתאים/ה כלל לקצונה">אינו מתאים/ה כלל
+          לקצונה</label>
+      </div>
 
-      <label>עד כמה תהיה מוכן לקבל את החייל/ת תחת פיקודך כקצין/ה?</label>
-      <select name="willingnessCommand">
-        <option value="">בחר</option>
-        <option>במידה רבה מאוד</option>
-        <option>במידה רבה</option>
-        <option>במידה בינונית</option>
-        <option>במידה מועטה</option>
-        <option>לא מעוניין כלל</option>
-      </select>
+      <label>6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה?</label>
+      <div id="willingnessCommand">
+        <label><input type="checkbox" name="willingnessCommand" value="במידה רבה מאוד"> במידה רבה מאוד</label>
+        <label><input type="checkbox" name="willingnessCommand" value="במידה רבה"> במידה רבה</label>
+        <label><input type="checkbox" name="willingnessCommand" value="במידה בינונית"> במידה בינונית</label>
+        <label><input type="checkbox" name="willingnessCommand" value="במידה מועטה"> במידה מועטה</label>
+        <label><input type="checkbox" name="willingnessCommand" value="לא מעוניין כלל"> לא מעוניין כלל</label>
+      </div>
 
-      <h3>פרטי המפקד:</h3>
-      <label>שם פרטי:</label>
-      <input type="text" name="commanderName">
+      <div>
+        <h3>פרטי המפקד/ת הישיר/ה:</h3>
+        <label>שם פרטי בלבד:</label>
+        <input type="text" name="commanderName">
 
-      <label>טלפון:</label>
-      <input type="text" name="commanderPhone" pattern="\d{10}">
+        <label>טלפון:</label>
+        <input type="text" name="commanderPhone" pattern="\d{10}">
 
-      <label>משוב לחוות הדעת - שם פרטי:</label>
-      <input type="text" name="feedbackName">
+      </div>
 
-      <input type="hidden" name="signature" />
-      <canvas id="signature" width="400" height="150" style="border:1px solid #ccc;"></canvas>
+      <span>
+        שים/י לב! תוכן הטופב חסוי וישמש את הגורמים המקצועיים בלבד. עם זאת, חובה להביא את החו"ד לעיתו של המועמד ולבצע
+        שיחת משוב לחוות הדעת שנכתבה!
+        חתימת המועמד/הצהרת המפקד/ת שנערכו שיחות משוב לחוות דעת
+      </span>
 
-      <button type="button" onclick="clearSignature()">נקה חתימה</button>
+      <div>
+        <label>שם פרטי בלבד:</label>
+        <input type="text" name="feedbackName">
 
-      <h2>חוות דעת מפקדו של המפקד הישיר</h2>
+        <label>חתימה:</label>
+        <input type="hidden" name="signature" />
+        <canvas id="signature" width="400" height="150" style="border:1px solid #ccc;"></canvas>
 
-      <label>משך היכרותך עם החייל (בחודשים):</label>
+        <button type="button" onclick="clearSignature()">נקה חתימה</button>
+
+      </div>
+
+      <h2>חלק ב': דעת מפקדו של המפקד הישיר</h2>
+
+      <label>1. משך היכרותך עם החייל בחודשים</label>
       <input type="number" name="monthsUnder2" min="0">
 
       <label>מידת היכרות:</label>
-      <select name="familiarity2">
-        <option value="">בחר</option>
-        <option>טובה מאוד</option>
-        <option>די טובה</option>
-        <option>בינונית</option>
-        <option>קלושה</option>
-        <option>איני יכול להעריך</option>
-      </select>
+      <div id="familiarity2">
+        <label><input type="checkbox" name="familiarity2" value="טובה מאוד"> טובה מאוד</label>
+        <label><input type="checkbox" name="familiarity2" value="די טובה"> די טובה</label>
+        <label><input type="checkbox" name="familiarity2" value="בינונית"> בינונית</label>
+        <label><input type="checkbox" name="familiarity2" value="קלושה"> קלושה</label>
+        <label><input type="checkbox" name="familiarity2" value="איני יכול/ה להעריך"> איני יכול להעריך</label>
+      </div>
 
-      <label>נקודת חוזק:</label>
-      <input type="text" name="strength2">
+      <div>
+        2.תאר/י את מידת ההתאמה של החייל/ת לקצונה, תוך התייחסות לנקודות חוזק וחולשה שלו/ה:
+        <label>נקודת חוזק:</label>
+        <input type="text" name="strength2">
 
-      <label>נקודת חולשה:</label>
-      <input type="text" name="weakness2">
+        <label>נקודת חולשה:</label>
+        <input type="text" name="weakness2">
+      </div>
 
-      <label>עד כמה תהיה מוכן שהחייל ישרת תחת פיקודך כקצין:</label>
-      <select name="willingnessCommand2">
-        <option value="">בחר</option>
-        <option>במידה רבה מאוד</option>
-        <option>במידה רבה</option>
-        <option>במידה בינונית</option>
-        <option>במידה מועטה</option>
-        <option>לא מעוניין כלל</option>
-      </select>
+      <label>
+        3. באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ"א )
+      </label>
+      <div id="willingnessCommand2">
+        <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה מאוד</label>
+        <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
+        <label><input type="checkbox" name="willingnessCommand2" value="במידה בינונית"> במידה בינונית</label>
+        <label><input type="checkbox" name="willingnessCommand2" value="במידה מועטה"> במידה מועטה</label>
+        <label><input type="checkbox" id="siuu" name="willingnessCommand2" value="לא מעוניין כלל"> לא מעוניין
+          כלל</label>
+      </div>
 
-      <label>הערות נוספות:</label>
+      <label>4. הערות נוספות:</label>
       <textarea name="additionalComments" rows="3"></textarea>
 
       <h3>פרטי מפקדו של המפקד הישיר:</h3>
       <label>שם פרטי בלבד:</label>
       <input type="text" name="commander2Name">
 
-      <label>טלפון (10 ספרות):</label>
+      <label>טלפון:</label>
       <input type="text" name="commander2Phone" pattern="\d{10}">
 
       <button type="button" id="send-form">שלח במייל</button>
@@ -401,6 +461,8 @@
 
 
   <script>
+
+    // console.log( document.querySelector("input[value='במידה מועטה']")  )
 
     // פונקציה לניקוי חתימה
     function clearSignature() {
@@ -560,10 +622,10 @@
     function disableSelecting() {
       document.querySelectorAll('.eval-cell').forEach(cell => {
         cell.style.pointerEvents = "none"
-      }); 
+      });
     }
 
-    function destroyTableX(){
+    function destroyTableX() {
 
       const rows = document.querySelectorAll('.eval-table tbody tr');
 
