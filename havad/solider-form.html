@@ -5,13 +5,111 @@
   <meta charset="UTF-8">
   <title>חוות דעת לקצונה</title>
   <style>
+    /* 1. Box sizing everywhere */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 2. Make common elements block */
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    dl,
+    dd,
+    ol,
+    ul,
+    figure,
+    hr,
+    fieldset,
+    legend {
+      display: block;
+    }
+
+    /* 3. Kill list styles */
+    ul,
+    ol {
+      list-style: none;
+    }
+
+    /* 4. Kill link underline */
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 5. Image and media clean */
+    img,
+    picture,
+    svg,
+    video,
+    canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* 6. Tables clean */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    /* 7. Forms clean (NO width, NO padding) */
+    input,
+    textarea,
+    select,
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      margin: 0;
+      padding: 0;
+      min-width: 0;
+      min-height: 0;
+      /* nice to kill browser styling */
+    }
+
+    /* 8. Fieldset clean */
+    fieldset {
+      border: none;
+    }
+
+
     body {
       font-family: Arial, sans-serif;
       direction: rtl;
-      padding: 20px;
     }
 
-    label {
+    #feedback-form {
+
+      height: 1123px;
+      width: 1588px;
+    }
+
+    #feedback-form fieldset {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      height: 100%;
+    }
+
+    #feedback-form fieldset>:nth-child(n) {
+      overflow: hidden;
+    }
+
+    /* label {
       display: block;
       margin-top: 10px;
       font-weight: bold;
@@ -23,12 +121,12 @@
       width: 100%;
       margin-bottom: 10px;
       padding: 5px;
-    }
+    } */
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
+      /* margin-bottom: 20px; */
     }
 
     th,
@@ -42,10 +140,6 @@
       background-color: #f2f2f2;
     }
 
-    h2 {
-      background-color: #e0e0e0;
-      padding: 10px;
-    }
 
     button {
       padding: 10px 20px;
@@ -85,6 +179,15 @@
       background-color: #f0f0f0;
       font-weight: bold;
     }
+
+    #date-label {
+      display: flex;
+    }
+
+    input {
+      background-color: grey;
+      padding: 2px;
+    }
   </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
@@ -92,366 +195,493 @@
 </head>
 
 <body>
+
   <form id="feedback-form">
 
-    <fieldset>
+    <fieldset style="background-color: brown;">
 
-      <label>תאריך:</label>
-      <input type="date" name="date">
+      <div style="background-color: yellowgreen; padding: 53px 23px; overflow: hidden;">
 
-      <label>קוד סמכות: </label>
-      <input type="number" name="samkhut">
+        <div style="display: flex;">
 
-      <label>מיועד לקורס: להב/מעוז/נחשון</label>
+          <label style="display: flex;">
+            <span style="font-weight: bold;"> תאריך:</span>
+            <div style="position: relative; width:fit-content; height: fit-content; ">
+              <div>__________</div>
 
-      <h1>חוות דעת של מועמד/ת לקורס קצונה</h1>
+              <input type="date" name="date" style="display: block; inset: 15% 7%; position: absolute;
+              font-size: 0.5em; "> </input>
+            </div>
 
-      <div>
-        כמפקד, חוות הדעת שלך אודות המועמד מהווה כלי חשוב בעיצוב דור הקצינים הבא של צה"ל. לכן, ככל שהערכותיך יהיו מדויקות
-        יותר, כך תתאפשר קבלת החלטות נכונה ואחראית, הן כלפי המערכת והן כלפי הפרט עצמו.
-      </div>
+          </label>
 
-      <span>פרטי המועמד/ת</span>
+          <label style="display: flex;">
+            <span style="font-weight: bold;">קוד סמכות:</span>
+            <div style="position: relative; width:fit-content; height: fit-content; ">
+              <div>__________</div>
 
-      <label>שם פרטי בלבד:</label>
-      <input type="text" name="firstName">
+              <input type="number" name="samkhut"
+                style="display: block; inset: 15% 7%; position: absolute; font-size: 0.9em;"> </input>
+            </div>
 
-      <label>מ"א:</label>
-      <input type="text" name="personalNumber" pattern="\d{7}">
+          </label>
 
-      <h2>חלק א: חוות דעת המפקד הישיר</h2>
+          <span style="font-weight: bold;">מיועד לקורס: </span> 
+          <span> להב/מעוז/נחשון</span>
 
-      <label>החייל משרת תחת פיקודי :
-        <input type="number" name="monthsUnder" min="0">
-        <span>חודשים </span>
-      </label>
+        </div>
 
-      <label>החו"ד נכתב יחד עם מפקד קודם:
-        <input type="checkbox" name="writtenUnderLast">
-        <span>(סמן אם כן) </span>
-      </label>
+        <div style="display: flex; justify-content: center; align-items: flex-end; padding: 18px;">
+          <h1 style="text-align: bottom; font-size: 1.35em;">חוות דעת על מועמד/ת לקורס קצונה</h1>
+          <img
+            src="data:image/png;base64,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">
+        </div>
 
-      <label>מידת היכרות עם החייל/ת:</label>
-      <select name="familiarity">
-        <option value="">בחר</option>
-        <option>טובה מאוד</option>
-        <option>די טובה</option>
-        <option>בינונית</option>
-        <option>קלושה</option>
-      </select>
+        <div style="padding-bottom: 18px;">
+          כמפקד, חוות הדעת שלך אודות המועמד מהווה כלי חשוב בעיצוב דור הקצינים הבא של צה"ל. לכן, ככל שהערכותיך יהיו
+          מדויקות
+          יותר, כך תתאפשר קבלת החלטות נכונה ואחראית, הן כלפי המערכת והן כלפי הפרט עצמו.
+        </div>
 
-      <label>תפקידו/ה הנוכחי של החייל\ת (פירוט ברמת בלמ"ס בלבד):</label>
-      <input type="text" name="role">
+        <div style="font-weight: bold; padding-bottom: 18px; font-weight: bold;">פרטי המועמד/ת</div>
 
-      <label>1. תאר את המועמד/ת בטבלה הבאה, תוך התייחסות ל-2 נקודות חוזק ו-2 נקודות חולשה וכיצד הן באות לידי ביטוי על ידי
-        הסבר או דוגמה.</label>
-      <table style="border-collapse: collapse; text-align: right;">
-        <thead>
-          <tr>
-            <th></th>
-            <th>מאפייני החייל/ת</th>
-            <th>הסבר/דוגמה</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>נקודות חוזק</td>
-            <td>
-              <div style="display: flex; flex-direction: column;">
-                <input type="text" name="strength1" placeholder="מאפיין ראשון">
-                <hr style="width: 100%;">
-                <input type="text" name="strength2" placeholder="מאפיין שני">
+        <div style="display: flex; padding-bottom: 18px;">
+
+          <label style="display: flex;">
+            <span style="font-weight: bold;">שם פרטי בלבד:</span>
+            <div style="position: relative; width:fit-content; height: fit-content;">
+              <span>_______________</span>
+              <input type="text" name="firstName" style="display: block; inset: 15% 7%; position: absolute; ">
+            </div>
+          </label>
+
+          <label style="display: flex;">
+            <span style="font-weight: bold;">מ"א:</span>
+            <div style="position: relative; width:fit-content; height: fit-content;">
+              <span>_______________</span>
+              <input type="text" name="personalNumber" pattern="\d{7}"
+                style="display: block; inset: 15% 7%; position: absolute; font-size: 0.9em;">
+            </div>
+          </label>
+
+        </div>
+
+        <h3 style="text-decoration: underline; font-size: 1em; padding-bottom: 18px;">חלק א: חוות דעת המפקד הישיר</h2>
+
+          <div style="display: flex;">
+
+            <label style="display: flex; padding-bottom: 18px;">
+              <span style="font-weight: bold;">החייל/ת משרת/ת תחת פיקודי  
+                &thinsp;
+               </span>
+              <div style="position: relative; width:fit-content; height: fit-content;">
+                <span>___</span>
+                <input type="text" pattern="\d{1,2}" name="monthsUnder" style="display: block; inset: 15% 7%; position: absolute;
+            font-size: 0.9em;">
               </div>
-            </td>
-            <td><input type="text" name="strengthExample" style="width: 100%;" placeholder="הסבר או דוגמה"></td>
-          </tr>
-          <tr>
-            <td>נקודות חולשה</td>
-            <td>
-              <div style="display: flex; flex-direction: column;">
-                <input type="text" name="weakness1" placeholder="מאפיין ראשון">
-                <hr style="width: 100%;">
-                <input type="text" name="weakness2" placeholder="מאפיין שני">
-              </div>
-            </td>
-            <td><input type="text" name="weaknessExample" style="width: 100%;" placeholder="הסבר או דוגמה"></td>
-          </tr>
-        </tbody>
-      </table>
+              <span> &thinsp;
+                חודשים. 
+                &thinsp;
+              </span>
+            </label>
 
-      <label>2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה): שים לב! ניתן לבחור עד שלושה מאפיינים בקטגוריה
-        "גבוה מאוד" ועד שלושה מאפיינים בקטגוריה "גבוה"
-      </label>
-      <table class="eval-table" id="eval-table">
-        <thead>
-          <tr>
-            <th>מאפיין</th>
-            <th>גבוה מאוד</th>
-            <th>גבוה</th>
-            <th>בינוני</th>
-            <th>נמוך</th>
-            <th>נמוך מאוד</th>
-            <th>לא ניתן להעריך</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="eval-feature">עצמאות בביצוע משימות</td>
-            <td class="eval-cell" data-row="0" data-value="גבוה מאוד"></td>
-            <td class="eval-cell" data-row="0" data-value="גבוה"></td>
-            <td class="eval-cell" data-row="0" data-value="בינוני"></td>
-            <td class="eval-cell" data-row="0" data-value="נמוך"></td>
-            <td class="eval-cell" data-row="0" data-value="נמוך מאוד"></td>
-            <td class="eval-cell" data-row="0" data-value="לא ניתן להעריך"></td>
-            <td style="display:none;">
-              <select name="rating_0" id="hidden-input-0" hidden>
-                <option value=""></option>
-                <option value="גבוה מאוד"></option>
-                <option value="גבוה"></option>
-                <option value="בינוני"></option>
-                <option value="נמוך"></option>
-                <option value="נמוך מאוד"></option>
-                <option value="לא ניתן להעריך"></option>
-              </select>
-            </td>
-          </tr>
+            <label style="display: flex; ">
+              <span style="font-weight: bold;"> 
+                החו"ד נכתב יחד עם המפקד הקודם:	&thinsp;
+              </span>
+              <input type="checkbox" name="writtenUnderLast" style="display: block; cursor: pointer;">
+              <span> &thinsp;
+                 (סמן אם כן)  </span>
+            </label>
 
-          <tr>
-            <td class="eval-feature">תפקוד יעיל בלחץ ובעומס</td>
-            <td class="eval-cell" data-row="1" data-value="גבוה מאוד"></td>
-            <td class="eval-cell" data-row="1" data-value="גבוה"></td>
-            <td class="eval-cell" data-row="1" data-value="בינוני"></td>
-            <td class="eval-cell" data-row="1" data-value="נמוך"></td>
-            <td class="eval-cell" data-row="1" data-value="נמוך מאוד"></td>
-            <td class="eval-cell" data-row="1" data-value="לא ניתן להעריך"></td>
-            <td style="display:none;">
-              <select name="rating_1" id="hidden-input-1" hidden>
-                <option value=""></option>
-                <option value="גבוה מאוד"></option>
-                <option value="גבוה"></option>
-                <option value="בינוני"></option>
-                <option value="נמוך"></option>
-                <option value="נמוך מאוד"></option>
-                <option value="לא ניתן להעריך"></option>
-              </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="eval-feature">קבלת החלטות</td>
-            <td class="eval-cell" data-row="2" data-value="גבוה מאוד"></td>
-            <td class="eval-cell" data-row="2" data-value="גבוה"></td>
-            <td class="eval-cell" data-row="2" data-value="בינוני"></td>
-            <td class="eval-cell" data-row="2" data-value="נמוך"></td>
-            <td class="eval-cell" data-row="2" data-value="נמוך מאוד"></td>
-            <td class="eval-cell" data-row="2" data-value="לא ניתן להעריך"></td>
-            <td style="display:none;">
-              <select name="rating_2" id="hidden-input-2" hidden>
-                <option value=""></option>
-                <option value="גבוה מאוד"></option>
-                <option value="גבוה"></option>
-                <option value="בינוני"></option>
-                <option value="נמוך"></option>
-                <option value="נמוך מאוד"></option>
-                <option value="לא ניתן להעריך"></option>
-              </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="eval-feature">משמעת והסתגלות לצרכי המערכת</td>
-            <td class="eval-cell" data-row="3" data-value="גבוה מאוד"></td>
-            <td class="eval-cell" data-row="3" data-value="גבוה"></td>
-            <td class="eval-cell" data-row="3" data-value="בינוני"></td>
-            <td class="eval-cell" data-row="3" data-value="נמוך"></td>
-            <td class="eval-cell" data-row="3" data-value="נמוך מאוד"></td>
-            <td class="eval-cell" data-row="3" data-value="לא ניתן להעריך"></td>
-            <td style="display:none;">
-              <select name="rating_3" id="hidden-input-3" hidden>
-                <option value=""></option>
-                <option value="גבוה מאוד"></option>
-                <option value="גבוה"></option>
-                <option value="בינוני"></option>
-                <option value="נמוך"></option>
-                <option value="נמוך מאוד"></option>
-                <option value="לא ניתן להעריך"></option>
-              </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="eval-feature">יכולת חשיבה ולמידה עצמית</td>
-            <td class="eval-cell" data-row="4" data-value="גבוה מאוד"></td>
-            <td class="eval-cell" data-row="4" data-value="גבוה"></td>
-            <td class="eval-cell" data-row="4" data-value="בינוני"></td>
-            <td class="eval-cell" data-row="4" data-value="נמוך"></td>
-            <td class="eval-cell" data-row="4" data-value="נמוך מאוד"></td>
-            <td class="eval-cell" data-row="4" data-value="לא ניתן להעריך"></td>
-            <td style="display:none;">
-              <select name="rating_4" id="hidden-input-4" hidden>
-                <option value=""></option>
-                <option value="גבוה מאוד"></option>
-                <option value="גבוה"></option>
-                <option value="בינוני"></option>
-                <option value="נמוך"></option>
-                <option value="נמוך מאוד"></option>
-                <option value="לא ניתן להעריך"></option>
-              </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="eval-feature">עבודת צוות</td>
-            <td class="eval-cell" data-row="5" data-value="גבוה מאוד"></td>
-            <td class="eval-cell" data-row="5" data-value="גבוה"></td>
-            <td class="eval-cell" data-row="5" data-value="בינוני"></td>
-            <td class="eval-cell" data-row="5" data-value="נמוך"></td>
-            <td class="eval-cell" data-row="5" data-value="נמוך מאוד"></td>
-            <td class="eval-cell" data-row="5" data-value="לא ניתן להעריך"></td>
-            <td style="display:none;">
-              <select name="rating_5" id="hidden-input-5" hidden>
-                <option value=""></option>
-                <option value="גבוה מאוד"></option>
-                <option value="גבוה"></option>
-                <option value="בינוני"></option>
-                <option value="נמוך"></option>
-                <option value="נמוך מאוד"></option>
-                <option value="לא ניתן להעריך"></option>
-              </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="eval-feature">אסרטיביות ויכולת הובלה</td>
-            <td class="eval-cell" data-row="6" data-value="גבוה מאוד"></td>
-            <td class="eval-cell" data-row="6" data-value="גבוה"></td>
-            <td class="eval-cell" data-row="6" data-value="בינוני"></td>
-            <td class="eval-cell" data-row="6" data-value="נמוך"></td>
-            <td class="eval-cell" data-row="6" data-value="נמוך מאוד"></td>
-            <td class="eval-cell" data-row="6" data-value="לא ניתן להעריך"></td>
-            <td style="display:none;">
-              <select name="rating_6" id="hidden-input-6" hidden>
-                <option value=""></option>
-                <option value="גבוה מאוד"></option>
-                <option value="גבוה"></option>
-                <option value="בינוני"></option>
-                <option value="נמוך"></option>
-                <option value="נמוך מאוד"></option>
-                <option value="לא ניתן להעריך"></option>
-              </select>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          </div>
 
 
-      <label>3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה:</label>
-      <div id="motivation">
-        <label><input type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה מאוד</label>
-        <label><input type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
-        <label><input type="checkbox" name="motivation" value="בינונית"> בינונית</label>
-        <label><input type="checkbox" name="motivation" value="נמוכה"> נמוכה</label>
-        <label><input type="checkbox" name="motivation" value="איני רוצה לצאת"> איני רוצה לצאת</label>
+          <div style="display: flex; gap: 5px; padding-bottom: 18px;">
+            <span style="font-weight: bold;">מידת היכרות עם החייל/ת:</span>
+          
+            <label style="display: flex; align-items: center; gap:4px">
+              <input type="checkbox" name="familiarity" value="טובה מאוד">
+              טובה מאוד
+            </label>
+          
+            <label style="display: flex; align-items: center; gap:4px ">
+              <input type="checkbox" name="familiarity" value="די טובה">
+              די טובה
+            </label>
+          
+            <label style="display: flex; align-items: center;  gap:4px ">
+              <input type="checkbox" name="familiarity" value="בינונית">
+              בינונית
+            </label>
+          
+            <label style="display: flex; align-items: center;  gap:4px">
+              <input type="checkbox" name="familiarity" value="קלושה">
+              קלושה
+            </label>
+          </div>
+          
+          
+          <label style="display: flex; padding-bottom: 18px;">
+            <span style="font-weight: bold;">תפקידו/ה הנוכחי של החייל/ת (פירוט ברמת בלמ"ס בלבד):</span>
+            <div style="position: relative; width:fit-content; height: fit-content;">
+              <span>___________________</span>
+              <input type="text" name="role"
+                style="display: block; inset: 15% 7%; position: absolute;">
+            </div>
+          </label>
+
+          <span style="padding-bottom: 18px; font-weight: bold;">1. &thinsp; 
+               תאר את המועמד/ת בטבלה הבאה, תוך התייחסות ל-2 נקודות חוזק ו-2 נקודות חולשה וכיצד הן באות לידי ביטוי
+            על
+            ידי
+            הסבר או דוגמה.</span>
+          <!-- <table style="border-collapse: collapse; text-align: right;">
+            <thead>
+              <tr>
+                <th></th>
+                <th>מאפייני החייל/ת</th>
+                <th>הסבר/דוגמה</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>נקודות חוזק</td>
+                <td>
+                  <div style="display: flex; flex-direction: column;">
+                    <input type="text" name="strength1" placeholder="מאפיין ראשון">
+                    <hr style="width: 100%;">
+                    <input type="text" name="strength2" placeholder="מאפיין שני">
+                  </div>
+                </td>
+                <td><input type="text" name="strengthExample" style="width: 100%;" placeholder="הסבר או דוגמה"></td>
+              </tr>
+              <tr>
+                <td>נקודות חולשה</td>
+                <td>
+                  <div style="display: flex; flex-direction: column;">
+                    <input type="text" name="weakness1" placeholder="מאפיין ראשון">
+                    <hr style="width: 100%;">
+                    <input type="text" name="weakness2" placeholder="מאפיין שני">
+                  </div>
+                </td>
+                <td><input type="text" name="weaknessExample" style="width: 100%;" placeholder="הסבר או דוגמה"></td>
+              </tr>
+            </tbody>
+          </table> -->
+
+          <table style="border-collapse: collapse; text-align: right; width: 100%;">
+            <thead>
+              <tr>
+                <th></th>
+                <th colspan="2">מאפייני החייל/ת</th>
+                <th>הסבר/דוגמה</th>
+              </tr>
+              <tr>
+                <th></th>
+                <th>מאפיין ראשון</th>
+                <th>מאפיין שני</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>נקודות חוזק</td>
+                <td><input type="text" name="strength1" placeholder="מאפיין ראשון" style="width: 100%;"></td>
+                <td><input type="text" name="strength2" placeholder="מאפיין שני" style="width: 100%;"></td>
+                <td><input type="text" name="strengthExample" placeholder="הסבר או דוגמה" style="width: 100%;"></td>
+              </tr>
+              <tr>
+                <td>נקודות חולשה</td>
+                <td><input type="text" name="weakness1" placeholder="מאפיין ראשון" style="width: 100%;"></td>
+                <td><input type="text" name="weakness2" placeholder="מאפיין שני" style="width: 100%;"></td>
+                <td><input type="text" name="weaknessExample" placeholder="הסבר או דוגמה" style="width: 100%;"></td>
+              </tr>
+            </tbody>
+          </table>
+          
+
+          <label>2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה): שים לב! ניתן לבחור עד שלושה מאפיינים
+            בקטגוריה
+            "גבוה מאוד" ועד שלושה מאפיינים בקטגוריה "גבוה"
+          </label>
+          <table class="eval-table" id="eval-table">
+            <thead>
+              <tr>
+                <th>מאפיין</th>
+                <th>גבוה מאוד</th>
+                <th>גבוה</th>
+                <th>בינוני</th>
+                <th>נמוך</th>
+                <th>נמוך מאוד</th>
+                <th>לא ניתן להעריך</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="eval-feature">עצמאות בביצוע משימות</td>
+                <td class="eval-cell" data-row="0" data-value="גבוה מאוד"></td>
+                <td class="eval-cell" data-row="0" data-value="גבוה"></td>
+                <td class="eval-cell" data-row="0" data-value="בינוני"></td>
+                <td class="eval-cell" data-row="0" data-value="נמוך"></td>
+                <td class="eval-cell" data-row="0" data-value="נמוך מאוד"></td>
+                <td class="eval-cell" data-row="0" data-value="לא ניתן להעריך"></td>
+                <td style="display:none;">
+                  <select name="rating_0" id="hidden-input-0" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="eval-feature">תפקוד יעיל בלחץ ובעומס</td>
+                <td class="eval-cell" data-row="1" data-value="גבוה מאוד"></td>
+                <td class="eval-cell" data-row="1" data-value="גבוה"></td>
+                <td class="eval-cell" data-row="1" data-value="בינוני"></td>
+                <td class="eval-cell" data-row="1" data-value="נמוך"></td>
+                <td class="eval-cell" data-row="1" data-value="נמוך מאוד"></td>
+                <td class="eval-cell" data-row="1" data-value="לא ניתן להעריך"></td>
+                <td style="display:none;">
+                  <select name="rating_1" id="hidden-input-1" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="eval-feature">קבלת החלטות</td>
+                <td class="eval-cell" data-row="2" data-value="גבוה מאוד"></td>
+                <td class="eval-cell" data-row="2" data-value="גבוה"></td>
+                <td class="eval-cell" data-row="2" data-value="בינוני"></td>
+                <td class="eval-cell" data-row="2" data-value="נמוך"></td>
+                <td class="eval-cell" data-row="2" data-value="נמוך מאוד"></td>
+                <td class="eval-cell" data-row="2" data-value="לא ניתן להעריך"></td>
+                <td style="display:none;">
+                  <select name="rating_2" id="hidden-input-2" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="eval-feature">משמעת והסתגלות לצרכי המערכת</td>
+                <td class="eval-cell" data-row="3" data-value="גבוה מאוד"></td>
+                <td class="eval-cell" data-row="3" data-value="גבוה"></td>
+                <td class="eval-cell" data-row="3" data-value="בינוני"></td>
+                <td class="eval-cell" data-row="3" data-value="נמוך"></td>
+                <td class="eval-cell" data-row="3" data-value="נמוך מאוד"></td>
+                <td class="eval-cell" data-row="3" data-value="לא ניתן להעריך"></td>
+                <td style="display:none;">
+                  <select name="rating_3" id="hidden-input-3" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="eval-feature">יכולת חשיבה ולמידה עצמית</td>
+                <td class="eval-cell" data-row="4" data-value="גבוה מאוד"></td>
+                <td class="eval-cell" data-row="4" data-value="גבוה"></td>
+                <td class="eval-cell" data-row="4" data-value="בינוני"></td>
+                <td class="eval-cell" data-row="4" data-value="נמוך"></td>
+                <td class="eval-cell" data-row="4" data-value="נמוך מאוד"></td>
+                <td class="eval-cell" data-row="4" data-value="לא ניתן להעריך"></td>
+                <td style="display:none;">
+                  <select name="rating_4" id="hidden-input-4" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="eval-feature">עבודת צוות</td>
+                <td class="eval-cell" data-row="5" data-value="גבוה מאוד"></td>
+                <td class="eval-cell" data-row="5" data-value="גבוה"></td>
+                <td class="eval-cell" data-row="5" data-value="בינוני"></td>
+                <td class="eval-cell" data-row="5" data-value="נמוך"></td>
+                <td class="eval-cell" data-row="5" data-value="נמוך מאוד"></td>
+                <td class="eval-cell" data-row="5" data-value="לא ניתן להעריך"></td>
+                <td style="display:none;">
+                  <select name="rating_5" id="hidden-input-5" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="eval-feature">אסרטיביות ויכולת הובלה</td>
+                <td class="eval-cell" data-row="6" data-value="גבוה מאוד"></td>
+                <td class="eval-cell" data-row="6" data-value="גבוה"></td>
+                <td class="eval-cell" data-row="6" data-value="בינוני"></td>
+                <td class="eval-cell" data-row="6" data-value="נמוך"></td>
+                <td class="eval-cell" data-row="6" data-value="נמוך מאוד"></td>
+                <td class="eval-cell" data-row="6" data-value="לא ניתן להעריך"></td>
+                <td style="display:none;">
+                  <select name="rating_6" id="hidden-input-6" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+
       </div>
 
-      <label>4. תחומים בהם החייל/ת עלול/ה להתקשות בקורס קצינים / בתפקיד:</label>
-      <textarea name="difficultyAreas" rows="3"></textarea>
+      <div style="background-color: blue;">
 
-      <label>5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?</label>
-      <div id="suitabilityCompared">
-        <label><input type="checkbox" name="suitabilityCompared" value="יותר מרוב החיילים בתפקידים דומים"> יותר מרוב
-          החיילים בתפקידים דומים</label>
-        <label><input type="checkbox" name="suitabilityCompared" value="כמו רוב החיילים בתפקידים דומים"> כמו רוב החיילים
-          בתפקידים דומים</label>
-        <label><input type="checkbox" name="suitabilityCompared" value="פחות מרוב החיילים בתפקידים דומים"> פחות מרוב
-          החיילים בתפקידים דומים</label>
-        <label><input type="checkbox" name="suitabilityCompared" value="אינו מתאים/ה כלל לקצונה">אינו מתאים/ה כלל
-          לקצונה</label>
-      </div>
+        <label>3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה:</label>
+        <div id="motivation">
+          <label><input type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה מאוד</label>
+          <label><input type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
+          <label><input type="checkbox" name="motivation" value="בינונית"> בינונית</label>
+          <label><input type="checkbox" name="motivation" value="נמוכה"> נמוכה</label>
+          <label><input type="checkbox" name="motivation" value="איני רוצה לצאת"> איני רוצה לצאת</label>
+        </div>
 
-      <label>6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה?</label>
-      <div id="willingnessCommand">
-        <label><input type="checkbox" name="willingnessCommand" value="במידה רבה מאוד"> במידה רבה מאוד</label>
-        <label><input type="checkbox" name="willingnessCommand" value="במידה רבה"> במידה רבה</label>
-        <label><input type="checkbox" name="willingnessCommand" value="במידה בינונית"> במידה בינונית</label>
-        <label><input type="checkbox" name="willingnessCommand" value="במידה מועטה"> במידה מועטה</label>
-        <label><input type="checkbox" name="willingnessCommand" value="לא מעוניין כלל"> לא מעוניין כלל</label>
-      </div>
+        <label>4. תחומים בהם החייל/ת עלול/ה להתקשות בקורס קצינים / בתפקיד:</label>
+        <textarea name="difficultyAreas" rows="3"></textarea>
 
-      <div>
-        <h3>פרטי המפקד/ת הישיר/ה:</h3>
+        <label>5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?</label>
+        <div id="suitabilityCompared">
+          <label><input type="checkbox" name="suitabilityCompared" value="יותר מרוב החיילים בתפקידים דומים"> יותר מרוב
+            החיילים בתפקידים דומים</label>
+          <label><input type="checkbox" name="suitabilityCompared" value="כמו רוב החיילים בתפקידים דומים"> כמו רוב
+            החיילים
+            בתפקידים דומים</label>
+          <label><input type="checkbox" name="suitabilityCompared" value="פחות מרוב החיילים בתפקידים דומים"> פחות מרוב
+            החיילים בתפקידים דומים</label>
+          <label><input type="checkbox" name="suitabilityCompared" value="אינו מתאים/ה כלל לקצונה">אינו מתאים/ה כלל
+            לקצונה</label>
+        </div>
+
+        <label>6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה?</label>
+        <div id="willingnessCommand">
+          <label><input type="checkbox" name="willingnessCommand" value="במידה רבה מאוד"> במידה רבה מאוד</label>
+          <label><input type="checkbox" name="willingnessCommand" value="במידה רבה"> במידה רבה</label>
+          <label><input type="checkbox" name="willingnessCommand" value="במידה בינונית"> במידה בינונית</label>
+          <label><input type="checkbox" name="willingnessCommand" value="במידה מועטה"> במידה מועטה</label>
+          <label><input type="checkbox" name="willingnessCommand" value="לא מעוניין כלל"> לא מעוניין כלל</label>
+        </div>
+
+        <div>
+          <h3>פרטי המפקד/ת הישיר/ה:</h3>
+          <label>שם פרטי בלבד:</label>
+          <input type="text" name="commanderName">
+
+          <label>טלפון:</label>
+          <input type="text" name="commanderPhone" pattern="\d{10}">
+
+        </div>
+
+        <span>
+          שים/י לב! תוכן הטופב חסוי וישמש את הגורמים המקצועיים בלבד. עם זאת, חובה להביא את החו"ד לעיתו של המועמד ולבצע
+          שיחת משוב לחוות הדעת שנכתבה!
+          חתימת המועמד/הצהרת המפקד/ת שנערכו שיחות משוב לחוות דעת
+        </span>
+
+        <div>
+          <label>שם פרטי בלבד:</label>
+          <input type="text" name="feedbackName">
+
+          <label>חתימה:</label>
+          <input type="hidden" name="signature" />
+          <canvas id="signature" width="400" height="150" style="border:1px solid #ccc;"></canvas>
+
+          <button type="button" onclick="clearSignature()">נקה חתימה</button>
+
+        </div>
+
+        <h2>חלק ב': דעת מפקדו של המפקד הישיר</h2>
+
+        <label>1. משך היכרותך עם החייל בחודשים</label>
+        <input type="number" name="monthsUnder2" min="0">
+
+        <label>מידת היכרות:</label>
+        <div id="familiarity2">
+          <label><input type="checkbox" name="familiarity2" value="טובה מאוד"> טובה מאוד</label>
+          <label><input type="checkbox" name="familiarity2" value="די טובה"> די טובה</label>
+          <label><input type="checkbox" name="familiarity2" value="בינונית"> בינונית</label>
+          <label><input type="checkbox" name="familiarity2" value="קלושה"> קלושה</label>
+          <label><input type="checkbox" name="familiarity2" value="איני יכול/ה להעריך"> איני יכול להעריך</label>
+        </div>
+
+        <div>
+          2.תאר/י את מידת ההתאמה של החייל/ת לקצונה, תוך התייחסות לנקודות חוזק וחולשה שלו/ה:
+          <label>נקודת חוזק:</label>
+          <input type="text" name="strength2">
+
+          <label>נקודת חולשה:</label>
+          <input type="text" name="weakness2">
+        </div>
+
+        <label>
+          3. באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ"א )
+        </label>
+        <div id="willingnessCommand2">
+          <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה מאוד</label>
+          <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
+          <label><input type="checkbox" name="willingnessCommand2" value="במידה בינונית"> במידה בינונית</label>
+          <label><input type="checkbox" name="willingnessCommand2" value="במידה מועטה"> במידה מועטה</label>
+          <label><input type="checkbox" id="siuu" name="willingnessCommand2" value="לא מעוניין כלל"> לא מעוניין
+            כלל</label>
+        </div>
+
+        <label>4. הערות נוספות:</label>
+        <textarea name="additionalComments" rows="3"></textarea>
+
+        <h3>פרטי מפקדו של המפקד הישיר:</h3>
         <label>שם פרטי בלבד:</label>
-        <input type="text" name="commanderName">
+        <input type="text" name="commander2Name">
 
         <label>טלפון:</label>
-        <input type="text" name="commanderPhone" pattern="\d{10}">
+        <input type="text" name="commander2Phone" pattern="\d{10}">
+
+        <button type="button" id="send-form">שלח במייל</button>
 
       </div>
-
-      <span>
-        שים/י לב! תוכן הטופב חסוי וישמש את הגורמים המקצועיים בלבד. עם זאת, חובה להביא את החו"ד לעיתו של המועמד ולבצע
-        שיחת משוב לחוות הדעת שנכתבה!
-        חתימת המועמד/הצהרת המפקד/ת שנערכו שיחות משוב לחוות דעת
-      </span>
-
-      <div>
-        <label>שם פרטי בלבד:</label>
-        <input type="text" name="feedbackName">
-
-        <label>חתימה:</label>
-        <input type="hidden" name="signature" />
-        <canvas id="signature" width="400" height="150" style="border:1px solid #ccc;"></canvas>
-
-        <button type="button" onclick="clearSignature()">נקה חתימה</button>
-
-      </div>
-
-      <h2>חלק ב': דעת מפקדו של המפקד הישיר</h2>
-
-      <label>1. משך היכרותך עם החייל בחודשים</label>
-      <input type="number" name="monthsUnder2" min="0">
-
-      <label>מידת היכרות:</label>
-      <div id="familiarity2">
-        <label><input type="checkbox" name="familiarity2" value="טובה מאוד"> טובה מאוד</label>
-        <label><input type="checkbox" name="familiarity2" value="די טובה"> די טובה</label>
-        <label><input type="checkbox" name="familiarity2" value="בינונית"> בינונית</label>
-        <label><input type="checkbox" name="familiarity2" value="קלושה"> קלושה</label>
-        <label><input type="checkbox" name="familiarity2" value="איני יכול/ה להעריך"> איני יכול להעריך</label>
-      </div>
-
-      <div>
-        2.תאר/י את מידת ההתאמה של החייל/ת לקצונה, תוך התייחסות לנקודות חוזק וחולשה שלו/ה:
-        <label>נקודת חוזק:</label>
-        <input type="text" name="strength2">
-
-        <label>נקודת חולשה:</label>
-        <input type="text" name="weakness2">
-      </div>
-
-      <label>
-        3. באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ"א )
-      </label>
-      <div id="willingnessCommand2">
-        <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה מאוד</label>
-        <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
-        <label><input type="checkbox" name="willingnessCommand2" value="במידה בינונית"> במידה בינונית</label>
-        <label><input type="checkbox" name="willingnessCommand2" value="במידה מועטה"> במידה מועטה</label>
-        <label><input type="checkbox" id="siuu" name="willingnessCommand2" value="לא מעוניין כלל"> לא מעוניין
-          כלל</label>
-      </div>
-
-      <label>4. הערות נוספות:</label>
-      <textarea name="additionalComments" rows="3"></textarea>
-
-      <h3>פרטי מפקדו של המפקד הישיר:</h3>
-      <label>שם פרטי בלבד:</label>
-      <input type="text" name="commander2Name">
-
-      <label>טלפון:</label>
-      <input type="text" name="commander2Phone" pattern="\d{10}">
-
-      <button type="button" id="send-form">שלח במייל</button>
     </fieldset>
 
   </form>
@@ -652,13 +882,111 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "  <" + "meta charset=\"UTF-8\"> \n"
  + "  <" + "title>חוות דעת לקצונה<" + "/title> \n"
  + "  <" + "style> \n"
+ + "    /* 1. Box sizing everywhere */ \n"
+ + "    *, \n"
+ + "    *::before, \n"
+ + "    *::after { \n"
+ + "      box-sizing: border-box; \n"
+ + "      margin: 0; \n"
+ + "      padding: 0; \n"
+ + "    } \n"
+ + " \n"
+ + "    /* 2. Make common elements block */ \n"
+ + "    body, \n"
+ + "    h1, \n"
+ + "    h2, \n"
+ + "    h3, \n"
+ + "    h4, \n"
+ + "    h5, \n"
+ + "    h6, \n"
+ + "    p, \n"
+ + "    blockquote, \n"
+ + "    pre, \n"
+ + "    dl, \n"
+ + "    dd, \n"
+ + "    ol, \n"
+ + "    ul, \n"
+ + "    figure, \n"
+ + "    hr, \n"
+ + "    fieldset, \n"
+ + "    legend { \n"
+ + "      display: block; \n"
+ + "    } \n"
+ + " \n"
+ + "    /* 3. Kill list styles */ \n"
+ + "    ul, \n"
+ + "    ol { \n"
+ + "      list-style: none; \n"
+ + "    } \n"
+ + " \n"
+ + "    /* 4. Kill link underline */ \n"
+ + "    a { \n"
+ + "      text-decoration: none; \n"
+ + "      color: inherit; \n"
+ + "    } \n"
+ + " \n"
+ + "    /* 5. Image and media clean */ \n"
+ + "    img, \n"
+ + "    picture, \n"
+ + "    svg, \n"
+ + "    video, \n"
+ + "    canvas { \n"
+ + "      display: block; \n"
+ + "      max-width: 100%; \n"
+ + "      height: auto; \n"
+ + "    } \n"
+ + " \n"
+ + "    /* 6. Tables clean */ \n"
+ + "    table { \n"
+ + "      border-collapse: collapse; \n"
+ + "      width: 100%; \n"
+ + "    } \n"
+ + " \n"
+ + "    /* 7. Forms clean (NO width, NO padding) */ \n"
+ + "    input, \n"
+ + "    textarea, \n"
+ + "    select, \n"
+ + "    button { \n"
+ + "      font: inherit; \n"
+ + "      color: inherit; \n"
+ + "      background: none; \n"
+ + "      border: none; \n"
+ + "      margin: 0; \n"
+ + "      padding: 0; \n"
+ + "      min-width: 0; \n"
+ + "      min-height: 0; \n"
+ + "      /* nice to kill browser styling */ \n"
+ + "    } \n"
+ + " \n"
+ + "    /* 8. Fieldset clean */ \n"
+ + "    fieldset { \n"
+ + "      border: none; \n"
+ + "    } \n"
+ + " \n"
+ + " \n"
  + "    body { \n"
  + "      font-family: Arial, sans-serif; \n"
  + "      direction: rtl; \n"
- + "      padding: 20px; \n"
  + "    } \n"
  + " \n"
- + "    label { \n"
+ + "    #feedback-form { \n"
+ + " \n"
+ + "      height: 1123px; \n"
+ + "      width: 1588px; \n"
+ + "    } \n"
+ + " \n"
+ + "    #feedback-form fieldset { \n"
+ + "      display: grid; \n"
+ + "      grid-template-columns: 1fr 1fr; \n"
+ + " \n"
+ + "      height: 100%; \n"
+ + "    } \n"
+ + " \n"
+ + "    #feedback-form fieldset>:nth-child(n) { \n"
+ + "      overflow: hidden; \n"
+ + "    } \n"
+ + " \n"
+ + "    /* label { \n"
  + "      display: block; \n"
  + "      margin-top: 10px; \n"
  + "      font-weight: bold; \n"
@@ -670,12 +998,12 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      width: 100%; \n"
  + "      margin-bottom: 10px; \n"
  + "      padding: 5px; \n"
- + "    } \n"
+ + "    } */ \n"
  + " \n"
  + "    table { \n"
  + "      width: 100%; \n"
  + "      border-collapse: collapse; \n"
- + "      margin-bottom: 20px; \n"
+ + "      /* margin-bottom: 20px; */ \n"
  + "    } \n"
  + " \n"
  + "    th, \n"
@@ -689,10 +1017,6 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      background-color: #f2f2f2; \n"
  + "    } \n"
  + " \n"
- + "    h2 { \n"
- + "      background-color: #e0e0e0; \n"
- + "      padding: 10px; \n"
- + "    } \n"
  + " \n"
  + "    button { \n"
  + "      padding: 10px 20px; \n"
@@ -732,6 +1056,15 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      background-color: #f0f0f0; \n"
  + "      font-weight: bold; \n"
  + "    } \n"
+ + " \n"
+ + "    #date-label { \n"
+ + "      display: flex; \n"
+ + "    } \n"
+ + " \n"
+ + "    input { \n"
+ + "      background-color: grey; \n"
+ + "      padding: 2px; \n"
+ + "    } \n"
  + "  <" + "/style> \n"
  + " \n"
  + "  <" + "script src=\"https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js\"><" + "/script> \n"
@@ -739,366 +1072,493 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "<" + "/head> \n"
  + " \n"
  + "<" + "body> \n"
+ + " \n"
  + "  <" + "form id=\"feedback-form\"> \n"
  + " \n"
- + "    <" + "fieldset> \n"
+ + "    <" + "fieldset style=\"background-color: brown;\"> \n"
  + " \n"
- + "      <" + "label>תאריך:<" + "/label> \n"
- + "      <" + "input type=\"date\" name=\"date\"> \n"
+ + "      <" + "div style=\"background-color: yellowgreen; padding: 53px 23px; overflow: hidden;\"> \n"
  + " \n"
- + "      <" + "label>קוד סמכות: <" + "/label> \n"
- + "      <" + "input type=\"number\" name=\"samkhut\"> \n"
+ + "        <" + "div style=\"display: flex;\"> \n"
  + " \n"
- + "      <" + "label>מיועד לקורס: להב/מעוז/נחשון<" + "/label> \n"
+ + "          <" + "label style=\"display: flex;\"> \n"
+ + "            <" + "span style=\"font-weight: bold;\"> תאריך:<" + "/span> \n"
+ + "            <" + "div style=\"position: relative; width:fit-content; height: fit-content; \"> \n"
+ + "              <" + "div>__________<" + "/div> \n"
  + " \n"
- + "      <" + "h1>חוות דעת של מועמד/ת לקורס קצונה<" + "/h1> \n"
+ + "              <" + "input type=\"date\" name=\"date\" style=\"display: block; inset: 15% 7%; position: absolute; \n"
+ + "              font-size: 0.5em; \"> <" + "/input> \n"
+ + "            <" + "/div> \n"
  + " \n"
- + "      <" + "div> \n"
- + "        כמפקד, חוות הדעת שלך אודות המועמד מהווה כלי חשוב בעיצוב דור הקצינים הבא של צה\"ל. לכן, ככל שהערכותיך יהיו מדויקות \n"
- + "        יותר, כך תתאפשר קבלת החלטות נכונה ואחראית, הן כלפי המערכת והן כלפי הפרט עצמו. \n"
- + "      <" + "/div> \n"
+ + "          <" + "/label> \n"
  + " \n"
- + "      <" + "span>פרטי המועמד/ת<" + "/span> \n"
+ + "          <" + "label style=\"display: flex;\"> \n"
+ + "            <" + "span style=\"font-weight: bold;\">קוד סמכות:<" + "/span> \n"
+ + "            <" + "div style=\"position: relative; width:fit-content; height: fit-content; \"> \n"
+ + "              <" + "div>__________<" + "/div> \n"
  + " \n"
- + "      <" + "label>שם פרטי בלבד:<" + "/label> \n"
- + "      <" + "input type=\"text\" name=\"firstName\"> \n"
+ + "              <" + "input type=\"number\" name=\"samkhut\" \n"
+ + "                style=\"display: block; inset: 15% 7%; position: absolute; font-size: 0.9em;\"> <" + "/input> \n"
+ + "            <" + "/div> \n"
  + " \n"
- + "      <" + "label>מ\"א:<" + "/label> \n"
- + "      <" + "input type=\"text\" name=\"personalNumber\" pattern=\"\d{7}\"> \n"
+ + "          <" + "/label> \n"
  + " \n"
- + "      <" + "h2>חלק א: חוות דעת המפקד הישיר<" + "/h2> \n"
+ + "          <" + "span style=\"font-weight: bold;\">מיועד לקורס: <" + "/span>  \n"
+ + "          <" + "span> להב/מעוז/נחשון<" + "/span> \n"
  + " \n"
- + "      <" + "label>החייל משרת תחת פיקודי : \n"
- + "        <" + "input type=\"number\" name=\"monthsUnder\" min=\"0\"> \n"
- + "        <" + "span>חודשים <" + "/span> \n"
- + "      <" + "/label> \n"
+ + "        <" + "/div> \n"
  + " \n"
- + "      <" + "label>החו\"ד נכתב יחד עם מפקד קודם: \n"
- + "        <" + "input type=\"checkbox\" name=\"writtenUnderLast\"> \n"
- + "        <" + "span>(סמן אם כן) <" + "/span> \n"
- + "      <" + "/label> \n"
+ + "        <" + "div style=\"display: flex; justify-content: center; align-items: flex-end; padding: 18px;\"> \n"
+ + "          <" + "h1 style=\"text-align: bottom; font-size: 1.35em;\">חוות דעת על מועמד/ת לקורס קצונה<" + "/h1> \n"
+ + "          <" + "img \n"
+ + "            src=\"data:image/png;base64,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\"> \n"
+ + "        <" + "/div> \n"
  + " \n"
- + "      <" + "label>מידת היכרות עם החייל/ת:<" + "/label> \n"
- + "      <" + "select name=\"familiarity\"> \n"
- + "        <" + "option value=\"\">בחר<" + "/option> \n"
- + "        <" + "option>טובה מאוד<" + "/option> \n"
- + "        <" + "option>די טובה<" + "/option> \n"
- + "        <" + "option>בינונית<" + "/option> \n"
- + "        <" + "option>קלושה<" + "/option> \n"
- + "      <" + "/select> \n"
+ + "        <" + "div style=\"padding-bottom: 18px;\"> \n"
+ + "          כמפקד, חוות הדעת שלך אודות המועמד מהווה כלי חשוב בעיצוב דור הקצינים הבא של צה\"ל. לכן, ככל שהערכותיך יהיו \n"
+ + "          מדויקות \n"
+ + "          יותר, כך תתאפשר קבלת החלטות נכונה ואחראית, הן כלפי המערכת והן כלפי הפרט עצמו. \n"
+ + "        <" + "/div> \n"
  + " \n"
- + "      <" + "label>תפקידו/ה הנוכחי של החייל\ת (פירוט ברמת בלמ\"ס בלבד):<" + "/label> \n"
- + "      <" + "input type=\"text\" name=\"role\"> \n"
+ + "        <" + "div style=\"font-weight: bold; padding-bottom: 18px; font-weight: bold;\">פרטי המועמד/ת<" + "/div> \n"
  + " \n"
- + "      <" + "label>1. תאר את המועמד/ת בטבלה הבאה, תוך התייחסות ל-2 נקודות חוזק ו-2 נקודות חולשה וכיצד הן באות לידי ביטוי על ידי \n"
- + "        הסבר או דוגמה.<" + "/label> \n"
- + "      <" + "table style=\"border-collapse: collapse; text-align: right;\"> \n"
- + "        <" + "thead> \n"
- + "          <" + "tr> \n"
- + "            <" + "th><" + "/th> \n"
- + "            <" + "th>מאפייני החייל/ת<" + "/th> \n"
- + "            <" + "th>הסבר/דוגמה<" + "/th> \n"
- + "          <" + "/tr> \n"
- + "        <" + "/thead> \n"
- + "        <" + "tbody> \n"
- + "          <" + "tr> \n"
- + "            <" + "td>נקודות חוזק<" + "/td> \n"
- + "            <" + "td> \n"
- + "              <" + "div style=\"display: flex; flex-direction: column;\"> \n"
- + "                <" + "input type=\"text\" name=\"strength1\" placeholder=\"מאפיין ראשון\"> \n"
- + "                <" + "hr style=\"width: 100%;\"> \n"
- + "                <" + "input type=\"text\" name=\"strength2\" placeholder=\"מאפיין שני\"> \n"
+ + "        <" + "div style=\"display: flex; padding-bottom: 18px;\"> \n"
+ + " \n"
+ + "          <" + "label style=\"display: flex;\"> \n"
+ + "            <" + "span style=\"font-weight: bold;\">שם פרטי בלבד:<" + "/span> \n"
+ + "            <" + "div style=\"position: relative; width:fit-content; height: fit-content;\"> \n"
+ + "              <" + "span>_______________<" + "/span> \n"
+ + "              <" + "input type=\"text\" name=\"firstName\" style=\"display: block; inset: 15% 7%; position: absolute; \"> \n"
+ + "            <" + "/div> \n"
+ + "          <" + "/label> \n"
+ + " \n"
+ + "          <" + "label style=\"display: flex;\"> \n"
+ + "            <" + "span style=\"font-weight: bold;\">מ\"א:<" + "/span> \n"
+ + "            <" + "div style=\"position: relative; width:fit-content; height: fit-content;\"> \n"
+ + "              <" + "span>_______________<" + "/span> \n"
+ + "              <" + "input type=\"text\" name=\"personalNumber\" pattern=\"\d{7}\" \n"
+ + "                style=\"display: block; inset: 15% 7%; position: absolute; font-size: 0.9em;\"> \n"
+ + "            <" + "/div> \n"
+ + "          <" + "/label> \n"
+ + " \n"
+ + "        <" + "/div> \n"
+ + " \n"
+ + "        <" + "h3 style=\"text-decoration: underline; font-size: 1em; padding-bottom: 18px;\">חלק א: חוות דעת המפקד הישיר<" + "/h2> \n"
+ + " \n"
+ + "          <" + "div style=\"display: flex;\"> \n"
+ + " \n"
+ + "            <" + "label style=\"display: flex; padding-bottom: 18px;\"> \n"
+ + "              <" + "span style=\"font-weight: bold;\">החייל/ת משרת/ת תחת פיקודי   \n"
+ + "                &thinsp; \n"
+ + "               <" + "/span> \n"
+ + "              <" + "div style=\"position: relative; width:fit-content; height: fit-content;\"> \n"
+ + "                <" + "span>___<" + "/span> \n"
+ + "                <" + "input type=\"text\" pattern=\"\d{1,2}\" name=\"monthsUnder\" style=\"display: block; inset: 15% 7%; position: absolute; \n"
+ + "            font-size: 0.9em;\"> \n"
  + "              <" + "/div> \n"
- + "            <" + "/td> \n"
- + "            <" + "td><" + "input type=\"text\" name=\"strengthExample\" style=\"width: 100%;\" placeholder=\"הסבר או דוגמה\"><" + "/td> \n"
- + "          <" + "/tr> \n"
- + "          <" + "tr> \n"
- + "            <" + "td>נקודות חולשה<" + "/td> \n"
- + "            <" + "td> \n"
- + "              <" + "div style=\"display: flex; flex-direction: column;\"> \n"
- + "                <" + "input type=\"text\" name=\"weakness1\" placeholder=\"מאפיין ראשון\"> \n"
- + "                <" + "hr style=\"width: 100%;\"> \n"
- + "                <" + "input type=\"text\" name=\"weakness2\" placeholder=\"מאפיין שני\"> \n"
- + "              <" + "/div> \n"
- + "            <" + "/td> \n"
- + "            <" + "td><" + "input type=\"text\" name=\"weaknessExample\" style=\"width: 100%;\" placeholder=\"הסבר או דוגמה\"><" + "/td> \n"
- + "          <" + "/tr> \n"
- + "        <" + "/tbody> \n"
- + "      <" + "/table> \n"
+ + "              <" + "span> &thinsp; \n"
+ + "                חודשים.  \n"
+ + "                &thinsp; \n"
+ + "              <" + "/span> \n"
+ + "            <" + "/label> \n"
  + " \n"
- + "      <" + "label>2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה): שים לב! ניתן לבחור עד שלושה מאפיינים בקטגוריה \n"
- + "        \"גבוה מאוד\" ועד שלושה מאפיינים בקטגוריה \"גבוה\" \n"
- + "      <" + "/label> \n"
- + "      <" + "table class=\"eval-table\" id=\"eval-table\"> \n"
- + "        <" + "thead> \n"
- + "          <" + "tr> \n"
- + "            <" + "th>מאפיין<" + "/th> \n"
- + "            <" + "th>גבוה מאוד<" + "/th> \n"
- + "            <" + "th>גבוה<" + "/th> \n"
- + "            <" + "th>בינוני<" + "/th> \n"
- + "            <" + "th>נמוך<" + "/th> \n"
- + "            <" + "th>נמוך מאוד<" + "/th> \n"
- + "            <" + "th>לא ניתן להעריך<" + "/th> \n"
- + "          <" + "/tr> \n"
- + "        <" + "/thead> \n"
- + "        <" + "tbody> \n"
- + "          <" + "tr> \n"
- + "            <" + "td class=\"eval-feature\">עצמאות בביצוע משימות<" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"גבוה מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"גבוה\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"בינוני\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"נמוך\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"נמוך מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
- + "            <" + "td style=\"display:none;\"> \n"
- + "              <" + "select name=\"rating_0\" id=\"hidden-input-0\" hidden> \n"
- + "                <" + "option value=\"\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "              <" + "/select> \n"
- + "            <" + "/td> \n"
- + "          <" + "/tr> \n"
+ + "            <" + "label style=\"display: flex; \"> \n"
+ + "              <" + "span style=\"font-weight: bold;\">  \n"
+ + "                החו\"ד נכתב יחד עם המפקד הקודם:	&thinsp; \n"
+ + "              <" + "/span> \n"
+ + "              <" + "input type=\"checkbox\" name=\"writtenUnderLast\" style=\"display: block; cursor: pointer;\"> \n"
+ + "              <" + "span> &thinsp; \n"
+ + "                 (סמן אם כן)  <" + "/span> \n"
+ + "            <" + "/label> \n"
  + " \n"
- + "          <" + "tr> \n"
- + "            <" + "td class=\"eval-feature\">תפקוד יעיל בלחץ ובעומס<" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"גבוה מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"גבוה\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"בינוני\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"נמוך\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"נמוך מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
- + "            <" + "td style=\"display:none;\"> \n"
- + "              <" + "select name=\"rating_1\" id=\"hidden-input-1\" hidden> \n"
- + "                <" + "option value=\"\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "              <" + "/select> \n"
- + "            <" + "/td> \n"
- + "          <" + "/tr> \n"
- + " \n"
- + "          <" + "tr> \n"
- + "            <" + "td class=\"eval-feature\">קבלת החלטות<" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"גבוה מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"גבוה\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"בינוני\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"נמוך\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"נמוך מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
- + "            <" + "td style=\"display:none;\"> \n"
- + "              <" + "select name=\"rating_2\" id=\"hidden-input-2\" hidden> \n"
- + "                <" + "option value=\"\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "              <" + "/select> \n"
- + "            <" + "/td> \n"
- + "          <" + "/tr> \n"
- + " \n"
- + "          <" + "tr> \n"
- + "            <" + "td class=\"eval-feature\">משמעת והסתגלות לצרכי המערכת<" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"גבוה מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"גבוה\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"בינוני\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"נמוך\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"נמוך מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
- + "            <" + "td style=\"display:none;\"> \n"
- + "              <" + "select name=\"rating_3\" id=\"hidden-input-3\" hidden> \n"
- + "                <" + "option value=\"\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "              <" + "/select> \n"
- + "            <" + "/td> \n"
- + "          <" + "/tr> \n"
- + " \n"
- + "          <" + "tr> \n"
- + "            <" + "td class=\"eval-feature\">יכולת חשיבה ולמידה עצמית<" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"גבוה מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"גבוה\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"בינוני\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"נמוך\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"נמוך מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
- + "            <" + "td style=\"display:none;\"> \n"
- + "              <" + "select name=\"rating_4\" id=\"hidden-input-4\" hidden> \n"
- + "                <" + "option value=\"\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "              <" + "/select> \n"
- + "            <" + "/td> \n"
- + "          <" + "/tr> \n"
- + " \n"
- + "          <" + "tr> \n"
- + "            <" + "td class=\"eval-feature\">עבודת צוות<" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"גבוה מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"גבוה\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"בינוני\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"נמוך\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"נמוך מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
- + "            <" + "td style=\"display:none;\"> \n"
- + "              <" + "select name=\"rating_5\" id=\"hidden-input-5\" hidden> \n"
- + "                <" + "option value=\"\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "              <" + "/select> \n"
- + "            <" + "/td> \n"
- + "          <" + "/tr> \n"
- + " \n"
- + "          <" + "tr> \n"
- + "            <" + "td class=\"eval-feature\">אסרטיביות ויכולת הובלה<" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"גבוה מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"גבוה\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"בינוני\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"נמוך\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"נמוך מאוד\"><" + "/td> \n"
- + "            <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
- + "            <" + "td style=\"display:none;\"> \n"
- + "              <" + "select name=\"rating_6\" id=\"hidden-input-6\" hidden> \n"
- + "                <" + "option value=\"\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "              <" + "/select> \n"
- + "            <" + "/td> \n"
- + "          <" + "/tr> \n"
- + "        <" + "/tbody> \n"
- + "      <" + "/table> \n"
+ + "          <" + "/div> \n"
  + " \n"
  + " \n"
- + "      <" + "label>3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה:<" + "/label> \n"
- + "      <" + "div id=\"motivation\"> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"motivation\" value=\"גבוהה מאוד\"> גבוהה מאוד<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"motivation\" value=\"גבוהה\"> גבוהה<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"motivation\" value=\"בינונית\"> בינונית<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"motivation\" value=\"נמוכה\"> נמוכה<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"motivation\" value=\"איני רוצה לצאת\"> איני רוצה לצאת<" + "/label> \n"
+ + "          <" + "div style=\"display: flex; gap: 5px; padding-bottom: 18px;\"> \n"
+ + "            <" + "span style=\"font-weight: bold;\">מידת היכרות עם החייל/ת:<" + "/span> \n"
+ + "           \n"
+ + "            <" + "label style=\"display: flex; align-items: center; gap:4px\"> \n"
+ + "              <" + "input type=\"checkbox\" name=\"familiarity\" value=\"טובה מאוד\"> \n"
+ + "              טובה מאוד \n"
+ + "            <" + "/label> \n"
+ + "           \n"
+ + "            <" + "label style=\"display: flex; align-items: center; gap:4px \"> \n"
+ + "              <" + "input type=\"checkbox\" name=\"familiarity\" value=\"די טובה\"> \n"
+ + "              די טובה \n"
+ + "            <" + "/label> \n"
+ + "           \n"
+ + "            <" + "label style=\"display: flex; align-items: center;  gap:4px \"> \n"
+ + "              <" + "input type=\"checkbox\" name=\"familiarity\" value=\"בינונית\"> \n"
+ + "              בינונית \n"
+ + "            <" + "/label> \n"
+ + "           \n"
+ + "            <" + "label style=\"display: flex; align-items: center;  gap:4px\"> \n"
+ + "              <" + "input type=\"checkbox\" name=\"familiarity\" value=\"קלושה\"> \n"
+ + "              קלושה \n"
+ + "            <" + "/label> \n"
+ + "          <" + "/div> \n"
+ + "           \n"
+ + "           \n"
+ + "          <" + "label style=\"display: flex; padding-bottom: 18px;\"> \n"
+ + "            <" + "span style=\"font-weight: bold;\">תפקידו/ה הנוכחי של החייל/ת (פירוט ברמת בלמ\"ס בלבד):<" + "/span> \n"
+ + "            <" + "div style=\"position: relative; width:fit-content; height: fit-content;\"> \n"
+ + "              <" + "span>___________________<" + "/span> \n"
+ + "              <" + "input type=\"text\" name=\"role\" \n"
+ + "                style=\"display: block; inset: 15% 7%; position: absolute;\"> \n"
+ + "            <" + "/div> \n"
+ + "          <" + "/label> \n"
+ + " \n"
+ + "          <" + "span style=\"padding-bottom: 18px; font-weight: bold;\">1. &thinsp;  \n"
+ + "               תאר את המועמד/ת בטבלה הבאה, תוך התייחסות ל-2 נקודות חוזק ו-2 נקודות חולשה וכיצד הן באות לידי ביטוי \n"
+ + "            על \n"
+ + "            ידי \n"
+ + "            הסבר או דוגמה.<" + "/span> \n"
+ + "          <" + "!-- <" + "table style=\"border-collapse: collapse; text-align: right;\"> \n"
+ + "            <" + "thead> \n"
+ + "              <" + "tr> \n"
+ + "                <" + "th><" + "/th> \n"
+ + "                <" + "th>מאפייני החייל/ת<" + "/th> \n"
+ + "                <" + "th>הסבר/דוגמה<" + "/th> \n"
+ + "              <" + "/tr> \n"
+ + "            <" + "/thead> \n"
+ + "            <" + "tbody> \n"
+ + "              <" + "tr> \n"
+ + "                <" + "td>נקודות חוזק<" + "/td> \n"
+ + "                <" + "td> \n"
+ + "                  <" + "div style=\"display: flex; flex-direction: column;\"> \n"
+ + "                    <" + "input type=\"text\" name=\"strength1\" placeholder=\"מאפיין ראשון\"> \n"
+ + "                    <" + "hr style=\"width: 100%;\"> \n"
+ + "                    <" + "input type=\"text\" name=\"strength2\" placeholder=\"מאפיין שני\"> \n"
+ + "                  <" + "/div> \n"
+ + "                <" + "/td> \n"
+ + "                <" + "td><" + "input type=\"text\" name=\"strengthExample\" style=\"width: 100%;\" placeholder=\"הסבר או דוגמה\"><" + "/td> \n"
+ + "              <" + "/tr> \n"
+ + "              <" + "tr> \n"
+ + "                <" + "td>נקודות חולשה<" + "/td> \n"
+ + "                <" + "td> \n"
+ + "                  <" + "div style=\"display: flex; flex-direction: column;\"> \n"
+ + "                    <" + "input type=\"text\" name=\"weakness1\" placeholder=\"מאפיין ראשון\"> \n"
+ + "                    <" + "hr style=\"width: 100%;\"> \n"
+ + "                    <" + "input type=\"text\" name=\"weakness2\" placeholder=\"מאפיין שני\"> \n"
+ + "                  <" + "/div> \n"
+ + "                <" + "/td> \n"
+ + "                <" + "td><" + "input type=\"text\" name=\"weaknessExample\" style=\"width: 100%;\" placeholder=\"הסבר או דוגמה\"><" + "/td> \n"
+ + "              <" + "/tr> \n"
+ + "            <" + "/tbody> \n"
+ + "          <" + "/table> --> \n"
+ + " \n"
+ + "          <" + "table style=\"border-collapse: collapse; text-align: right; width: 100%;\"> \n"
+ + "            <" + "thead> \n"
+ + "              <" + "tr> \n"
+ + "                <" + "th><" + "/th> \n"
+ + "                <" + "th colspan=\"2\">מאפייני החייל/ת<" + "/th> \n"
+ + "                <" + "th>הסבר/דוגמה<" + "/th> \n"
+ + "              <" + "/tr> \n"
+ + "              <" + "tr> \n"
+ + "                <" + "th><" + "/th> \n"
+ + "                <" + "th>מאפיין ראשון<" + "/th> \n"
+ + "                <" + "th>מאפיין שני<" + "/th> \n"
+ + "                <" + "th><" + "/th> \n"
+ + "              <" + "/tr> \n"
+ + "            <" + "/thead> \n"
+ + "            <" + "tbody> \n"
+ + "              <" + "tr> \n"
+ + "                <" + "td>נקודות חוזק<" + "/td> \n"
+ + "                <" + "td><" + "input type=\"text\" name=\"strength1\" placeholder=\"מאפיין ראשון\" style=\"width: 100%;\"><" + "/td> \n"
+ + "                <" + "td><" + "input type=\"text\" name=\"strength2\" placeholder=\"מאפיין שני\" style=\"width: 100%;\"><" + "/td> \n"
+ + "                <" + "td><" + "input type=\"text\" name=\"strengthExample\" placeholder=\"הסבר או דוגמה\" style=\"width: 100%;\"><" + "/td> \n"
+ + "              <" + "/tr> \n"
+ + "              <" + "tr> \n"
+ + "                <" + "td>נקודות חולשה<" + "/td> \n"
+ + "                <" + "td><" + "input type=\"text\" name=\"weakness1\" placeholder=\"מאפיין ראשון\" style=\"width: 100%;\"><" + "/td> \n"
+ + "                <" + "td><" + "input type=\"text\" name=\"weakness2\" placeholder=\"מאפיין שני\" style=\"width: 100%;\"><" + "/td> \n"
+ + "                <" + "td><" + "input type=\"text\" name=\"weaknessExample\" placeholder=\"הסבר או דוגמה\" style=\"width: 100%;\"><" + "/td> \n"
+ + "              <" + "/tr> \n"
+ + "            <" + "/tbody> \n"
+ + "          <" + "/table> \n"
+ + "           \n"
+ + " \n"
+ + "          <" + "label>2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה): שים לב! ניתן לבחור עד שלושה מאפיינים \n"
+ + "            בקטגוריה \n"
+ + "            \"גבוה מאוד\" ועד שלושה מאפיינים בקטגוריה \"גבוה\" \n"
+ + "          <" + "/label> \n"
+ + "          <" + "table class=\"eval-table\" id=\"eval-table\"> \n"
+ + "            <" + "thead> \n"
+ + "              <" + "tr> \n"
+ + "                <" + "th>מאפיין<" + "/th> \n"
+ + "                <" + "th>גבוה מאוד<" + "/th> \n"
+ + "                <" + "th>גבוה<" + "/th> \n"
+ + "                <" + "th>בינוני<" + "/th> \n"
+ + "                <" + "th>נמוך<" + "/th> \n"
+ + "                <" + "th>נמוך מאוד<" + "/th> \n"
+ + "                <" + "th>לא ניתן להעריך<" + "/th> \n"
+ + "              <" + "/tr> \n"
+ + "            <" + "/thead> \n"
+ + "            <" + "tbody> \n"
+ + "              <" + "tr> \n"
+ + "                <" + "td class=\"eval-feature\">עצמאות בביצוע משימות<" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"גבוה מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"גבוה\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"בינוני\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"נמוך\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"נמוך מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
+ + "                <" + "td style=\"display:none;\"> \n"
+ + "                  <" + "select name=\"rating_0\" id=\"hidden-input-0\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/td> \n"
+ + "              <" + "/tr> \n"
+ + " \n"
+ + "              <" + "tr> \n"
+ + "                <" + "td class=\"eval-feature\">תפקוד יעיל בלחץ ובעומס<" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"גבוה מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"גבוה\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"בינוני\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"נמוך\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"נמוך מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
+ + "                <" + "td style=\"display:none;\"> \n"
+ + "                  <" + "select name=\"rating_1\" id=\"hidden-input-1\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/td> \n"
+ + "              <" + "/tr> \n"
+ + " \n"
+ + "              <" + "tr> \n"
+ + "                <" + "td class=\"eval-feature\">קבלת החלטות<" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"גבוה מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"גבוה\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"בינוני\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"נמוך\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"נמוך מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
+ + "                <" + "td style=\"display:none;\"> \n"
+ + "                  <" + "select name=\"rating_2\" id=\"hidden-input-2\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/td> \n"
+ + "              <" + "/tr> \n"
+ + " \n"
+ + "              <" + "tr> \n"
+ + "                <" + "td class=\"eval-feature\">משמעת והסתגלות לצרכי המערכת<" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"גבוה מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"גבוה\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"בינוני\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"נמוך\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"נמוך מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
+ + "                <" + "td style=\"display:none;\"> \n"
+ + "                  <" + "select name=\"rating_3\" id=\"hidden-input-3\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/td> \n"
+ + "              <" + "/tr> \n"
+ + " \n"
+ + "              <" + "tr> \n"
+ + "                <" + "td class=\"eval-feature\">יכולת חשיבה ולמידה עצמית<" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"גבוה מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"גבוה\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"בינוני\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"נמוך\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"נמוך מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
+ + "                <" + "td style=\"display:none;\"> \n"
+ + "                  <" + "select name=\"rating_4\" id=\"hidden-input-4\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/td> \n"
+ + "              <" + "/tr> \n"
+ + " \n"
+ + "              <" + "tr> \n"
+ + "                <" + "td class=\"eval-feature\">עבודת צוות<" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"גבוה מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"גבוה\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"בינוני\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"נמוך\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"נמוך מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
+ + "                <" + "td style=\"display:none;\"> \n"
+ + "                  <" + "select name=\"rating_5\" id=\"hidden-input-5\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/td> \n"
+ + "              <" + "/tr> \n"
+ + " \n"
+ + "              <" + "tr> \n"
+ + "                <" + "td class=\"eval-feature\">אסרטיביות ויכולת הובלה<" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"גבוה מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"גבוה\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"בינוני\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"נמוך\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"נמוך מאוד\"><" + "/td> \n"
+ + "                <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"לא ניתן להעריך\"><" + "/td> \n"
+ + "                <" + "td style=\"display:none;\"> \n"
+ + "                  <" + "select name=\"rating_6\" id=\"hidden-input-6\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/td> \n"
+ + "              <" + "/tr> \n"
+ + "            <" + "/tbody> \n"
+ + "          <" + "/table> \n"
+ + " \n"
+ + " \n"
  + "      <" + "/div> \n"
  + " \n"
- + "      <" + "label>4. תחומים בהם החייל/ת עלול/ה להתקשות בקורס קצינים / בתפקיד:<" + "/label> \n"
- + "      <" + "textarea name=\"difficultyAreas\" rows=\"3\"><" + "/textarea> \n"
+ + "      <" + "div style=\"background-color: blue;\"> \n"
  + " \n"
- + "      <" + "label>5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?<" + "/label> \n"
- + "      <" + "div id=\"suitabilityCompared\"> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"suitabilityCompared\" value=\"יותר מרוב החיילים בתפקידים דומים\"> יותר מרוב \n"
- + "          החיילים בתפקידים דומים<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"suitabilityCompared\" value=\"כמו רוב החיילים בתפקידים דומים\"> כמו רוב החיילים \n"
- + "          בתפקידים דומים<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"suitabilityCompared\" value=\"פחות מרוב החיילים בתפקידים דומים\"> פחות מרוב \n"
- + "          החיילים בתפקידים דומים<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"suitabilityCompared\" value=\"אינו מתאים/ה כלל לקצונה\">אינו מתאים/ה כלל \n"
- + "          לקצונה<" + "/label> \n"
- + "      <" + "/div> \n"
+ + "        <" + "label>3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה:<" + "/label> \n"
+ + "        <" + "div id=\"motivation\"> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"motivation\" value=\"גבוהה מאוד\"> גבוהה מאוד<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"motivation\" value=\"גבוהה\"> גבוהה<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"motivation\" value=\"בינונית\"> בינונית<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"motivation\" value=\"נמוכה\"> נמוכה<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"motivation\" value=\"איני רוצה לצאת\"> איני רוצה לצאת<" + "/label> \n"
+ + "        <" + "/div> \n"
  + " \n"
- + "      <" + "label>6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה?<" + "/label> \n"
- + "      <" + "div id=\"willingnessCommand\"> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה רבה מאוד\"> במידה רבה מאוד<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה רבה\"> במידה רבה<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה בינונית\"> במידה בינונית<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה מועטה\"> במידה מועטה<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"לא מעוניין כלל\"> לא מעוניין כלל<" + "/label> \n"
- + "      <" + "/div> \n"
+ + "        <" + "label>4. תחומים בהם החייל/ת עלול/ה להתקשות בקורס קצינים / בתפקיד:<" + "/label> \n"
+ + "        <" + "textarea name=\"difficultyAreas\" rows=\"3\"><" + "/textarea> \n"
  + " \n"
- + "      <" + "div> \n"
- + "        <" + "h3>פרטי המפקד/ת הישיר/ה:<" + "/h3> \n"
+ + "        <" + "label>5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?<" + "/label> \n"
+ + "        <" + "div id=\"suitabilityCompared\"> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"suitabilityCompared\" value=\"יותר מרוב החיילים בתפקידים דומים\"> יותר מרוב \n"
+ + "            החיילים בתפקידים דומים<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"suitabilityCompared\" value=\"כמו רוב החיילים בתפקידים דומים\"> כמו רוב \n"
+ + "            החיילים \n"
+ + "            בתפקידים דומים<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"suitabilityCompared\" value=\"פחות מרוב החיילים בתפקידים דומים\"> פחות מרוב \n"
+ + "            החיילים בתפקידים דומים<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"suitabilityCompared\" value=\"אינו מתאים/ה כלל לקצונה\">אינו מתאים/ה כלל \n"
+ + "            לקצונה<" + "/label> \n"
+ + "        <" + "/div> \n"
+ + " \n"
+ + "        <" + "label>6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה?<" + "/label> \n"
+ + "        <" + "div id=\"willingnessCommand\"> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה רבה מאוד\"> במידה רבה מאוד<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה רבה\"> במידה רבה<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה בינונית\"> במידה בינונית<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה מועטה\"> במידה מועטה<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"לא מעוניין כלל\"> לא מעוניין כלל<" + "/label> \n"
+ + "        <" + "/div> \n"
+ + " \n"
+ + "        <" + "div> \n"
+ + "          <" + "h3>פרטי המפקד/ת הישיר/ה:<" + "/h3> \n"
+ + "          <" + "label>שם פרטי בלבד:<" + "/label> \n"
+ + "          <" + "input type=\"text\" name=\"commanderName\"> \n"
+ + " \n"
+ + "          <" + "label>טלפון:<" + "/label> \n"
+ + "          <" + "input type=\"text\" name=\"commanderPhone\" pattern=\"\d{10}\"> \n"
+ + " \n"
+ + "        <" + "/div> \n"
+ + " \n"
+ + "        <" + "span> \n"
+ + "          שים/י לב! תוכן הטופב חסוי וישמש את הגורמים המקצועיים בלבד. עם זאת, חובה להביא את החו\"ד לעיתו של המועמד ולבצע \n"
+ + "          שיחת משוב לחוות הדעת שנכתבה! \n"
+ + "          חתימת המועמד/הצהרת המפקד/ת שנערכו שיחות משוב לחוות דעת \n"
+ + "        <" + "/span> \n"
+ + " \n"
+ + "        <" + "div> \n"
+ + "          <" + "label>שם פרטי בלבד:<" + "/label> \n"
+ + "          <" + "input type=\"text\" name=\"feedbackName\"> \n"
+ + " \n"
+ + "          <" + "label>חתימה:<" + "/label> \n"
+ + "          <" + "input type=\"hidden\" name=\"signature\" /> \n"
+ + "          <" + "canvas id=\"signature\" width=\"400\" height=\"150\" style=\"border:1px solid #ccc;\"><" + "/canvas> \n"
+ + " \n"
+ + "          <" + "button type=\"button\" onclick=\"clearSignature()\">נקה חתימה<" + "/button> \n"
+ + " \n"
+ + "        <" + "/div> \n"
+ + " \n"
+ + "        <" + "h2>חלק ב': דעת מפקדו של המפקד הישיר<" + "/h2> \n"
+ + " \n"
+ + "        <" + "label>1. משך היכרותך עם החייל בחודשים<" + "/label> \n"
+ + "        <" + "input type=\"number\" name=\"monthsUnder2\" min=\"0\"> \n"
+ + " \n"
+ + "        <" + "label>מידת היכרות:<" + "/label> \n"
+ + "        <" + "div id=\"familiarity2\"> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"טובה מאוד\"> טובה מאוד<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"די טובה\"> די טובה<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"בינונית\"> בינונית<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"קלושה\"> קלושה<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"איני יכול/ה להעריך\"> איני יכול להעריך<" + "/label> \n"
+ + "        <" + "/div> \n"
+ + " \n"
+ + "        <" + "div> \n"
+ + "          2.תאר/י את מידת ההתאמה של החייל/ת לקצונה, תוך התייחסות לנקודות חוזק וחולשה שלו/ה: \n"
+ + "          <" + "label>נקודת חוזק:<" + "/label> \n"
+ + "          <" + "input type=\"text\" name=\"strength2\"> \n"
+ + " \n"
+ + "          <" + "label>נקודת חולשה:<" + "/label> \n"
+ + "          <" + "input type=\"text\" name=\"weakness2\"> \n"
+ + "        <" + "/div> \n"
+ + " \n"
+ + "        <" + "label> \n"
+ + "          3. באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ\"א ) \n"
+ + "        <" + "/label> \n"
+ + "        <" + "div id=\"willingnessCommand2\"> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה מאוד\"> במידה רבה מאוד<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה\"> במידה רבה<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה בינונית\"> במידה בינונית<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה מועטה\"> במידה מועטה<" + "/label> \n"
+ + "          <" + "label><" + "input type=\"checkbox\" id=\"siuu\" name=\"willingnessCommand2\" value=\"לא מעוניין כלל\"> לא מעוניין \n"
+ + "            כלל<" + "/label> \n"
+ + "        <" + "/div> \n"
+ + " \n"
+ + "        <" + "label>4. הערות נוספות:<" + "/label> \n"
+ + "        <" + "textarea name=\"additionalComments\" rows=\"3\"><" + "/textarea> \n"
+ + " \n"
+ + "        <" + "h3>פרטי מפקדו של המפקד הישיר:<" + "/h3> \n"
  + "        <" + "label>שם פרטי בלבד:<" + "/label> \n"
- + "        <" + "input type=\"text\" name=\"commanderName\"> \n"
+ + "        <" + "input type=\"text\" name=\"commander2Name\"> \n"
  + " \n"
  + "        <" + "label>טלפון:<" + "/label> \n"
- + "        <" + "input type=\"text\" name=\"commanderPhone\" pattern=\"\d{10}\"> \n"
+ + "        <" + "input type=\"text\" name=\"commander2Phone\" pattern=\"\d{10}\"> \n"
+ + " \n"
+ + "        <" + "button type=\"button\" id=\"send-form\">שלח במייל<" + "/button> \n"
  + " \n"
  + "      <" + "/div> \n"
- + " \n"
- + "      <" + "span> \n"
- + "        שים/י לב! תוכן הטופב חסוי וישמש את הגורמים המקצועיים בלבד. עם זאת, חובה להביא את החו\"ד לעיתו של המועמד ולבצע \n"
- + "        שיחת משוב לחוות הדעת שנכתבה! \n"
- + "        חתימת המועמד/הצהרת המפקד/ת שנערכו שיחות משוב לחוות דעת \n"
- + "      <" + "/span> \n"
- + " \n"
- + "      <" + "div> \n"
- + "        <" + "label>שם פרטי בלבד:<" + "/label> \n"
- + "        <" + "input type=\"text\" name=\"feedbackName\"> \n"
- + " \n"
- + "        <" + "label>חתימה:<" + "/label> \n"
- + "        <" + "input type=\"hidden\" name=\"signature\" /> \n"
- + "        <" + "canvas id=\"signature\" width=\"400\" height=\"150\" style=\"border:1px solid #ccc;\"><" + "/canvas> \n"
- + " \n"
- + "        <" + "button type=\"button\" onclick=\"clearSignature()\">נקה חתימה<" + "/button> \n"
- + " \n"
- + "      <" + "/div> \n"
- + " \n"
- + "      <" + "h2>חלק ב': דעת מפקדו של המפקד הישיר<" + "/h2> \n"
- + " \n"
- + "      <" + "label>1. משך היכרותך עם החייל בחודשים<" + "/label> \n"
- + "      <" + "input type=\"number\" name=\"monthsUnder2\" min=\"0\"> \n"
- + " \n"
- + "      <" + "label>מידת היכרות:<" + "/label> \n"
- + "      <" + "div id=\"familiarity2\"> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"טובה מאוד\"> טובה מאוד<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"די טובה\"> די טובה<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"בינונית\"> בינונית<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"קלושה\"> קלושה<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"איני יכול/ה להעריך\"> איני יכול להעריך<" + "/label> \n"
- + "      <" + "/div> \n"
- + " \n"
- + "      <" + "div> \n"
- + "        2.תאר/י את מידת ההתאמה של החייל/ת לקצונה, תוך התייחסות לנקודות חוזק וחולשה שלו/ה: \n"
- + "        <" + "label>נקודת חוזק:<" + "/label> \n"
- + "        <" + "input type=\"text\" name=\"strength2\"> \n"
- + " \n"
- + "        <" + "label>נקודת חולשה:<" + "/label> \n"
- + "        <" + "input type=\"text\" name=\"weakness2\"> \n"
- + "      <" + "/div> \n"
- + " \n"
- + "      <" + "label> \n"
- + "        3. באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ\"א ) \n"
- + "      <" + "/label> \n"
- + "      <" + "div id=\"willingnessCommand2\"> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה מאוד\"> במידה רבה מאוד<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה\"> במידה רבה<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה בינונית\"> במידה בינונית<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה מועטה\"> במידה מועטה<" + "/label> \n"
- + "        <" + "label><" + "input type=\"checkbox\" id=\"siuu\" name=\"willingnessCommand2\" value=\"לא מעוניין כלל\"> לא מעוניין \n"
- + "          כלל<" + "/label> \n"
- + "      <" + "/div> \n"
- + " \n"
- + "      <" + "label>4. הערות נוספות:<" + "/label> \n"
- + "      <" + "textarea name=\"additionalComments\" rows=\"3\"><" + "/textarea> \n"
- + " \n"
- + "      <" + "h3>פרטי מפקדו של המפקד הישיר:<" + "/h3> \n"
- + "      <" + "label>שם פרטי בלבד:<" + "/label> \n"
- + "      <" + "input type=\"text\" name=\"commander2Name\"> \n"
- + " \n"
- + "      <" + "label>טלפון:<" + "/label> \n"
- + "      <" + "input type=\"text\" name=\"commander2Phone\" pattern=\"\d{10}\"> \n"
- + " \n"
- + "      <" + "button type=\"button\" id=\"send-form\">שלח במייל<" + "/button> \n"
  + "    <" + "/fieldset> \n"
  + " \n"
  + "  <" + "/form> \n"
@@ -1345,6 +1805,15 @@ function submitAndEmail(e) {
 }
 
 document.getElementById("send-form").addEventListener("click", submitAndEmail)
+
+
+// document.getElementById("date-label").addEventListener("click", () => {
+//     document.getElementsByName("date")[0].click()
+// })
+
+// // document.getElementsByName("date")[0].addEventListener("click", () => {
+// //     alert("yoohoo2")
+// // })
 </script>
 </body>
 
