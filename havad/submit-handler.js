@@ -50,3 +50,12 @@ function submitAndEmail(e) {
 }
 
 document.getElementById("send-form").addEventListener("click", submitAndEmail)
+
+
+// document.getElementById("date-label").addEventListener("click", () => {
+//     document.getElementsByName("date")[0].click()
+// })
+
+// // document.getElementsByName("date")[0].addEventListener("click", () => {
+// //     alert("yoohoo2")
+// // })

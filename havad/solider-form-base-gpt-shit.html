@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <title>חוות דעת לקצונה</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      padding: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: right;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    h2 {
+      background-color: #e0e0e0;
+      padding: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    canvas#signature {
+      border: 2px solid black;
+    }
+
+
+    .eval-table {
+      border-collapse: collapse;
+      direction: rtl;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .eval-table th,
+    .eval-table td {
+      border: 1px solid #999;
+      padding: 10px;
+      min-width: 80px;
+    }
+
+    .eval-cell {
+      cursor: pointer;
+    }
+
+    .eval-cell.selected {
+      background-color: #d0f0d0;
+      font-weight: bold;
+    }
+
+    .eval-feature {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
+  <!-- Pako from CDN -->
+</head>
+
+<body>
+  <!DOCTYPE html>
+  <html lang="he" dir="rtl">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>טופס הערכת קצונה</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        direction: rtl;
+        font-family: sans-serif;
+      }
+
+      .page {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 100vh;
+        box-sizing: border-box;
+        padding: 1rem;
+      }
+
+      .right-half {
+        padding: 1rem;
+        border-left: 1px solid #ccc;
+      }
+
+      .left-half {
+        padding: 1rem;
+        overflow: auto;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        border: 1px solid black;
+        text-align: center;
+        padding: 6px;
+        font-size: 12px;
+      }
+
+      .eval-table td.eval-feature {
+        text-align: right;
+        font-weight: bold;
+      }
+
+      .eval-cell {
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .eval-cell.x {
+        background-color: #4caf50;
+        color: white;
+        font-weight: bold;
+      }
+
+      .hidden-select {
+        display: none;
+      }
+
+      /* Print settings */
+      @media print {
+        @page {
+          size: A4 landscape;
+          margin: 0;
+        }
+
+        body,
+        html {
+          width: 100%;
+          height: 100%;
+        }
+
+        .page {
+          height: 100%;
+          grid-template-columns: 1fr 1fr;
+          padding: 0.5cm;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <form class="page">
+      <!-- Right Half: Info -->
+      <div class="right-half">
+        <h1>טופס הערכת קצונה</h1>
+
+        <label>שם המעריך: <input type="text" name="evaluatorName"></label><br><br>
+        <label>תאריך ההערכה: <input type="date" name="evaluationDate"></label><br><br>
+        <label>שם מוערך: <input type="text" name="evaluateeName"></label><br><br>
+        <label>תפקיד: <input type="text" name="position"></label><br><br>
+        <label>יחידה: <input type="text" name="unit"></label><br><br>
+      </div>
+
+      <!-- Left Half: Eval Table -->
+      <div class="left-half">
+        <table id="eval-table" class="eval-table">
+          <thead>
+            <tr>
+              <th>מאפיין</th>
+              <th>גבוה מאוד</th>
+              <th>גבוה</th>
+              <th>בינוני</th>
+              <th>נמוך</th>
+              <th>נמוך מאוד</th>
+              <th>לא ניתן להעריך</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 0 -->
+            <tr>
+              <td class="eval-feature">עצמאות בביצוע משימות</td>
+              <td class="eval-cell" data-row="0" data-value="גבוה מאוד"></td>
+              <td class="eval-cell" data-row="0" data-value="גבוה"></td>
+              <td class="eval-cell" data-row="0" data-value="בינוני"></td>
+              <td class="eval-cell" data-row="0" data-value="נמוך"></td>
+              <td class="eval-cell" data-row="0" data-value="נמוך מאוד"></td>
+              <td class="eval-cell" data-row="0" data-value="לא ניתן להעריך"></td>
+              <td style="display:none;">
+                <select class="hidden-select" name="rating_0" id="hidden-input-0">
+                  <option value=""></option>
+                  <option value="גבוה מאוד">גבוה מאוד</option>
+                  <option value="גבוה">גבוה</option>
+                  <option value="בינוני">בינוני</option>
+                  <option value="נמוך">נמוך</option>
+                  <option value="נמוך מאוד">נמוך מאוד</option>
+                  <option value="לא ניתן להעריך">לא ניתן להעריך</option>
+                </select>
+              </td>
+            </tr>
+            <!-- Row 1 -->
+            <tr>
+              <td class="eval-feature">הבנת תהליכים ונהלים</td>
+              <td class="eval-cell" data-row="1" data-value="גבוה מאוד"></td>
+              <td class="eval-cell" data-row="1" data-value="גבוה"></td>
+              <td class="eval-cell" data-row="1" data-value="בינוני"></td>
+              <td class="eval-cell" data-row="1" data-value="נמוך"></td>
+              <td class="eval-cell" data-row="1" data-value="נמוך מאוד"></td>
+              <td class="eval-cell" data-row="1" data-value="לא ניתן להעריך"></td>
+              <td style="display:none;">
+                <select class="hidden-select" name="rating_1" id="hidden-input-1">
+                  <option value=""></option>
+                  <option value="גבוה מאוד">גבוה מאוד</option>
+                  <option value="גבוה">גבוה</option>
+                  <option value="בינוני">בינוני</option>
+                  <option value="נמוך">נמוך</option>
+                  <option value="נמוך מאוד">נמוך מאוד</option>
+                  <option value="לא ניתן להעריך">לא ניתן להעריך</option>
+                </select>
+              </td>
+            </tr>
+            <!-- Row 2 -->
+            <tr>
+              <td class="eval-feature">יכולת ניהול והובלת צוותים</td>
+              <td class="eval-cell" data-row="2" data-value="גבוה מאוד"></td>
+              <td class="eval-cell" data-row="2" data-value="גבוה"></td>
+              <td class="eval-cell" data-row="2" data-value="בינוני"></td>
+              <td class="eval-cell" data-row="2" data-value="נמוך"></td>
+              <td class="eval-cell" data-row="2" data-value="נמוך מאוד"></td>
+              <td class="eval-cell" data-row="2" data-value="לא ניתן להעריך"></td>
+              <td style="display:none;">
+                <select class="hidden-select" name="rating_2" id="hidden-input-2">
+                  <option value=""></option>
+                  <option value="גבוה מאוד">גבוה מאוד</option>
+                  <option value="גבוה">גבוה</option>
+                  <option value="בינוני">בינוני</option>
+                  <option value="נמוך">נמוך</option>
+                  <option value="נמוך מאוד">נמוך מאוד</option>
+                  <option value="לא ניתן להעריך">לא ניתן להעריך</option>
+                </select>
+              </td>
+            </tr>
+            <!-- Row 3 -->
+            <tr>
+              <td class="eval-feature">יכולת תכנון וביצוע</td>
+              <td class="eval-cell" data-row="3" data-value="גבוה מאוד"></td>
+              <td class="eval-cell" data-row="3" data-value="גבוה"></td>
+              <td class="eval-cell" data-row="3" data-value="בינוני"></td>
+              <td class="eval-cell" data-row="3" data-value="נמוך"></td>
+              <td class="eval-cell" data-row="3" data-value="נמוך מאוד"></td>
+              <td class="eval-cell" data-row="3" data-value="לא ניתן להעריך"></td>
+              <td style="display:none;">
+                <select class="hidden-select" name="rating_3" id="hidden-input-3">
+                  <option value=""></option>
+                  <option value="גבוה מאוד">גבוה מאוד</option>
+                  <option value="גבוה">גבוה</option>
+                  <option value="בינוני">בינוני</option>
+                  <option value="נמוך">נמוך</option>
+                  <option value="נמוך מאוד">נמוך מאוד</option>
+                  <option value="לא ניתן להעריך">לא ניתן להעריך</option>
+                </select>
+              </td>
+            </tr>
+            <!-- Repeat Rows 4-23 -->
+            <!-- You can continue adding rows 4-23 similarly using the structure above -->
+          </tbody>
+        </table>
+      </div>
+    </form>
+
+    <!-- <button id="tsup">Tsup</button>
+  <button id="tsup2">Tsup2</button> -->
+
+
+    <script>
+
+      // console.log( document.querySelector("input[value='במידה מועטה']")  )
+
+      // פונקציה לניקוי חתימה
+      function clearSignature() {
+        const canvas = document.getElementById("signature-pad");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+    </script>
+
+    <script>
+
+
+      var canvas = document.getElementById('signature');
+      var ctx = canvas.getContext("2d");
+      var drawing = false;
+      var prevX, prevY;
+      var currX, currY;
+      var signature = document.getElementsByName('signature')[0];
+
+      canvas.addEventListener("mousemove", draw);
+      document.addEventListener("mouseup", stop);
+      canvas.addEventListener("mousedown", start);
+
+      // function blah(e) {
+      //   setCanvasElFromHiddenInput()
+      // }
+
+      function setCanvasElFromHiddenInput() {
+        const img = new Image()
+        img.src = signature.value
+
+        img.addEventListener("load", () => {
+          canvas.getContext('2d').drawImage(img, 0, 0)
+        })
+      }
+
+
+      function start(e) {
+
+        console.log("starting to draw", signature.value[0], signature.value[1])
+        drawing = true;
+      }
+
+      function stop() {
+
+        if (drawing) {
+
+          console.log("stopping drawing")
+          drawing = false;
+          prevX = prevY = null;
+          signature.value = canvas.toDataURL();
+
+        }
+      }
+
+      function draw(e) {
+
+        if (!drawing) {
+          return;
+        }
+
+        console.log("well... drawing")
+
+        // Test for touchmove event, this requires another property.
+        var clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+        var clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+        console.log(clientX, clientY)
+
+        currX = clientX - canvas.getBoundingClientRect().left;
+        currY = clientY - canvas.getBoundingClientRect().top;
+
+        // console.log(currX, currY)
+
+        if (!prevX && !prevY) {
+          prevX = currX;
+          prevY = currY;
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(currX, currY);
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.closePath();
+
+        prevX = currX;
+        prevY = currY;
+      }
+
+      function clearSignature(e) {
+        ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        signature.value = "";
+      }
+
+      // function onSubmit(e) {
+      //     console.log({
+      //         'name': document.getElementsByName('name')[0].value,
+      //         'signature': signature.value,
+      //     });
+      //     return false;
+      // }
+
+
+
+      document.querySelectorAll('.eval-cell').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const row = cell.dataset.row;
+          const value = cell.dataset.value;
+
+          // ניקוי כל תאי השורה
+          document.querySelectorAll(`.eval-cell[data-row="${row}"]`).forEach(c => {
+            c.textContent = "";
+            c.classList.remove("selected");
+          });
+
+          // סימון התא
+          cell.textContent = "X";
+          cell.classList.add("selected");
+
+          // עדכון select הנסתר
+          const select = document.getElementById(`hidden-input-${row}`);
+          select.value = value;
+          console.log("changing", select.id, select.value)
+        });
+
+      });
+
+      function restoreSelectionsFromInputs() {
+        const rows = document.querySelectorAll('.eval-table tbody tr');
+
+        rows.forEach((row, rowIndex) => {
+          const select = document.getElementById(`hidden-input-${rowIndex}`);
+          const selectedValue = select.value;
+
+          if (!selectedValue) return;
+
+          // Clear all cells in the row
+          row.querySelectorAll(`.eval-cell[data-row="${rowIndex}"]`).forEach(cell => {
+            cell.textContent = "";
+            cell.classList.remove("selected");
+          });
+
+          // Re-select the correct cell
+          const cellToMark = row.querySelector(`.eval-cell[data-row="${rowIndex}"][data-value="${selectedValue}"]`);
+          if (cellToMark) {
+            cellToMark.textContent = "X";
+            cellToMark.classList.add("selected");
+          }
+        });
+      }
+
+      function disableSelecting() {
+        document.querySelectorAll('.eval-cell').forEach(cell => {
+          cell.style.pointerEvents = "none"
+        });
+      }
+
+      function destroyTableX() {
+
+        const rows = document.querySelectorAll('.eval-table tbody tr');
+
+        rows.forEach((row, rowIndex) => {
+          row.querySelectorAll(`.eval-cell[data-row="${rowIndex}"]`).forEach(cell => {
+            cell.textContent = "";
+            cell.classList.remove("selected");
+          });
+        });
+      }
+
+      // document.getElementById("tsup").addEventListener("click", destroyTableX)
+      // document.getElementById("tsup2").addEventListener("click", restoreSelectionsFromInputs)
+
+    </script>
+
+
+  </body>
+
+  </html>
