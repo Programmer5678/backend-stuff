@@ -123,21 +123,31 @@
       padding: 5px;
     } */
 
-    table {
+    /* table {
       width: 100%;
       border-collapse: collapse;
-      /* margin-bottom: 20px; */
-    }
+    } */
 
     th,
     td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: right;
+      border: 1px solid black;
+      text-align: center;
     }
 
-    th {
-      background-color: #f2f2f2;
+    tr {
+      border: 5px solid black;
+    }
+
+    tr>:nth-child(1) {
+      width: 15%;
+    }
+
+    tr>:nth-child(2) {
+      width: 27%;
+    }
+
+    tr>:nth-child(3) {
+      width: 58%;
     }
 
 
@@ -226,7 +236,7 @@
 
           </label>
 
-          <span style="font-weight: bold;">מיועד לקורס: </span> 
+          <span style="font-weight: bold;">מיועד לקורס: </span>
           <span> להב/מעוז/נחשון</span>
 
         </div>
@@ -271,27 +281,27 @@
           <div style="display: flex;">
 
             <label style="display: flex; padding-bottom: 18px;">
-              <span style="font-weight: bold;">החייל/ת משרת/ת תחת פיקודי  
+              <span style="font-weight: bold;">החייל/ת משרת/ת תחת פיקודי
                 &thinsp;
-               </span>
+              </span>
               <div style="position: relative; width:fit-content; height: fit-content;">
                 <span>___</span>
                 <input type="text" pattern="\d{1,2}" name="monthsUnder" style="display: block; inset: 15% 7%; position: absolute;
             font-size: 0.9em;">
               </div>
               <span> &thinsp;
-                חודשים. 
+                חודשים.
                 &thinsp;
               </span>
             </label>
 
             <label style="display: flex; ">
-              <span style="font-weight: bold;"> 
-                החו"ד נכתב יחד עם המפקד הקודם:	&thinsp;
+              <span style="font-weight: bold;">
+                החו"ד נכתב יחד עם המפקד הקודם: &thinsp;
               </span>
               <input type="checkbox" name="writtenUnderLast" style="display: block; cursor: pointer;">
               <span> &thinsp;
-                 (סמן אם כן)  </span>
+                (סמן אם כן) </span>
             </label>
 
           </div>
@@ -299,78 +309,130 @@
 
           <div style="display: flex; gap: 5px; padding-bottom: 18px;">
             <span style="font-weight: bold;">מידת היכרות עם החייל/ת:</span>
-          
+
             <label style="display: flex; align-items: center; gap:4px">
               <input type="checkbox" name="familiarity" value="טובה מאוד">
               טובה מאוד
             </label>
-          
+
             <label style="display: flex; align-items: center; gap:4px ">
               <input type="checkbox" name="familiarity" value="די טובה">
               די טובה
             </label>
-          
+
             <label style="display: flex; align-items: center;  gap:4px ">
               <input type="checkbox" name="familiarity" value="בינונית">
               בינונית
             </label>
-          
+
             <label style="display: flex; align-items: center;  gap:4px">
               <input type="checkbox" name="familiarity" value="קלושה">
               קלושה
             </label>
           </div>
-          
-          
+
+
           <label style="display: flex; padding-bottom: 18px;">
             <span style="font-weight: bold;">תפקידו/ה הנוכחי של החייל/ת (פירוט ברמת בלמ"ס בלבד):</span>
             <div style="position: relative; width:fit-content; height: fit-content;">
               <span>___________________</span>
-              <input type="text" name="role"
-                style="display: block; inset: 15% 7%; position: absolute;">
+              <input type="text" name="role" style="display: block; inset: 15% 7%; position: absolute;">
             </div>
           </label>
 
-          <span style="padding-bottom: 18px; font-weight: bold;">1. &thinsp; 
-               תאר את המועמד/ת בטבלה הבאה, תוך התייחסות ל-2 נקודות חוזק ו-2 נקודות חולשה וכיצד הן באות לידי ביטוי
+          <span style="padding-bottom: 18px; font-weight: bold;">1. &thinsp;
+            תאר את המועמד/ת בטבלה הבאה, תוך התייחסות ל-2 נקודות חוזק ו-2 נקודות חולשה וכיצד הן באות לידי ביטוי
             על
             ידי
             הסבר או דוגמה.</span>
-          <!-- <table style="border-collapse: collapse; text-align: right;">
-            <thead>
+
+          <table style="border-collapse: collapse; text-align: right; width: 100%; height: 250px;">
+            <thead style="height:15%">
               <tr>
                 <th></th>
                 <th>מאפייני החייל/ת</th>
                 <th>הסבר/דוגמה</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
+            <tbody style="height: 85%">
+              <tr style="height: 50%;">
                 <td>נקודות חוזק</td>
                 <td>
-                  <div style="display: flex; flex-direction: column;">
-                    <input type="text" name="strength1" placeholder="מאפיין ראשון">
-                    <hr style="width: 100%;">
-                    <input type="text" name="strength2" placeholder="מאפיין שני">
+                  <div style="display: flex; flex-direction: column; height: 100%; border-right: 1px solid black;">
+
+                    <textarea rows="2" type="text" name="strength1" placeholder="מאפיין ראשון"
+                      style="width: 100%; height: 50%; border-bottom: 1px solid black;"></textarea>
+                    <textarea rows="2" type="text" name="strength2" placeholder="מאפיין שני"
+                      style="width: 100%; height: 50%; border-bottom: 1px solid black;"></textarea>
+
                   </div>
                 </td>
-                <td><input type="text" name="strengthExample" style="width: 100%;" placeholder="הסבר או דוגמה"></td>
+                <td>
+
+                  <textarea rows="4" name="strengthExample" style="width: 100%; height: 100%; display: block;
+                    line-height: 26.5px;
+                    background: repeating-linear-gradient(
+                    to bottom,
+                    white 0%,
+                    white 25%,
+                    black 25%,
+                    black calc(25% + 1px),
+                    white calc(25% + 1px),
+                    white 50%,
+                    black 50%,
+                    black calc(50% + 1px),
+                    white calc(50% + 1px),
+                    white 75%,
+                    black 75%,
+                    black calc(75% + 1px),
+                    white calc(75% + 1px),
+                    white 100%
+                  );
+                  " placeholder="הסבר או דוגמה"></textarea>
+
+                </td>
               </tr>
-              <tr>
+              <tr style="height: 50%;">
                 <td>נקודות חולשה</td>
                 <td>
-                  <div style="display: flex; flex-direction: column;">
-                    <input type="text" name="weakness1" placeholder="מאפיין ראשון">
-                    <hr style="width: 100%;">
-                    <input type="text" name="weakness2" placeholder="מאפיין שני">
+                  <div style="display: flex; flex-direction: column; height: 100%; border-right: 1px solid black;">
+                    <textarea rows="2" type="text" name="weakness1" placeholder="מאפיין ראשון"
+                      style="width: 100%; height: 50%; border-bottom: 1px solid black;"></textarea>
+                    <textarea rows="2" type="text" name="weakness2" placeholder="מאפיין שני"
+                      style="width: 100%; height: 50%; border-bottom: 1px solid black;"></textarea>
                   </div>
                 </td>
-                <td><input type="text" name="weaknessExample" style="width: 100%;" placeholder="הסבר או דוגמה"></td>
+                <td>
+
+                  <textarea rows="4" name="weaknessExample" style="width: 100%; height: 100%; display: block;
+                    line-height: 26.5px;
+                    background: repeating-linear-gradient(
+                    to bottom,
+                    white 0%,
+                    white 25%,
+                    black 25%,
+                    black calc(25% + 1px),
+                    white calc(25% + 1px),
+                    white 50%,
+                    black 50%,
+                    black calc(50% + 1px),
+                    white calc(50% + 1px),
+                    white 75%,
+                    black 75%,
+                    black calc(75% + 1px),
+                    white calc(75% + 1px),
+                    white 100%
+                  );
+                  " placeholder="הסבר או דוגמה"></textarea>
+
+                </td>
               </tr>
             </tbody>
-          </table> -->
+          </table>
 
-          <table style="border-collapse: collapse; text-align: right; width: 100%;">
+
+
+          <!-- <table style="border-collapse: collapse; text-align: right; width: 100%;">
             <thead>
               <tr>
                 <th></th>
@@ -398,8 +460,8 @@
                 <td><input type="text" name="weaknessExample" placeholder="הסבר או דוגמה" style="width: 100%;"></td>
               </tr>
             </tbody>
-          </table>
-          
+          </table> -->
+
 
           <label>2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה): שים לב! ניתן לבחור עד שלושה מאפיינים
             בקטגוריה
