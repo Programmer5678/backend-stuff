@@ -193,8 +193,9 @@
 
     .class-17 {
       display: flex;
+      flex-direction: row;
       align-items: center;
-      gap: 4px
+      gap: 9px;
     }
 
     .class-21 {
@@ -260,6 +261,17 @@
     .class-31 {
       display: none;
 
+    }
+
+    .class-32 {
+      display: flex;
+      gap: 10px;
+    }
+
+    .class-33 {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 30px;
     }
 
     #feedback-form {
@@ -412,16 +424,16 @@
           grey 0%,
           grey 25%,
           black 25%,
-          black 27%,
-          grey 27%,
+          black calc(25% + 1px),
+          grey calc(25% + 1px),
           grey 50%,
           black 50%,
-          black 52%,
-          grey 52%,
+          black calc(50% + 1px),
+          grey calc(50% + 1px),
           grey 75%,
           black 75%,
-          black 77%,
-          grey 77%,
+          black calc(75% + 1px),
+          grey calc(75% + 1px),
           grey 100%) !important;
     }
 
@@ -432,18 +444,19 @@
       line-height: 26.5px;
       /* background: linear-gradient(to right, yellow 50%, green 50%); */
 
-      background: linear-gradient(to bottom,
-          grey 0%,
-          grey 39%,
-          black 39%,
-          black 41%,
-          grey 41%,
-          grey 78%,
-          black 78%,
-          black 80%,
-          grey 80%,
-          grey 100% );
+      background: repeating-linear-gradient(to bottom,
+          grey 0px,
+          grey 26.5px,
+          black 26.5px,
+          black 27.5px,
+          grey 27.5px,
+          grey 53px,
+          black 53px,
+          black 54px,
+          grey 54px,
+          grey 100%);
 
+      height: 55.5px;
     }
   </style>
 
@@ -930,65 +943,120 @@
 
       <div style="background-color: blue;">
 
-        <span style="font-weight: bold;">3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה:</span>
-        <div id="motivation">
-          <label><input type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה מאוד</label>
-          <label><input type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
-          <label><input type="checkbox" name="motivation" value="בינונית"> בינונית</label>
-          <label><input type="checkbox" name="motivation" value="נמוכה"> נמוכה</label>
-          <label><input type="checkbox" name="motivation" value="איני רוצה לצאת"> איני רוצה לצאת</label>
-        </div>
-
-        <label>4. תחומים בהם החייל/ת עלול/ה להתקשות בקורס קצינים / בתפקיד:</label>
-        <textarea name="difficultyAreas" rows="2" class="mytextareaclass2"></textarea>
-
-        <label>5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?</label>
-        <div id="suitabilityCompared">
-          <label><input type="checkbox" name="suitabilityCompared" value="יותר מרוב החיילים בתפקידים דומים"> יותר מרוב
-            החיילים בתפקידים דומים</label>
-          <label><input type="checkbox" name="suitabilityCompared" value="כמו רוב החיילים בתפקידים דומים"> כמו רוב
-            החיילים
-            בתפקידים דומים</label>
-          <label><input type="checkbox" name="suitabilityCompared" value="פחות מרוב החיילים בתפקידים דומים"> פחות מרוב
-            החיילים בתפקידים דומים</label>
-          <label><input type="checkbox" name="suitabilityCompared" value="אינו מתאים/ה כלל לקצונה">אינו מתאים/ה כלל
+        <span style="font-weight: bold;">3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה?</span>
+        <div id="motivation" class="class-32">
+          <label class="class-17"><input type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה מאוד</label>
+          <label class="class-17"><input type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
+          <label class="class-17"><input type="checkbox" name="motivation" value="בינונית"> בינונית</label>
+          <label class="class-17"><input type="checkbox" name="motivation" value="נמוכה"> נמוכה</label>
+          <label class="class-17"><input type="checkbox" name="motivation" value="איני רוצה לצאת"> איני רוצה לצאת
             לקצונה</label>
         </div>
 
-        <label>6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה?</label>
-        <div id="willingnessCommand">
-          <label><input type="checkbox" name="willingnessCommand" value="במידה רבה מאוד"> במידה רבה מאוד</label>
-          <label><input type="checkbox" name="willingnessCommand" value="במידה רבה"> במידה רבה</label>
-          <label><input type="checkbox" name="willingnessCommand" value="במידה בינונית"> במידה בינונית</label>
-          <label><input type="checkbox" name="willingnessCommand" value="במידה מועטה"> במידה מועטה</label>
-          <label><input type="checkbox" name="willingnessCommand" value="לא מעוניין כלל"> לא מעוניין כלל</label>
+        <label style="font-weight: bold;">4. תחומים בהם החייל/ת עלול/ה להתקשות בקורס קצינים / בתפקיד:</label>
+        <textarea name="difficultyAreas" rows="2" class="mytextareaclass2"></textarea>
+
+        <span style="font-weight: bold;">5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?</span>
+        <div id="suitabilityCompared" class="class-33">
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared"
+              value="יותר מרוב החיילים בתפקידים דומים"> יותר מרוב
+            החיילים בתפקידים דומים</label>
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared"
+              value="כמו רוב החיילים בתפקידים דומים"> כמו רוב
+            החיילים
+            בתפקידים דומים</label>
+
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared"
+              value="פחות מרוב החיילים בתפקידים דומים"> פחות מרוב
+            החיילים בתפקידים דומים</label>
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared" value="אינו מתאים/ה כלל לקצונה">אינו
+            מתאים/ה כלל
+            לקצונה</label>
+        </div>
+
+        <span style="font-weight: bold;">
+          6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה?
+        </span>
+        <div id="willingnessCommand" class="class-32">
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה רבה מאוד"> במידה רבה
+            מאוד</label>
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה רבה"> במידה רבה</label>
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה בינונית"> במידה
+            בינונית</label>
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה מועטה"> במידה
+            מועטה</label>
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="לא מעוניין כלל"> איני
+            מעוניין/ת כלל</label>
         </div>
 
         <div>
           <h3>פרטי המפקד/ת הישיר/ה:</h3>
-          <label>שם פרטי בלבד:</label>
-          <input type="text" name="commanderName">
 
-          <label>טלפון:</label>
-          <input type="text" name="commanderPhone" pattern="\d{10}">
+          <div style="display: flex;">
+            <label class="class-2">
+              <span class="class-3">שם פרטי בלבד:</span>
+              <div class="class-4">
+                <div>__________</div>
+
+                <input type="text" name="kidName" class="class-11">
+              </div>
+            </label>
+
+            <label class="class-2">
+              <span class="class-3">טלפון:</span>
+              <div class="class-4">
+                <div>__________</div>
+
+                <input type="number" name="numba" class="class-6 class-11">
+              </div>
+
+            </label>
+
+          </div>
 
         </div>
 
-        <span>
-          שים/י לב! תוכן הטופב חסוי וישמש את הגורמים המקצועיים בלבד. עם זאת, חובה להביא את החו"ד לעיתו של המועמד ולבצע
-          שיחת משוב לחוות הדעת שנכתבה!
-          חתימת המועמד/הצהרת המפקד/ת שנערכו שיחות משוב לחוות דעת
-        </span>
+        <p style="display: inline-block;">
+          <span style="font-weight: bold; text-decoration: underline;">שים/י לב!</span>
+          תוכן הטופס חסוי וישמש את הגורמים המקצועיים בלבד.
+          <span style="font-weight: bold; ">
+            חובה להביא את החו"ד לעיונו של המועמד ולבצע שיחות משוב לחוות הדעת שנכתבה!
+          </span>
+          <span style="display: block; text-align: left;">
+            חתימת המועמד/הצהרת המפקד/ת שנערכו שיחות
+          </span>
+          <span style="display: block; text-align: center;">
+            משוב לחוות דעת.
+          </span>
+        </p>
+        
+        
 
         <div>
-          <label>שם פרטי בלבד:</label>
-          <input type="text" name="feedbackName">
 
-          <label>חתימה:</label>
-          <input type="hidden" name="signature" />
-          <canvas id="signature" width="400" height="150" style="border:1px solid #ccc;"></canvas>
+          <label class="class-2">
+            <span class="class-3">שם פרטי בלבד:</span>
+            <div class="class-4">
+              <div>__________</div>
 
-          <button type="button" onclick="clearSignature()">נקה חתימה</button>
+              <input type="number" name="feedbackName" class="class-11">
+            </div>
+
+          </label>
+
+          <label class="class-2">
+            <span class="class-3">חתימה: </span>
+            <div class="class-4">
+              <div>__________</div>
+
+              <canvas id="signature" width="100" height="100" style="border:1px solid #ccc; " 
+              ></canvas>
+            </div>
+
+            <input type="hidden" name="signature" />
+            <!-- <button type="button" onclick="clearSignature()">נקה חתימה</button> -->
+
+          </label>
 
         </div>
 
