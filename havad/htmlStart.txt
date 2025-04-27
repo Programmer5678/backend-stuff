@@ -222,6 +222,17 @@
       background-color: grey;
       padding: 2px;
     }
+
+    /* fieldset >:nth-child(1) >:nth-child(n){
+      padding-bottom: 18px;
+    } */
+
+    fieldset >:nth-child(1) {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }    
+
   </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
@@ -300,11 +311,11 @@
 
         </div>
 
-        <h3 style="text-decoration: underline; font-size: 1em; padding-bottom: 18px;">חלק א: חוות דעת המפקד הישיר</h2>
+        <h3 style="text-decoration: underline; font-size: 1em; ">חלק א: חוות דעת המפקד הישיר</h3>
 
           <div style="display: flex;">
 
-            <label style="display: flex; padding-bottom: 18px;">
+            <label style="display: flex;">
               <span style="font-weight: bold;">החייל/ת משרת/ת תחת פיקודי
                 &thinsp;
               </span>
@@ -364,12 +375,13 @@
             </div>
           </label>
 
-          <span style="padding-bottom: 18px; font-weight: bold;">1. &thinsp;
+          <p style="font-weight: bold;">1. &thinsp;
             תאר את המועמד/ת בטבלה הבאה, תוך התייחסות ל-2 נקודות חוזק ו-2 נקודות חולשה וכיצד הן באות לידי ביטוי
             על
             ידי
-            הסבר או דוגמה.</span>
+            הסבר או דוגמה.</p>
 
+          
           <table id="qualities" style="border-collapse: collapse; text-align: right; width: 100%; height: 250px;">
             <thead style="height:15%">
               <tr style="height: 100%;">
@@ -489,10 +501,18 @@
           </table> -->
 
 
-          <label>2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה): שים לב! ניתן לבחור עד שלושה מאפיינים
+          <p style="font-weight: bold;">2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה): 
+            <span style="text-decoration: underline;">שים לב!</span>
+             ניתן <br>
+              לבחור 
+              עד
+             <span style="text-decoration: underline;">שלושה מאפיינים</span>
             בקטגוריה
-            "גבוה מאוד" ועד שלושה מאפיינים בקטגוריה "גבוה"
-          </label>
+            "גבוה מאוד"
+            ועד
+            <span style="text-decoration: underline;">שלושה מאפיינים</span>
+             בקטגוריה "גבוה"
+          </p>
           <table class="eval-table" id="eval-table">
             <thead>
               <tr>

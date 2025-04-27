@@ -222,6 +222,17 @@
       background-color: grey;
       padding: 2px;
     }
+
+    /* fieldset >:nth-child(1) >:nth-child(n){
+      padding-bottom: 18px;
+    } */
+
+    fieldset >:nth-child(1) {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }    
+
   </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
@@ -300,11 +311,11 @@
 
         </div>
 
-        <h3 style="text-decoration: underline; font-size: 1em; padding-bottom: 18px;">חלק א: חוות דעת המפקד הישיר</h2>
+        <h3 style="text-decoration: underline; font-size: 1em; ">חלק א: חוות דעת המפקד הישיר</h3>
 
           <div style="display: flex;">
 
-            <label style="display: flex; padding-bottom: 18px;">
+            <label style="display: flex;">
               <span style="font-weight: bold;">החייל/ת משרת/ת תחת פיקודי
                 &thinsp;
               </span>
@@ -364,12 +375,13 @@
             </div>
           </label>
 
-          <span style="padding-bottom: 18px; font-weight: bold;">1. &thinsp;
+          <p style="font-weight: bold;">1. &thinsp;
             תאר את המועמד/ת בטבלה הבאה, תוך התייחסות ל-2 נקודות חוזק ו-2 נקודות חולשה וכיצד הן באות לידי ביטוי
             על
             ידי
-            הסבר או דוגמה.</span>
+            הסבר או דוגמה.</p>
 
+          
           <table id="qualities" style="border-collapse: collapse; text-align: right; width: 100%; height: 250px;">
             <thead style="height:15%">
               <tr style="height: 100%;">
@@ -489,10 +501,18 @@
           </table> -->
 
 
-          <label>2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה): שים לב! ניתן לבחור עד שלושה מאפיינים
+          <p style="font-weight: bold;">2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה): 
+            <span style="text-decoration: underline;">שים לב!</span>
+             ניתן <br>
+              לבחור 
+              עד
+             <span style="text-decoration: underline;">שלושה מאפיינים</span>
             בקטגוריה
-            "גבוה מאוד" ועד שלושה מאפיינים בקטגוריה "גבוה"
-          </label>
+            "גבוה מאוד"
+            ועד
+            <span style="text-decoration: underline;">שלושה מאפיינים</span>
+             בקטגוריה "גבוה"
+          </p>
           <table class="eval-table" id="eval-table">
             <thead>
               <tr>
@@ -1273,6 +1293,17 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      background-color: grey; \n"
  + "      padding: 2px; \n"
  + "    } \n"
+ + " \n"
+ + "    /* fieldset >:nth-child(1) >:nth-child(n){ \n"
+ + "      padding-bottom: 18px; \n"
+ + "    } */ \n"
+ + " \n"
+ + "    fieldset >:nth-child(1) { \n"
+ + "      display: flex; \n"
+ + "      flex-direction: column; \n"
+ + "      gap: 18px; \n"
+ + "    }     \n"
+ + " \n"
  + "  <" + "/style> \n"
  + " \n"
  + "  <" + "script src=\"https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js\"><" + "/script> \n"
@@ -1351,11 +1382,11 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "        <" + "/div> \n"
  + " \n"
- + "        <" + "h3 style=\"text-decoration: underline; font-size: 1em; padding-bottom: 18px;\">חלק א: חוות דעת המפקד הישיר<" + "/h2> \n"
+ + "        <" + "h3 style=\"text-decoration: underline; font-size: 1em; \">חלק א: חוות דעת המפקד הישיר<" + "/h3> \n"
  + " \n"
  + "          <" + "div style=\"display: flex;\"> \n"
  + " \n"
- + "            <" + "label style=\"display: flex; padding-bottom: 18px;\"> \n"
+ + "            <" + "label style=\"display: flex;\"> \n"
  + "              <" + "span style=\"font-weight: bold;\">החייל/ת משרת/ת תחת פיקודי \n"
  + "                &thinsp; \n"
  + "              <" + "/span> \n"
@@ -1415,12 +1446,13 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "/div> \n"
  + "          <" + "/label> \n"
  + " \n"
- + "          <" + "span style=\"padding-bottom: 18px; font-weight: bold;\">1. &thinsp; \n"
+ + "          <" + "p style=\"font-weight: bold;\">1. &thinsp; \n"
  + "            תאר את המועמד/ת בטבלה הבאה, תוך התייחסות ל-2 נקודות חוזק ו-2 נקודות חולשה וכיצד הן באות לידי ביטוי \n"
  + "            על \n"
  + "            ידי \n"
- + "            הסבר או דוגמה.<" + "/span> \n"
+ + "            הסבר או דוגמה.<" + "/p> \n"
  + " \n"
+ + "           \n"
  + "          <" + "table id=\"qualities\" style=\"border-collapse: collapse; text-align: right; width: 100%; height: 250px;\"> \n"
  + "            <" + "thead style=\"height:15%\"> \n"
  + "              <" + "tr style=\"height: 100%;\"> \n"
@@ -1540,10 +1572,18 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          <" + "/table> --> \n"
  + " \n"
  + " \n"
- + "          <" + "label>2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה): שים לב! ניתן לבחור עד שלושה מאפיינים \n"
+ + "          <" + "p style=\"font-weight: bold;\">2. דרג/י את החייל/ת לפי המאפיינים הבאים (סמן X במשבצת המתאימה):  \n"
+ + "            <" + "span style=\"text-decoration: underline;\">שים לב!<" + "/span> \n"
+ + "             ניתן <" + "br> \n"
+ + "              לבחור  \n"
+ + "              עד \n"
+ + "             <" + "span style=\"text-decoration: underline;\">שלושה מאפיינים<" + "/span> \n"
  + "            בקטגוריה \n"
- + "            \"גבוה מאוד\" ועד שלושה מאפיינים בקטגוריה \"גבוה\" \n"
- + "          <" + "/label> \n"
+ + "            \"גבוה מאוד\" \n"
+ + "            ועד \n"
+ + "            <" + "span style=\"text-decoration: underline;\">שלושה מאפיינים<" + "/span> \n"
+ + "             בקטגוריה \"גבוה\" \n"
+ + "          <" + "/p> \n"
  + "          <" + "table class=\"eval-table\" id=\"eval-table\"> \n"
  + "            <" + "thead> \n"
  + "              <" + "tr> \n"
