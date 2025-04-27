@@ -81,6 +81,15 @@
       /* nice to kill browser styling */
     }
 
+    button {
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 5px;
+      background-color: black;
+      color: white;
+      font-size: 13px;
+    }
+
     /* 8. Fieldset clean */
     fieldset {
       border: none;
@@ -157,7 +166,6 @@
       display: block;
       inset: 15% 7%;
       position: absolute;
-
     }
 
     .class-12 {
@@ -333,14 +341,12 @@
     }
 
 
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-top: 20px;
-    }
 
     canvas#signature {
-      border: 2px solid black;
+      border: 1px solid black;
+      width: 100%;
+      height: 100%;
+      background-color: grey;
     }
 
 
@@ -458,6 +464,9 @@
 
       height: 55.5px;
     }
+
+
+
   </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
@@ -1029,10 +1038,10 @@
             משוב לחוות דעת.
           </span>
         </p>
-        
-        
 
-        <div>
+
+
+        <div style="display: flex; align-items: center;">
 
           <label class="class-2">
             <span class="class-3">שם פרטי בלבד:</span>
@@ -1049,14 +1058,19 @@
             <div class="class-4">
               <div>__________</div>
 
-              <canvas id="signature" width="100" height="100" style="border:1px solid #ccc; " 
-              ></canvas>
+              <div class="class-11">
+                <canvas id="signature"></canvas>
+              </div>
             </div>
 
             <input type="hidden" name="signature" />
-            <!-- <button type="button" onclick="clearSignature()">נקה חתימה</button> -->
-
+            
           </label>
+
+          <div style="padding-right: 5px;"><button type="button"
+            onclick="clearSignature()">נקה חתימה</button>
+          </div>
+
 
         </div>
 
@@ -1131,8 +1145,18 @@
 
   <script>
 
-
     var canvas = document.getElementById('signature');
+
+    //Make sure canvas width and height attr are properly set...
+    function saveCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+
+
+    saveCanvas()
+    
+
     var ctx = canvas.getContext("2d");
     var drawing = false;
     var prevX, prevY;
@@ -1384,6 +1408,15 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      /* nice to kill browser styling */ \n"
  + "    } \n"
  + " \n"
+ + "    button { \n"
+ + "      cursor: pointer; \n"
+ + "      padding: 5px; \n"
+ + "      border-radius: 5px; \n"
+ + "      background-color: black; \n"
+ + "      color: white; \n"
+ + "      font-size: 13px; \n"
+ + "    } \n"
+ + " \n"
  + "    /* 8. Fieldset clean */ \n"
  + "    fieldset { \n"
  + "      border: none; \n"
@@ -1460,7 +1493,6 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      display: block; \n"
  + "      inset: 15% 7%; \n"
  + "      position: absolute; \n"
- + " \n"
  + "    } \n"
  + " \n"
  + "    .class-12 { \n"
@@ -1636,14 +1668,12 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "    } \n"
  + " \n"
  + " \n"
- + "    button { \n"
- + "      padding: 10px 20px; \n"
- + "      font-size: 16px; \n"
- + "      margin-top: 20px; \n"
- + "    } \n"
  + " \n"
  + "    canvas#signature { \n"
- + "      border: 2px solid black; \n"
+ + "      border: 1px solid black; \n"
+ + "      width: 100%; \n"
+ + "      height: 100%; \n"
+ + "      background-color: grey; \n"
  + "    } \n"
  + " \n"
  + " \n"
@@ -1761,6 +1791,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "      height: 55.5px; \n"
  + "    } \n"
+ + " \n"
+ + " \n"
+ + " \n"
  + "  <" + "/style> \n"
  + " \n"
  + "  <" + "script src=\"https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js\"><" + "/script> \n"
@@ -2332,10 +2365,10 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            משוב לחוות דעת. \n"
  + "          <" + "/span> \n"
  + "        <" + "/p> \n"
- + "         \n"
- + "         \n"
  + " \n"
- + "        <" + "div> \n"
+ + " \n"
+ + " \n"
+ + "        <" + "div style=\"display: flex; align-items: center;\"> \n"
  + " \n"
  + "          <" + "label class=\"class-2\"> \n"
  + "            <" + "span class=\"class-3\">שם פרטי בלבד:<" + "/span> \n"
@@ -2352,14 +2385,19 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "div class=\"class-4\"> \n"
  + "              <" + "div>__________<" + "/div> \n"
  + " \n"
- + "              <" + "canvas id=\"signature\" width=\"100\" height=\"100\" style=\"border:1px solid #ccc; \"  \n"
- + "              ><" + "/canvas> \n"
+ + "              <" + "div class=\"class-11\"> \n"
+ + "                <" + "canvas id=\"signature\"><" + "/canvas> \n"
+ + "              <" + "/div> \n"
  + "            <" + "/div> \n"
  + " \n"
  + "            <" + "input type=\"hidden\" name=\"signature\" /> \n"
- + "            <" + "!-- <" + "button type=\"button\" onclick=\"clearSignature()\">נקה חתימה<" + "/button> --> \n"
- + " \n"
+ + "             \n"
  + "          <" + "/label> \n"
+ + " \n"
+ + "          <" + "div style=\"padding-right: 5px;\"><" + "button type=\"button\" \n"
+ + "            onclick=\"clearSignature()\">נקה חתימה<" + "/button> \n"
+ + "          <" + "/div> \n"
+ + " \n"
  + " \n"
  + "        <" + "/div> \n"
  + " \n"
@@ -2434,8 +2472,18 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "  <" + "script> \n"
  + " \n"
- + " \n"
  + "    var canvas = document.getElementById('signature'); \n"
+ + " \n"
+ + "    //Make sure canvas width and height attr are properly set... \n"
+ + "    function saveCanvas() { \n"
+ + "      canvas.width = canvas.offsetWidth; \n"
+ + "      canvas.height = canvas.offsetHeight; \n"
+ + "    } \n"
+ + " \n"
+ + " \n"
+ + "    saveCanvas() \n"
+ + "     \n"
+ + " \n"
  + "    var ctx = canvas.getContext(\"2d\"); \n"
  + "    var drawing = false; \n"
  + "    var prevX, prevY; \n"
