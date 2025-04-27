@@ -412,17 +412,38 @@
           grey 0%,
           grey 25%,
           black 25%,
-          black calc(25% + 1px),
-          grey calc(25% + 1px),
+          black 27%,
+          grey 27%,
           grey 50%,
           black 50%,
-          black calc(50% + 1px),
-          grey calc(50% + 1px),
+          black 52%,
+          grey 52%,
           grey 75%,
           black 75%,
-          black calc(75% + 1px),
-          grey calc(75% + 1px),
+          black 77%,
+          grey 77%,
           grey 100%) !important;
+    }
+
+
+    .mytextareaclass2 {
+
+      display: block;
+      line-height: 26.5px;
+      /* background: linear-gradient(to right, yellow 50%, green 50%); */
+
+      background: linear-gradient(to bottom,
+          grey 0%,
+          grey 39%,
+          black 39%,
+          black 41%,
+          grey 41%,
+          grey 78%,
+          black 78%,
+          black 80%,
+          grey 80%,
+          grey 100% );
+
     }
   </style>
 
@@ -919,7 +940,7 @@
         </div>
 
         <label>4. תחומים בהם החייל/ת עלול/ה להתקשות בקורס קצינים / בתפקיד:</label>
-        <textarea name="difficultyAreas" rows="3"></textarea>
+        <textarea name="difficultyAreas" rows="2" class="mytextareaclass2"></textarea>
 
         <label>5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?</label>
         <div id="suitabilityCompared">
@@ -976,7 +997,7 @@
         <label>1. משך היכרותך עם החייל בחודשים</label>
         <input type="number" name="monthsUnder2" min="0">
 
-        <label>מידת היכרות:</label>
+        <!-- <label>מידת היכרות:</label>
         <div id="familiarity2">
           <label><input type="checkbox" name="familiarity2" value="טובה מאוד"> טובה מאוד</label>
           <label><input type="checkbox" name="familiarity2" value="די טובה"> די טובה</label>
@@ -1014,7 +1035,7 @@
         <input type="text" name="commander2Name">
 
         <label>טלפון:</label>
-        <input type="text" name="commander2Phone" pattern="\d{10}">
+        <input type="text" name="commander2Phone" pattern="\d{10}"> -->
 
         <button type="button" id="send-form">שלח במייל</button>
 
