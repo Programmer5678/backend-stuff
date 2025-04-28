@@ -471,6 +471,7 @@
 
     #signature-stuff {
       display: flex;
+      justify-content: center;
       align-items: center;
       gap: 20px;
     }
@@ -504,10 +505,6 @@
     }
   </style>
 
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
-
-  <!-- Pako from CDN -->
 </head>
 
 <body>
@@ -1078,7 +1075,7 @@
 
 
 
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; justify-content: center;">
 
           <label class="class-2">
             <span class="class-3">שם פרטי בלבד:</span>
