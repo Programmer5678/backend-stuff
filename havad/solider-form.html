@@ -502,7 +502,35 @@
       width: 30px;
       height: 30px;
 
+      cursor: pointer;
     }
+
+
+    #part-b {
+      font-size: 20px;
+      text-decoration: underline;
+      font-weight: bold;
+      text-align: center;
+
+      padding-top: 55px;
+      padding-bottom: 10px;
+    }
+
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input[type="checkbox"] {
+      cursor: pointer;
+    }
+
+    /* fieldset {
+      display: flex;
+      flex-direction: row;
+    } */
   </style>
 
 </head>
@@ -511,7 +539,7 @@
 
   <form id="feedback-form">
 
-    <fieldset style="background-color: brown;">
+    <fieldset>
 
       <div class="class-1">
 
@@ -779,7 +807,7 @@
               <td class="class-31">
                 <select name="rating_1" id="hidden-input-1" hidden="">
                   <option value=""></option>
-                  <option value="גבוה מאוד"></option>
+                  <option id="babulele" value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
                   <option value="בינוני"></option>
                   <option value="נמוך"></option>
@@ -983,8 +1011,7 @@
         </table>
       </div>
 
-
-      <div style="background-color: blue;">
+      <div style="border-right: 2px solid black;">
 
         <span style="font-weight: bold;">3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה?</span>
         <div id="motivation" class="class-32">
@@ -1032,7 +1059,7 @@
             מעוניין/ת כלל</label>
         </div>
 
-        <div>
+        <div class="info">
           <h3>פרטי המפקד/ת הישיר/ה:</h3>
 
           <div style="display: flex;">
@@ -1080,7 +1107,7 @@
           <label class="class-2">
             <span class="class-3">שם פרטי בלבד:</span>
             <div class="class-4">
-              <div>__________</div>
+              <div>____________________</div>
 
               <input type="text" name="feedbackName" class="class-11">
             </div>
@@ -1091,7 +1118,7 @@
             <label class="class-2" id="signature-label" style="position: relative">
               <span class="class-3">חתימה: </span>
               <div class="class-4">
-                <div>__________</div>
+                <div>____________________</div>
 
                 <div class="class-11">
                   <canvas id="signature"></canvas>
@@ -1126,52 +1153,152 @@
 
         </div>
 
-        <h2>חלק ב': דעת מפקדו של המפקד הישיר</h2>
-
-        <label>1. משך היכרותך עם החייל בחודשים</label>
-        <input type="number" name="monthsUnder2" min="0">
-
-        <!-- <label>מידת היכרות:</label>
-        <div id="familiarity2">
-          <label><input type="checkbox" name="familiarity2" value="טובה מאוד"> טובה מאוד</label>
-          <label><input type="checkbox" name="familiarity2" value="די טובה"> די טובה</label>
-          <label><input type="checkbox" name="familiarity2" value="בינונית"> בינונית</label>
-          <label><input type="checkbox" name="familiarity2" value="קלושה"> קלושה</label>
-          <label><input type="checkbox" name="familiarity2" value="איני יכול/ה להעריך"> איני יכול להעריך</label>
-        </div>
 
         <div>
-          2.תאר/י את מידת ההתאמה של החייל/ת לקצונה, תוך התייחסות לנקודות חוזק וחולשה שלו/ה:
-          <label>נקודת חוזק:</label>
-          <input type="text" name="strength2">
 
-          <label>נקודת חולשה:</label>
-          <input type="text" name="weakness2">
+          <h2 id="part-b">חלק ב': חוות דעת מפקדו של המפקד הישיר</h2>
+
+          <hr style="border: none; border-top: 3.5px dotted black; height: 0;">
+
         </div>
 
-        <label>
-          3. באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ"א )
+        <label class="class-2">
+          <span class="class-3">1.&emsp; משך היכרותיך עם החייל בחודשים &nbsp;</span>
+          <div class="class-10">
+            <span>___</span>
+            <input type="text" pattern="\d{1,2}" name="monthsUnder2" class="class-6 class-11">
+          </div>
+
         </label>
-        <div id="willingnessCommand2">
-          <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה מאוד</label>
-          <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
-          <label><input type="checkbox" name="willingnessCommand2" value="במידה בינונית"> במידה בינונית</label>
-          <label><input type="checkbox" name="willingnessCommand2" value="במידה מועטה"> במידה מועטה</label>
-          <label><input type="checkbox" id="siuu" name="willingnessCommand2" value="לא מעוניין כלל"> לא מעוניין
-            כלל</label>
+
+
+        <div class="class-16">
+          <span class="class-3">מידת ההיכרות:</span>
+
+          <label class="class-17">
+            <input type="checkbox" name="familiarity2" value="טובה מאוד">
+            טובה מאוד
+          </label>
+
+          <label class="class-17">
+            <input type="checkbox" name="familiarity2" value="די טובה">
+            די טובה
+          </label>
+
+          <label class="class-17">
+            <input type="checkbox" name="familiarity2" value="בינונית">
+            בינונית
+          </label>
+
+          <label class="class-17">
+            <input type="checkbox" name="familiarity2" value="קלושה">
+            קלושה
+          </label>
+
+          <label class="class-17">
+            <input type="checkbox" name="familiarity2" value="איני יודע להעריך">
+            איני יודע להעריך
+          </label>
+
         </div>
 
-        <label>4. הערות נוספות:</label>
-        <textarea name="additionalComments" rows="3"></textarea>
 
-        <h3>פרטי מפקדו של המפקד הישיר:</h3>
-        <label>שם פרטי בלבד:</label>
-        <input type="text" name="commander2Name">
 
-        <label>טלפון:</label>
-        <input type="text" name="commander2Phone" pattern="\d{10}"> -->
 
-        <button type="button" id="send-form">שלח במייל</button>
+        <div style="display: flex;">
+
+          <b>2.&emsp;</b>
+
+          <div>
+
+            <p><b> תאר/י את מידת ההתאמה של החייל/ת לקצונה,
+                <u>תוך התייחסות לנקודות חוזק וחולשה שלו/ה</u>:</b></p>
+
+
+            <label class="class-2">
+              <span class="class-3">נקודת חוזק:</span>
+              <div class="class-10">
+                <span>_________________________________________________________________</span>
+                <input type="text" name="strength2" class="class-11">
+                &nbsp;
+              </div>
+            </label>
+
+            <label class="class-2">
+              <span class="class-3">נקודת חולשה:</span>
+              <div class="class-10">
+                <span>_______________________________________________________________</span>
+                <input type="text" name="weakness2" class="class-11">
+                &nbsp;
+              </div>
+            </label>
+
+          </div>
+
+        </div>
+
+        <div style="display: flex; ">
+          <b>3.&emsp;</b>
+
+          <div style="display: flex; flex-direction: column; gap:15px;">
+
+            <b>באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ"א)</b>
+            <div id="willingnessCommand2">
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה מאוד</label>
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה בינונית"> במידה בינונית</label>
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה מועטה"> במידה מועטה</label>
+              <label><input type="checkbox" id="siuu" name="willingnessCommand2" value="איני מעוניין/ת כלל">
+                איני מעוניין/ת כלל
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <label class="class-2">
+          <span class="class-3">4.&emsp; הערות נוספות:</span>
+          <div class="class-10">
+            <span>________</span>
+            <input type="text" name="additionalComments" class="class-11">
+            &nbsp;
+          </div>
+        </label>
+
+
+
+
+
+        <div class="info">
+          <h3>פרטי מפקדו של המפקד הישיר</h3>
+
+          <div style="display: flex; align-items: center; gap: 3px;">
+            <label class="class-2">
+              <span class="class-3">שם פרטי בלבד:</span>
+              <div class="class-4">
+                <div>__________</div>
+
+                <input type="text" name="commander2Name" class="class-11">
+              </div>
+            </label>
+
+            <label class="class-2">
+              <span class="class-3">טלפון:</span>
+              <div class="class-4">
+                <div>__________</div>
+
+                <input type="text" name="commander2Phone" class="class-6 class-11" pattern="\d{10}">
+              </div>
+
+            </label>
+
+            <button type="button" id="send-form">הורד טופס</button>
+
+          </div>
+
+        </div>
 
       </div>
     </fieldset>
@@ -1200,27 +1327,77 @@
       document.addEventListener("mouseup", stop);
       canvas.addEventListener("mousedown", start);
 
-      document.querySelectorAll('.eval-cell').forEach(cell => {
-        cell.addEventListener('click', () => {
-          const row = cell.dataset.row;
-          const value = cell.dataset.value;
+      document.querySelectorAll('.eval-cell')
+        .forEach(cell => cell.addEventListener("click",
+          genCellEventListener(cell)
+        ));
 
-          // ניקוי כל תאי השורה
-          document.querySelectorAll(`.eval-cell[data-row="${row}"]`).forEach(c => {
-            c.textContent = "";
-            c.classList.remove("selected");
-          });
+      makeSureOnlyOneSelected()
 
-          // סימון התא
-          cell.textContent = "X";
-          cell.classList.add("selected");
+    }
 
+    function genCellEventListener(cell) {
+
+      return () => {
+
+        console.log("HIII")
+
+        const row = cell.dataset.row;
+        const value = cell.dataset.value;
+
+        if (isSelectAllowed(value)) {
           // עדכון select הנסתר
           const select = document.getElementById(`hidden-input-${row}`);
           select.value = value;
           console.log("changing", select.id, select.value)
-        });
 
+
+          restoreSelectionsFromInputs()
+
+        }
+
+      }
+
+    }
+
+    // 3 גבוה ,and 3 גבוה מאוד MAX allowed
+    function isSelectAllowed(value) {
+      const selectedHighest =
+        [...document.querySelectorAll("option[value='גבוה מאוד']")]
+          .filter(option => option.selected)
+
+      const selectedHigh =
+        [...document.querySelectorAll("option[value='גבוה']")]
+          .filter(option => option.selected)
+
+
+      if (value == "גבוה" && selectedHigh.length >= 3) {
+        alert("לא ניתן לבחור מעל 3 כגבוה")
+        return false
+      }
+
+      if (value == "גבוה מאוד" && selectedHighest.length >= 3) {
+        alert("לא ניתן לבחור מעל 3 כגבוה מאוד")
+        return false
+      }
+
+      return true
+    }
+
+    function makeSureOnlyOneSelected() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+          if (this.checked) {
+            const sameNameCheckboxes = document.querySelectorAll(`input[type="checkbox"][name="${this.name}"]`);
+            sameNameCheckboxes.forEach(box => {
+              if (box !== this) {
+                box.checked = false;
+              }
+            });
+          }
+        });
       });
     }
 
@@ -1244,9 +1421,9 @@
       }
 
       img.addEventListener("load", () => {
-        canvas.getContext('2d').drawImage(img, 0, 0, 
-                canvas.width, canvas.height) //Draw scaled version of signature into
-                                             //scaled canvas
+        canvas.getContext('2d').drawImage(img, 0, 0,
+          canvas.width, canvas.height) //Draw scaled version of signature into
+        //scaled canvas
 
         signature.value = canvas.toDataURL();
       })
@@ -1907,7 +2084,35 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      width: 30px; \n"
  + "      height: 30px; \n"
  + " \n"
+ + "      cursor: pointer; \n"
  + "    } \n"
+ + " \n"
+ + " \n"
+ + "    #part-b { \n"
+ + "      font-size: 20px; \n"
+ + "      text-decoration: underline; \n"
+ + "      font-weight: bold; \n"
+ + "      text-align: center; \n"
+ + " \n"
+ + "      padding-top: 55px; \n"
+ + "      padding-bottom: 10px; \n"
+ + "    } \n"
+ + " \n"
+ + " \n"
+ + "    .info { \n"
+ + "      display: flex; \n"
+ + "      flex-direction: column; \n"
+ + "      gap: 10px; \n"
+ + "    } \n"
+ + " \n"
+ + "    input[type=\"checkbox\"] { \n"
+ + "      cursor: pointer; \n"
+ + "    } \n"
+ + " \n"
+ + "    /* fieldset { \n"
+ + "      display: flex; \n"
+ + "      flex-direction: row; \n"
+ + "    } */ \n"
  + "  <" + "/style> \n"
  + " \n"
  + "<" + "/head> \n"
@@ -1916,7 +2121,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "  <" + "form id=\"feedback-form\"> \n"
  + " \n"
- + "    <" + "fieldset style=\"background-color: brown;\"> \n"
+ + "    <" + "fieldset> \n"
  + " \n"
  + "      <" + "div class=\"class-1\"> \n"
  + " \n"
@@ -2184,7 +2389,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "td class=\"class-31\"> \n"
  + "                <" + "select name=\"rating_1\" id=\"hidden-input-1\" hidden=\"\"> \n"
  + "                  <" + "option value=\"\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                  <" + "option id=\"babulele\" value=\"גבוה מאוד\"><" + "/option> \n"
  + "                  <" + "option value=\"גבוה\"><" + "/option> \n"
  + "                  <" + "option value=\"בינוני\"><" + "/option> \n"
  + "                  <" + "option value=\"נמוך\"><" + "/option> \n"
@@ -2388,8 +2593,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "        <" + "/table> \n"
  + "      <" + "/div> \n"
  + " \n"
- + " \n"
- + "      <" + "div style=\"background-color: blue;\"> \n"
+ + "      <" + "div style=\"border-right: 2px solid black;\"> \n"
  + " \n"
  + "        <" + "span style=\"font-weight: bold;\">3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה?<" + "/span> \n"
  + "        <" + "div id=\"motivation\" class=\"class-32\"> \n"
@@ -2437,7 +2641,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            מעוניין/ת כלל<" + "/label> \n"
  + "        <" + "/div> \n"
  + " \n"
- + "        <" + "div> \n"
+ + "        <" + "div class=\"info\"> \n"
  + "          <" + "h3>פרטי המפקד/ת הישיר/ה:<" + "/h3> \n"
  + " \n"
  + "          <" + "div style=\"display: flex;\"> \n"
@@ -2485,7 +2689,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          <" + "label class=\"class-2\"> \n"
  + "            <" + "span class=\"class-3\">שם פרטי בלבד:<" + "/span> \n"
  + "            <" + "div class=\"class-4\"> \n"
- + "              <" + "div>__________<" + "/div> \n"
+ + "              <" + "div>____________________<" + "/div> \n"
  + " \n"
  + "              <" + "input type=\"text\" name=\"feedbackName\" class=\"class-11\"> \n"
  + "            <" + "/div> \n"
@@ -2496,7 +2700,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "label class=\"class-2\" id=\"signature-label\" style=\"position: relative\"> \n"
  + "              <" + "span class=\"class-3\">חתימה: <" + "/span> \n"
  + "              <" + "div class=\"class-4\"> \n"
- + "                <" + "div>__________<" + "/div> \n"
+ + "                <" + "div>____________________<" + "/div> \n"
  + " \n"
  + "                <" + "div class=\"class-11\"> \n"
  + "                  <" + "canvas id=\"signature\"><" + "/canvas> \n"
@@ -2531,52 +2735,152 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "        <" + "/div> \n"
  + " \n"
- + "        <" + "h2>חלק ב': דעת מפקדו של המפקד הישיר<" + "/h2> \n"
- + " \n"
- + "        <" + "label>1. משך היכרותך עם החייל בחודשים<" + "/label> \n"
- + "        <" + "input type=\"number\" name=\"monthsUnder2\" min=\"0\"> \n"
- + " \n"
- + "        <" + "!-- <" + "label>מידת היכרות:<" + "/label> \n"
- + "        <" + "div id=\"familiarity2\"> \n"
- + "          <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"טובה מאוד\"> טובה מאוד<" + "/label> \n"
- + "          <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"די טובה\"> די טובה<" + "/label> \n"
- + "          <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"בינונית\"> בינונית<" + "/label> \n"
- + "          <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"קלושה\"> קלושה<" + "/label> \n"
- + "          <" + "label><" + "input type=\"checkbox\" name=\"familiarity2\" value=\"איני יכול/ה להעריך\"> איני יכול להעריך<" + "/label> \n"
- + "        <" + "/div> \n"
  + " \n"
  + "        <" + "div> \n"
- + "          2.תאר/י את מידת ההתאמה של החייל/ת לקצונה, תוך התייחסות לנקודות חוזק וחולשה שלו/ה: \n"
- + "          <" + "label>נקודת חוזק:<" + "/label> \n"
- + "          <" + "input type=\"text\" name=\"strength2\"> \n"
  + " \n"
- + "          <" + "label>נקודת חולשה:<" + "/label> \n"
- + "          <" + "input type=\"text\" name=\"weakness2\"> \n"
+ + "          <" + "h2 id=\"part-b\">חלק ב': חוות דעת מפקדו של המפקד הישיר<" + "/h2> \n"
+ + " \n"
+ + "          <" + "hr style=\"border: none; border-top: 3.5px dotted black; height: 0;\"> \n"
+ + " \n"
  + "        <" + "/div> \n"
  + " \n"
- + "        <" + "label> \n"
- + "          3. באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ\"א ) \n"
+ + "        <" + "label class=\"class-2\"> \n"
+ + "          <" + "span class=\"class-3\">1.&emsp; משך היכרותיך עם החייל בחודשים &nbsp;<" + "/span> \n"
+ + "          <" + "div class=\"class-10\"> \n"
+ + "            <" + "span>___<" + "/span> \n"
+ + "            <" + "input type=\"text\" pattern=\"\d{1,2}\" name=\"monthsUnder2\" class=\"class-6 class-11\"> \n"
+ + "          <" + "/div> \n"
+ + " \n"
  + "        <" + "/label> \n"
- + "        <" + "div id=\"willingnessCommand2\"> \n"
- + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה מאוד\"> במידה רבה מאוד<" + "/label> \n"
- + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה\"> במידה רבה<" + "/label> \n"
- + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה בינונית\"> במידה בינונית<" + "/label> \n"
- + "          <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה מועטה\"> במידה מועטה<" + "/label> \n"
- + "          <" + "label><" + "input type=\"checkbox\" id=\"siuu\" name=\"willingnessCommand2\" value=\"לא מעוניין כלל\"> לא מעוניין \n"
- + "            כלל<" + "/label> \n"
+ + " \n"
+ + " \n"
+ + "        <" + "div class=\"class-16\"> \n"
+ + "          <" + "span class=\"class-3\">מידת ההיכרות:<" + "/span> \n"
+ + " \n"
+ + "          <" + "label class=\"class-17\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity2\" value=\"טובה מאוד\"> \n"
+ + "            טובה מאוד \n"
+ + "          <" + "/label> \n"
+ + " \n"
+ + "          <" + "label class=\"class-17\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity2\" value=\"די טובה\"> \n"
+ + "            די טובה \n"
+ + "          <" + "/label> \n"
+ + " \n"
+ + "          <" + "label class=\"class-17\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity2\" value=\"בינונית\"> \n"
+ + "            בינונית \n"
+ + "          <" + "/label> \n"
+ + " \n"
+ + "          <" + "label class=\"class-17\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity2\" value=\"קלושה\"> \n"
+ + "            קלושה \n"
+ + "          <" + "/label> \n"
+ + " \n"
+ + "          <" + "label class=\"class-17\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity2\" value=\"איני יודע להעריך\"> \n"
+ + "            איני יודע להעריך \n"
+ + "          <" + "/label> \n"
+ + " \n"
  + "        <" + "/div> \n"
  + " \n"
- + "        <" + "label>4. הערות נוספות:<" + "/label> \n"
- + "        <" + "textarea name=\"additionalComments\" rows=\"3\"><" + "/textarea> \n"
  + " \n"
- + "        <" + "h3>פרטי מפקדו של המפקד הישיר:<" + "/h3> \n"
- + "        <" + "label>שם פרטי בלבד:<" + "/label> \n"
- + "        <" + "input type=\"text\" name=\"commander2Name\"> \n"
  + " \n"
- + "        <" + "label>טלפון:<" + "/label> \n"
- + "        <" + "input type=\"text\" name=\"commander2Phone\" pattern=\"\d{10}\"> --> \n"
  + " \n"
- + "        <" + "button type=\"button\" id=\"send-form\">שלח במייל<" + "/button> \n"
+ + "        <" + "div style=\"display: flex;\"> \n"
+ + " \n"
+ + "          <" + "b>2.&emsp;<" + "/b> \n"
+ + " \n"
+ + "          <" + "div> \n"
+ + " \n"
+ + "            <" + "p><" + "b> תאר/י את מידת ההתאמה של החייל/ת לקצונה, \n"
+ + "                <" + "u>תוך התייחסות לנקודות חוזק וחולשה שלו/ה<" + "/u>:<" + "/b><" + "/p> \n"
+ + " \n"
+ + " \n"
+ + "            <" + "label class=\"class-2\"> \n"
+ + "              <" + "span class=\"class-3\">נקודת חוזק:<" + "/span> \n"
+ + "              <" + "div class=\"class-10\"> \n"
+ + "                <" + "span>_________________________________________________________________<" + "/span> \n"
+ + "                <" + "input type=\"text\" name=\"strength2\" class=\"class-11\"> \n"
+ + "                &nbsp; \n"
+ + "              <" + "/div> \n"
+ + "            <" + "/label> \n"
+ + " \n"
+ + "            <" + "label class=\"class-2\"> \n"
+ + "              <" + "span class=\"class-3\">נקודת חולשה:<" + "/span> \n"
+ + "              <" + "div class=\"class-10\"> \n"
+ + "                <" + "span>_______________________________________________________________<" + "/span> \n"
+ + "                <" + "input type=\"text\" name=\"weakness2\" class=\"class-11\"> \n"
+ + "                &nbsp; \n"
+ + "              <" + "/div> \n"
+ + "            <" + "/label> \n"
+ + " \n"
+ + "          <" + "/div> \n"
+ + " \n"
+ + "        <" + "/div> \n"
+ + " \n"
+ + "        <" + "div style=\"display: flex; \"> \n"
+ + "          <" + "b>3.&emsp;<" + "/b> \n"
+ + " \n"
+ + "          <" + "div style=\"display: flex; flex-direction: column; gap:15px;\"> \n"
+ + " \n"
+ + "            <" + "b>באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ\"א)<" + "/b> \n"
+ + "            <" + "div id=\"willingnessCommand2\"> \n"
+ + "              <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה מאוד\"> במידה רבה מאוד<" + "/label> \n"
+ + "              <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה\"> במידה רבה<" + "/label> \n"
+ + "              <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה בינונית\"> במידה בינונית<" + "/label> \n"
+ + "              <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה מועטה\"> במידה מועטה<" + "/label> \n"
+ + "              <" + "label><" + "input type=\"checkbox\" id=\"siuu\" name=\"willingnessCommand2\" value=\"איני מעוניין/ת כלל\"> \n"
+ + "                איני מעוניין/ת כלל \n"
+ + "              <" + "/label> \n"
+ + " \n"
+ + "            <" + "/div> \n"
+ + " \n"
+ + "          <" + "/div> \n"
+ + " \n"
+ + "        <" + "/div> \n"
+ + " \n"
+ + "        <" + "label class=\"class-2\"> \n"
+ + "          <" + "span class=\"class-3\">4.&emsp; הערות נוספות:<" + "/span> \n"
+ + "          <" + "div class=\"class-10\"> \n"
+ + "            <" + "span>________<" + "/span> \n"
+ + "            <" + "input type=\"text\" name=\"additionalComments\" class=\"class-11\"> \n"
+ + "            &nbsp; \n"
+ + "          <" + "/div> \n"
+ + "        <" + "/label> \n"
+ + " \n"
+ + " \n"
+ + " \n"
+ + " \n"
+ + " \n"
+ + "        <" + "div class=\"info\"> \n"
+ + "          <" + "h3>פרטי מפקדו של המפקד הישיר<" + "/h3> \n"
+ + " \n"
+ + "          <" + "div style=\"display: flex; align-items: center; gap: 3px;\"> \n"
+ + "            <" + "label class=\"class-2\"> \n"
+ + "              <" + "span class=\"class-3\">שם פרטי בלבד:<" + "/span> \n"
+ + "              <" + "div class=\"class-4\"> \n"
+ + "                <" + "div>__________<" + "/div> \n"
+ + " \n"
+ + "                <" + "input type=\"text\" name=\"commander2Name\" class=\"class-11\"> \n"
+ + "              <" + "/div> \n"
+ + "            <" + "/label> \n"
+ + " \n"
+ + "            <" + "label class=\"class-2\"> \n"
+ + "              <" + "span class=\"class-3\">טלפון:<" + "/span> \n"
+ + "              <" + "div class=\"class-4\"> \n"
+ + "                <" + "div>__________<" + "/div> \n"
+ + " \n"
+ + "                <" + "input type=\"text\" name=\"commander2Phone\" class=\"class-6 class-11\" pattern=\"\d{10}\"> \n"
+ + "              <" + "/div> \n"
+ + " \n"
+ + "            <" + "/label> \n"
+ + " \n"
+ + "            <" + "button type=\"button\" id=\"send-form\">הורד טופס<" + "/button> \n"
+ + " \n"
+ + "          <" + "/div> \n"
+ + " \n"
+ + "        <" + "/div> \n"
  + " \n"
  + "      <" + "/div> \n"
  + "    <" + "/fieldset> \n"
@@ -2605,27 +2909,77 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      document.addEventListener(\"mouseup\", stop); \n"
  + "      canvas.addEventListener(\"mousedown\", start); \n"
  + " \n"
- + "      document.querySelectorAll('.eval-cell').forEach(cell => { \n"
- + "        cell.addEventListener('click', () => { \n"
- + "          const row = cell.dataset.row; \n"
- + "          const value = cell.dataset.value; \n"
+ + "      document.querySelectorAll('.eval-cell') \n"
+ + "        .forEach(cell => cell.addEventListener(\"click\", \n"
+ + "          genCellEventListener(cell) \n"
+ + "        )); \n"
  + " \n"
- + "          // ניקוי כל תאי השורה \n"
- + "          document.querySelectorAll(`.eval-cell[data-row=\"${row}\"]`).forEach(c => { \n"
- + "            c.textContent = \"\"; \n"
- + "            c.classList.remove(\"selected\"); \n"
- + "          }); \n"
+ + "      makeSureOnlyOneSelected() \n"
  + " \n"
- + "          // סימון התא \n"
- + "          cell.textContent = \"X\"; \n"
- + "          cell.classList.add(\"selected\"); \n"
+ + "    } \n"
  + " \n"
+ + "    function genCellEventListener(cell) { \n"
+ + " \n"
+ + "      return () => { \n"
+ + " \n"
+ + "        console.log(\"HIII\") \n"
+ + " \n"
+ + "        const row = cell.dataset.row; \n"
+ + "        const value = cell.dataset.value; \n"
+ + " \n"
+ + "        if (isSelectAllowed(value)) { \n"
  + "          // עדכון select הנסתר \n"
  + "          const select = document.getElementById(`hidden-input-${row}`); \n"
  + "          select.value = value; \n"
  + "          console.log(\"changing\", select.id, select.value) \n"
- + "        }); \n"
  + " \n"
+ + " \n"
+ + "          restoreSelectionsFromInputs() \n"
+ + " \n"
+ + "        } \n"
+ + " \n"
+ + "      } \n"
+ + " \n"
+ + "    } \n"
+ + " \n"
+ + "    // 3 גבוה ,and 3 גבוה מאוד MAX allowed \n"
+ + "    function isSelectAllowed(value) { \n"
+ + "      const selectedHighest = \n"
+ + "        [...document.querySelectorAll(\"option[value='גבוה מאוד']\")] \n"
+ + "          .filter(option => option.selected) \n"
+ + " \n"
+ + "      const selectedHigh = \n"
+ + "        [...document.querySelectorAll(\"option[value='גבוה']\")] \n"
+ + "          .filter(option => option.selected) \n"
+ + " \n"
+ + " \n"
+ + "      if (value == \"גבוה\" && selectedHigh.length >= 3) { \n"
+ + "        alert(\"לא ניתן לבחור מעל 3 כגבוה\") \n"
+ + "        return false \n"
+ + "      } \n"
+ + " \n"
+ + "      if (value == \"גבוה מאוד\" && selectedHighest.length >= 3) { \n"
+ + "        alert(\"לא ניתן לבחור מעל 3 כגבוה מאוד\") \n"
+ + "        return false \n"
+ + "      } \n"
+ + " \n"
+ + "      return true \n"
+ + "    } \n"
+ + " \n"
+ + "    function makeSureOnlyOneSelected() { \n"
+ + "      const checkboxes = document.querySelectorAll('input[type=\"checkbox\"]'); \n"
+ + " \n"
+ + "      checkboxes.forEach(checkbox => { \n"
+ + "        checkbox.addEventListener('change', function () { \n"
+ + "          if (this.checked) { \n"
+ + "            const sameNameCheckboxes = document.querySelectorAll(`input[type=\"checkbox\"][name=\"${this.name}\"]`); \n"
+ + "            sameNameCheckboxes.forEach(box => { \n"
+ + "              if (box !== this) { \n"
+ + "                box.checked = false; \n"
+ + "              } \n"
+ + "            }); \n"
+ + "          } \n"
+ + "        }); \n"
  + "      }); \n"
  + "    } \n"
  + " \n"
@@ -2649,9 +3003,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      } \n"
  + " \n"
  + "      img.addEventListener(\"load\", () => { \n"
- + "        canvas.getContext('2d').drawImage(img, 0, 0,  \n"
- + "                canvas.width, canvas.height) //Draw scaled version of signature into \n"
- + "                                             //scaled canvas \n"
+ + "        canvas.getContext('2d').drawImage(img, 0, 0, \n"
+ + "          canvas.width, canvas.height) //Draw scaled version of signature into \n"
+ + "        //scaled canvas \n"
  + " \n"
  + "        signature.value = canvas.toDataURL(); \n"
  + "      }) \n"
