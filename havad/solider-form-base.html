@@ -493,14 +493,14 @@
       display: none !important;
     }
 
-    #zoom-icon-wrapper {
+    #zoom-wrapper {
       position: absolute;
       top: 0;
       left: 0;
       transform: translate(-50%, -50%);
       width: 30px;
       height: 30px;
-      cursor: pointer;
+
     }
   </style>
 
@@ -1085,7 +1085,7 @@
             <div class="class-4">
               <div>__________</div>
 
-              <input type="number" name="feedbackName" class="class-11">
+              <input type="text" name="feedbackName" class="class-11">
             </div>
 
           </label>
@@ -1100,7 +1100,7 @@
                   <canvas id="signature"></canvas>
                 </div>
 
-                <div id="zoom-icon-wrapper" onclick="zoomSignature()">
+                <div id="zoom-wrapper" onclick="zoomSignature()">
                   <svg id="zoom-in" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -1229,18 +1229,18 @@
 
     function zoomSignature() {
 
-      canvasWrapper = document.getElementById("signature-label")
+      canvasWrapper = document.getElementById("signature-stuff")
 
       if (canvasWrapper.classList.contains("signature-zoom")) {
         // Already zoomed, so unzoom
         canvasWrapper.classList.remove("signature-zoom");
-        canvas.width *= 1 / 4;
-        canvas.height *= 1 / 4;
+        canvas.width *= 1 / 3;
+        canvas.height *= 1 / 3;
       } else {
         // Not zoomed, so zoom
         canvasWrapper.classList.add("signature-zoom");
-        canvas.width *= 4;
-        canvas.height *= 4;
+        canvas.width *= 3;
+        canvas.height *= 3;
       }
 
     }
