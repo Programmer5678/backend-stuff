@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <title>חוות דעת לקצונה</title>
   <style>
+    /* body{
+      transform: scale(3);
+    } */
+
     /* 1. Box sizing everywhere */
     *,
     *::before,
@@ -465,11 +469,44 @@
       height: 55.5px;
     }
 
+    #signature-stuff {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
 
+    #signature-stuff #zoom-out {
+      display: none;
+    }
 
+    .signature-zoom {
+
+      transform: scale(3) !important;
+
+    }
+
+    .signature-zoom #zoom-out {
+      display: block !important;
+    }
+
+    .signature-zoom #zoom-in {
+      display: none !important;
+    }
+
+    #zoom-icon-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
   </style>
 
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
+
   <!-- Pako from CDN -->
 </head>
 
@@ -1053,24 +1090,42 @@
 
           </label>
 
-          <label class="class-2">
-            <span class="class-3">חתימה: </span>
-            <div class="class-4">
-              <div>__________</div>
+          <div id="signature-stuff">
+            <label class="class-2" id="signature-label" style="position: relative">
+              <span class="class-3">חתימה: </span>
+              <div class="class-4">
+                <div>__________</div>
 
-              <div class="class-11">
-                <canvas id="signature"></canvas>
+                <div class="class-11">
+                  <canvas id="signature"></canvas>
+                </div>
+
+                <div id="zoom-icon-wrapper" onclick="zoomSignature()">
+                  <svg id="zoom-in" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" />
+                  </svg>
+
+
+                  <svg id="zoom-out" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM13.5 10.5h-6" />
+                  </svg>
+
+                </div>
+
               </div>
-            </div>
 
-            <input type="hidden" name="signature" />
-            
-          </label>
 
-          <div style="padding-right: 5px;"><button type="button"
-            onclick="clearSignature()">נקה חתימה</button>
+              <input type="hidden" name="signature" />
+
+            </label>
+
+            <button type="button" onclick="clearSignature()">נקה חתימה</button>
+
           </div>
-
 
         </div>
 
@@ -1132,6 +1187,65 @@
 
   <script>
 
+
+    var canvas = document.getElementById('signature');
+
+
+    var ctx = canvas.getContext("2d");
+    var drawing = false;
+    var prevX, prevY;
+    var currX, currY;
+    var signature = document.getElementsByName('signature')[0];
+
+    function runStuff() {
+      saveCanvas()
+      canvas.addEventListener("mousemove", draw);
+      document.addEventListener("mouseup", stop);
+      canvas.addEventListener("mousedown", start);
+
+      document.querySelectorAll('.eval-cell').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const row = cell.dataset.row;
+          const value = cell.dataset.value;
+
+          // ניקוי כל תאי השורה
+          document.querySelectorAll(`.eval-cell[data-row="${row}"]`).forEach(c => {
+            c.textContent = "";
+            c.classList.remove("selected");
+          });
+
+          // סימון התא
+          cell.textContent = "X";
+          cell.classList.add("selected");
+
+          // עדכון select הנסתר
+          const select = document.getElementById(`hidden-input-${row}`);
+          select.value = value;
+          console.log("changing", select.id, select.value)
+        });
+
+      });
+    }
+
+    function zoomSignature() {
+
+      canvasWrapper = document.getElementById("signature-label")
+
+      if (canvasWrapper.classList.contains("signature-zoom")) {
+        // Already zoomed, so unzoom
+        canvasWrapper.classList.remove("signature-zoom");
+        canvas.width *= 1 / 4;
+        canvas.height *= 1 / 4;
+      } else {
+        // Not zoomed, so zoom
+        canvasWrapper.classList.add("signature-zoom");
+        canvas.width *= 4;
+        canvas.height *= 4;
+      }
+
+    }
+
+
     // console.log( document.querySelector("input[value='במידה מועטה']")  )
 
     // פונקציה לניקוי חתימה
@@ -1141,35 +1255,12 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-  </script>
-
-  <script>
-
-    var canvas = document.getElementById('signature');
 
     //Make sure canvas width and height attr are properly set...
     function saveCanvas() {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
     }
-
-
-    saveCanvas()
-    
-
-    var ctx = canvas.getContext("2d");
-    var drawing = false;
-    var prevX, prevY;
-    var currX, currY;
-    var signature = document.getElementsByName('signature')[0];
-
-    canvas.addEventListener("mousemove", draw);
-    document.addEventListener("mouseup", stop);
-    canvas.addEventListener("mousedown", start);
-
-    // function blah(e) {
-    //   setCanvasElFromHiddenInput()
-    // }
 
     function setCanvasElFromHiddenInput() {
       const img = new Image()
@@ -1251,30 +1342,6 @@
     // }
 
 
-
-    document.querySelectorAll('.eval-cell').forEach(cell => {
-      cell.addEventListener('click', () => {
-        const row = cell.dataset.row;
-        const value = cell.dataset.value;
-
-        // ניקוי כל תאי השורה
-        document.querySelectorAll(`.eval-cell[data-row="${row}"]`).forEach(c => {
-          c.textContent = "";
-          c.classList.remove("selected");
-        });
-
-        // סימון התא
-        cell.textContent = "X";
-        cell.classList.add("selected");
-
-        // עדכון select הנסתר
-        const select = document.getElementById(`hidden-input-${row}`);
-        select.value = value;
-        console.log("changing", select.id, select.value)
-      });
-
-    });
-
     function restoreSelectionsFromInputs() {
       const rows = document.querySelectorAll('.eval-table tbody tr');
 
@@ -1317,8 +1384,11 @@
       });
     }
 
-    // document.getElementById("tsup").addEventListener("click", destroyTableX)
-    // document.getElementById("tsup2").addEventListener("click", restoreSelectionsFromInputs)
+
+
+
+    runStuff()
+
 
   </script>
 
