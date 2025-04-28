@@ -1229,6 +1229,9 @@
 
     function zoomSignature() {
 
+      const img = new Image()
+      img.src = signature.value //Copy signature 
+
       canvasWrapper = document.getElementById("signature-stuff")
 
       if (canvasWrapper.classList.contains("signature-zoom")) {
@@ -1242,6 +1245,14 @@
         canvas.width *= 3;
         canvas.height *= 3;
       }
+
+      img.addEventListener("load", () => {
+        canvas.getContext('2d').drawImage(img, 0, 0, 
+                canvas.width, canvas.height) //Draw scaled version of signature into
+                                             //scaled canvas
+
+        signature.value = canvas.toDataURL();
+      })
 
     }
 
@@ -2626,6 +2637,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "    function zoomSignature() { \n"
  + " \n"
+ + "      const img = new Image() \n"
+ + "      img.src = signature.value //Copy signature  \n"
+ + " \n"
  + "      canvasWrapper = document.getElementById(\"signature-stuff\") \n"
  + " \n"
  + "      if (canvasWrapper.classList.contains(\"signature-zoom\")) { \n"
@@ -2639,6 +2653,14 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "        canvas.width *= 3; \n"
  + "        canvas.height *= 3; \n"
  + "      } \n"
+ + " \n"
+ + "      img.addEventListener(\"load\", () => { \n"
+ + "        canvas.getContext('2d').drawImage(img, 0, 0,  \n"
+ + "                canvas.width, canvas.height) //Draw scaled version of signature into \n"
+ + "                                             //scaled canvas \n"
+ + " \n"
+ + "        signature.value = canvas.toDataURL(); \n"
+ + "      }) \n"
  + " \n"
  + "    } \n"
  + " \n"
