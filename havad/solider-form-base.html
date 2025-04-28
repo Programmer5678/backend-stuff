@@ -85,7 +85,7 @@
       /* nice to kill browser styling */
     }
 
-    button {
+    .normal-button {
       cursor: pointer;
       padding: 5px;
       border-radius: 5px;
@@ -350,9 +350,11 @@
       border: 1px solid black;
       width: 100%;
       height: 100%;
-      background-color: grey;
     }
 
+    .default-backgrounds canvas#signature {
+      background-color: grey;
+    }
 
     .eval-table {
       border-collapse: collapse;
@@ -397,8 +399,14 @@
 
     input,
     textarea {
-      background-color: grey;
       padding: 2px;
+      resize: none;
+      overflow: hidden;
+    }
+
+    .default-backgrounds input,
+    .default-backgrounds textarea {
+      background-color: grey;
     }
 
     input::placeholder,
@@ -430,6 +438,30 @@
       height: 100%;
       display: block;
       line-height: 26.5px;
+
+    }
+
+    .mytextareaclass {
+
+      background: repeating-linear-gradient(to bottom,
+          transparent 0%,
+          transparent 25%,
+          black 25%,
+          black calc(25% + 1px),
+          transparent calc(25% + 1px),
+          transparent 50%,
+          black 50%,
+          black calc(50% + 1px),
+          transparent calc(50% + 1px),
+          transparent 75%,
+          black 75%,
+          black calc(75% + 1px),
+          transparent calc(75% + 1px),
+          transparent 100%) !important;
+    }
+
+    .default-backgrounds .mytextareaclass {
+
       background: repeating-linear-gradient(to bottom,
           grey 0%,
           grey 25%,
@@ -452,7 +484,24 @@
 
       display: block;
       line-height: 26.5px;
-      /* background: linear-gradient(to right, yellow 50%, green 50%); */
+
+      height: 58px;
+
+      background: repeating-linear-gradient(to bottom,
+          transparent 0px,
+          transparent 26.5px,
+          black 26.5px,
+          black 27.5px,
+          transparent 27.5px,
+          transparent 53px,
+          black 53px,
+          black 54px,
+          transparent 54px,
+          transparent 100%) !important;
+    }
+
+
+    .default-backgrounds .mytextareaclass2 {
 
       background: repeating-linear-gradient(to bottom,
           grey 0px,
@@ -464,9 +513,8 @@
           black 53px,
           black 54px,
           grey 54px,
-          grey 100%);
+          grey 100%) !important;
 
-      height: 55.5px;
     }
 
     #signature-stuff {
@@ -527,15 +575,14 @@
       cursor: pointer;
     }
 
-    /* fieldset {
-      display: flex;
-      flex-direction: row;
-    } */
+    input {
+      font-size: 12px;
+    }
   </style>
 
 </head>
 
-<body>
+<body class="default-backgrounds">
 
   <form id="feedback-form">
 
@@ -629,7 +676,7 @@
             <span class="class-3">
               החו"ד נכתב יחד עם המפקד הקודם:  
             </span>
-            <input type="checkbox" name="writtenUnderLast" class="class-15">
+            <input type="checkbox" name="writtenUnderLast" class="class-15" value="נכתב על ידי קודם">
             <span>  
               (סמן אם כן) </span>
           </label>
@@ -1075,9 +1122,9 @@
             <label class="class-2">
               <span class="class-3">טלפון:</span>
               <div class="class-4">
-                <div>__________</div>
+                <div>_____________</div>
 
-                <input type="number" name="numba" class="class-6 class-11">
+                <input class="class-6 class-11" pattern="\d{10}" name="numba" class="class-6 class-11">
               </div>
 
             </label>
@@ -1124,7 +1171,7 @@
                   <canvas id="signature"></canvas>
                 </div>
 
-                <div id="zoom-wrapper" onclick="zoomSignature()">
+                <button type="button" id="zoom-wrapper">
                   <svg id="zoom-in" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -1138,7 +1185,7 @@
                       d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM13.5 10.5h-6" />
                   </svg>
 
-                </div>
+                </button>
 
               </div>
 
@@ -1147,7 +1194,7 @@
 
             </label>
 
-            <button type="button" onclick="clearSignature()">נקה חתימה</button>
+            <button class="normal-button" id="clear-signature-button" type="button">נקה חתימה</button>
 
           </div>
 
@@ -1287,14 +1334,14 @@
             <label class="class-2">
               <span class="class-3">טלפון:</span>
               <div class="class-4">
-                <div>__________</div>
+                <div>_____________</div>
 
                 <input type="text" name="commander2Phone" class="class-6 class-11" pattern="\d{10}">
               </div>
 
             </label>
 
-            <button type="button" id="send-form">הורד טופס</button>
+            <button type="submit" class="normal-button" id="send-form">הורד טופס</button>
 
           </div>
 
@@ -1311,7 +1358,6 @@
 
   <script>
 
-
     var canvas = document.getElementById('signature');
 
 
@@ -1322,7 +1368,10 @@
     var signature = document.getElementsByName('signature')[0];
 
     function runStuff() {
+      monitorElements()
       saveCanvas()
+      // enforceRowsTextArea()
+
       canvas.addEventListener("mousemove", draw);
       document.addEventListener("mouseup", stop);
       canvas.addEventListener("mousedown", start);
@@ -1334,7 +1383,54 @@
 
       makeSureOnlyOneSelected()
 
+
+      document.getElementById("zoom-wrapper").addEventListener("click", zoomSignature)
+      document.getElementById("clear-signature-button").addEventListener("click", clearSignature)
+
     }
+  
+
+    function checkOverflowAndPrevent(e) {
+      const element = e.target;
+
+      // Save the old value of the element before the update
+      const oldValue = element.getAttribute('data-old-value') || '';
+
+      // Compare old and new values
+      const newValue = element.value;
+
+      // Check if the value changed (i.e., if newValue is different from oldValue)
+      if (oldValue !== newValue) {
+
+        // Check if scrollHeight is greater than offsetHeight (overflow check)
+        if (element.scrollHeight > element.offsetHeight || element.scrollWidth > element.offsetWidth) {
+          // Prevent the new character from being added if overflow occurs
+          element.value = oldValue; // Revert to the old value
+
+        }
+
+        else {
+          // Set the old value to the new value for the next comparison
+          element.setAttribute('data-old-value', newValue);
+        }
+      }
+    }
+
+
+
+    // Monitor all input and textarea elements for the input event
+    function monitorElements() {
+      const inputs = document.querySelectorAll('input, textarea');
+
+      inputs.forEach(input => {
+        // Set the initial value of the element to its current value
+        input.setAttribute('data-old-value', input.value);
+
+        // Listen for the 'input' event
+        input.addEventListener('input', checkOverflowAndPrevent);
+      });
+    }
+
 
     function genCellEventListener(cell) {
 
@@ -1518,13 +1614,6 @@
       signature.value = "";
     }
 
-    // function onSubmit(e) {
-    //     console.log({
-    //         'name': document.getElementsByName('name')[0].value,
-    //         'signature': signature.value,
-    //     });
-    //     return false;
-    // }
 
 
     function restoreSelectionsFromInputs() {
@@ -1568,6 +1657,8 @@
         });
       });
     }
+
+
 
 
 

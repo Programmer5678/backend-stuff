@@ -85,7 +85,7 @@
       /* nice to kill browser styling */
     }
 
-    button {
+    .normal-button {
       cursor: pointer;
       padding: 5px;
       border-radius: 5px;
@@ -350,9 +350,11 @@
       border: 1px solid black;
       width: 100%;
       height: 100%;
-      background-color: grey;
     }
 
+    .default-backgrounds canvas#signature {
+      background-color: grey;
+    }
 
     .eval-table {
       border-collapse: collapse;
@@ -397,8 +399,14 @@
 
     input,
     textarea {
-      background-color: grey;
       padding: 2px;
+      resize: none;
+      overflow: hidden;
+    }
+
+    .default-backgrounds input,
+    .default-backgrounds textarea {
+      background-color: grey;
     }
 
     input::placeholder,
@@ -430,6 +438,30 @@
       height: 100%;
       display: block;
       line-height: 26.5px;
+
+    }
+
+    .mytextareaclass {
+
+      background: repeating-linear-gradient(to bottom,
+          transparent 0%,
+          transparent 25%,
+          black 25%,
+          black calc(25% + 1px),
+          transparent calc(25% + 1px),
+          transparent 50%,
+          black 50%,
+          black calc(50% + 1px),
+          transparent calc(50% + 1px),
+          transparent 75%,
+          black 75%,
+          black calc(75% + 1px),
+          transparent calc(75% + 1px),
+          transparent 100%) !important;
+    }
+
+    .default-backgrounds .mytextareaclass {
+
       background: repeating-linear-gradient(to bottom,
           grey 0%,
           grey 25%,
@@ -452,7 +484,24 @@
 
       display: block;
       line-height: 26.5px;
-      /* background: linear-gradient(to right, yellow 50%, green 50%); */
+
+      height: 58px;
+
+      background: repeating-linear-gradient(to bottom,
+          transparent 0px,
+          transparent 26.5px,
+          black 26.5px,
+          black 27.5px,
+          transparent 27.5px,
+          transparent 53px,
+          black 53px,
+          black 54px,
+          transparent 54px,
+          transparent 100%) !important;
+    }
+
+
+    .default-backgrounds .mytextareaclass2 {
 
       background: repeating-linear-gradient(to bottom,
           grey 0px,
@@ -464,9 +513,8 @@
           black 53px,
           black 54px,
           grey 54px,
-          grey 100%);
+          grey 100%) !important;
 
-      height: 55.5px;
     }
 
     #signature-stuff {
@@ -527,15 +575,14 @@
       cursor: pointer;
     }
 
-    /* fieldset {
-      display: flex;
-      flex-direction: row;
-    } */
+    input {
+      font-size: 12px;
+    }
   </style>
 
 </head>
 
-<body>
+<body class="default-backgrounds">
 
   <form id="feedback-form">
 
@@ -629,7 +676,7 @@
             <span class="class-3">
               החו"ד נכתב יחד עם המפקד הקודם:  
             </span>
-            <input type="checkbox" name="writtenUnderLast" class="class-15">
+            <input type="checkbox" name="writtenUnderLast" class="class-15" value="נכתב על ידי קודם">
             <span>  
               (סמן אם כן) </span>
           </label>
@@ -1075,9 +1122,9 @@
             <label class="class-2">
               <span class="class-3">טלפון:</span>
               <div class="class-4">
-                <div>__________</div>
+                <div>_____________</div>
 
-                <input type="number" name="numba" class="class-6 class-11">
+                <input class="class-6 class-11" pattern="\d{10}" name="numba" class="class-6 class-11">
               </div>
 
             </label>
@@ -1124,7 +1171,7 @@
                   <canvas id="signature"></canvas>
                 </div>
 
-                <div id="zoom-wrapper" onclick="zoomSignature()">
+                <button type="button" id="zoom-wrapper">
                   <svg id="zoom-in" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -1138,7 +1185,7 @@
                       d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM13.5 10.5h-6" />
                   </svg>
 
-                </div>
+                </button>
 
               </div>
 
@@ -1147,7 +1194,7 @@
 
             </label>
 
-            <button type="button" onclick="clearSignature()">נקה חתימה</button>
+            <button class="normal-button" id="clear-signature-button" type="button">נקה חתימה</button>
 
           </div>
 
@@ -1287,14 +1334,14 @@
             <label class="class-2">
               <span class="class-3">טלפון:</span>
               <div class="class-4">
-                <div>__________</div>
+                <div>_____________</div>
 
                 <input type="text" name="commander2Phone" class="class-6 class-11" pattern="\d{10}">
               </div>
 
             </label>
 
-            <button type="button" id="send-form">הורד טופס</button>
+            <button type="submit" class="normal-button" id="send-form">הורד טופס</button>
 
           </div>
 
@@ -1311,7 +1358,6 @@
 
   <script>
 
-
     var canvas = document.getElementById('signature');
 
 
@@ -1322,7 +1368,10 @@
     var signature = document.getElementsByName('signature')[0];
 
     function runStuff() {
+      monitorElements()
       saveCanvas()
+      // enforceRowsTextArea()
+
       canvas.addEventListener("mousemove", draw);
       document.addEventListener("mouseup", stop);
       canvas.addEventListener("mousedown", start);
@@ -1334,7 +1383,54 @@
 
       makeSureOnlyOneSelected()
 
+
+      document.getElementById("zoom-wrapper").addEventListener("click", zoomSignature)
+      document.getElementById("clear-signature-button").addEventListener("click", clearSignature)
+
     }
+  
+
+    function checkOverflowAndPrevent(e) {
+      const element = e.target;
+
+      // Save the old value of the element before the update
+      const oldValue = element.getAttribute('data-old-value') || '';
+
+      // Compare old and new values
+      const newValue = element.value;
+
+      // Check if the value changed (i.e., if newValue is different from oldValue)
+      if (oldValue !== newValue) {
+
+        // Check if scrollHeight is greater than offsetHeight (overflow check)
+        if (element.scrollHeight > element.offsetHeight || element.scrollWidth > element.offsetWidth) {
+          // Prevent the new character from being added if overflow occurs
+          element.value = oldValue; // Revert to the old value
+
+        }
+
+        else {
+          // Set the old value to the new value for the next comparison
+          element.setAttribute('data-old-value', newValue);
+        }
+      }
+    }
+
+
+
+    // Monitor all input and textarea elements for the input event
+    function monitorElements() {
+      const inputs = document.querySelectorAll('input, textarea');
+
+      inputs.forEach(input => {
+        // Set the initial value of the element to its current value
+        input.setAttribute('data-old-value', input.value);
+
+        // Listen for the 'input' event
+        input.addEventListener('input', checkOverflowAndPrevent);
+      });
+    }
+
 
     function genCellEventListener(cell) {
 
@@ -1518,13 +1614,6 @@
       signature.value = "";
     }
 
-    // function onSubmit(e) {
-    //     console.log({
-    //         'name': document.getElementsByName('name')[0].value,
-    //         'signature': signature.value,
-    //     });
-    //     return false;
-    // }
 
 
     function restoreSelectionsFromInputs() {
@@ -1568,6 +1657,8 @@
         });
       });
     }
+
+
 
 
 
@@ -1667,7 +1758,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      /* nice to kill browser styling */ \n"
  + "    } \n"
  + " \n"
- + "    button { \n"
+ + "    .normal-button { \n"
  + "      cursor: pointer; \n"
  + "      padding: 5px; \n"
  + "      border-radius: 5px; \n"
@@ -1932,9 +2023,11 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      border: 1px solid black; \n"
  + "      width: 100%; \n"
  + "      height: 100%; \n"
- + "      background-color: grey; \n"
  + "    } \n"
  + " \n"
+ + "    .default-backgrounds canvas#signature { \n"
+ + "      background-color: grey; \n"
+ + "    } \n"
  + " \n"
  + "    .eval-table { \n"
  + "      border-collapse: collapse; \n"
@@ -1979,8 +2072,14 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "    input, \n"
  + "    textarea { \n"
- + "      background-color: grey; \n"
  + "      padding: 2px; \n"
+ + "      resize: none; \n"
+ + "      overflow: hidden; \n"
+ + "    } \n"
+ + " \n"
+ + "    .default-backgrounds input, \n"
+ + "    .default-backgrounds textarea { \n"
+ + "      background-color: grey; \n"
  + "    } \n"
  + " \n"
  + "    input::placeholder, \n"
@@ -2012,6 +2111,30 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      height: 100%; \n"
  + "      display: block; \n"
  + "      line-height: 26.5px; \n"
+ + " \n"
+ + "    } \n"
+ + " \n"
+ + "    .mytextareaclass { \n"
+ + " \n"
+ + "      background: repeating-linear-gradient(to bottom, \n"
+ + "          transparent 0%, \n"
+ + "          transparent 25%, \n"
+ + "          black 25%, \n"
+ + "          black calc(25% + 1px), \n"
+ + "          transparent calc(25% + 1px), \n"
+ + "          transparent 50%, \n"
+ + "          black 50%, \n"
+ + "          black calc(50% + 1px), \n"
+ + "          transparent calc(50% + 1px), \n"
+ + "          transparent 75%, \n"
+ + "          black 75%, \n"
+ + "          black calc(75% + 1px), \n"
+ + "          transparent calc(75% + 1px), \n"
+ + "          transparent 100%) !important; \n"
+ + "    } \n"
+ + " \n"
+ + "    .default-backgrounds .mytextareaclass { \n"
+ + " \n"
  + "      background: repeating-linear-gradient(to bottom, \n"
  + "          grey 0%, \n"
  + "          grey 25%, \n"
@@ -2034,7 +2157,24 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "      display: block; \n"
  + "      line-height: 26.5px; \n"
- + "      /* background: linear-gradient(to right, yellow 50%, green 50%); */ \n"
+ + " \n"
+ + "      height: 58px; \n"
+ + " \n"
+ + "      background: repeating-linear-gradient(to bottom, \n"
+ + "          transparent 0px, \n"
+ + "          transparent 26.5px, \n"
+ + "          black 26.5px, \n"
+ + "          black 27.5px, \n"
+ + "          transparent 27.5px, \n"
+ + "          transparent 53px, \n"
+ + "          black 53px, \n"
+ + "          black 54px, \n"
+ + "          transparent 54px, \n"
+ + "          transparent 100%) !important; \n"
+ + "    } \n"
+ + " \n"
+ + " \n"
+ + "    .default-backgrounds .mytextareaclass2 { \n"
  + " \n"
  + "      background: repeating-linear-gradient(to bottom, \n"
  + "          grey 0px, \n"
@@ -2046,9 +2186,8 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          black 53px, \n"
  + "          black 54px, \n"
  + "          grey 54px, \n"
- + "          grey 100%); \n"
+ + "          grey 100%) !important; \n"
  + " \n"
- + "      height: 55.5px; \n"
  + "    } \n"
  + " \n"
  + "    #signature-stuff { \n"
@@ -2109,15 +2248,14 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      cursor: pointer; \n"
  + "    } \n"
  + " \n"
- + "    /* fieldset { \n"
- + "      display: flex; \n"
- + "      flex-direction: row; \n"
- + "    } */ \n"
+ + "    input { \n"
+ + "      font-size: 12px; \n"
+ + "    } \n"
  + "  <" + "/style> \n"
  + " \n"
  + "<" + "/head> \n"
  + " \n"
- + "<" + "body> \n"
+ + "<" + "body class=\"default-backgrounds\"> \n"
  + " \n"
  + "  <" + "form id=\"feedback-form\"> \n"
  + " \n"
@@ -2211,7 +2349,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "span class=\"class-3\"> \n"
  + "              החו\"ד נכתב יחד עם המפקד הקודם:   \n"
  + "            <" + "/span> \n"
- + "            <" + "input type=\"checkbox\" name=\"writtenUnderLast\" class=\"class-15\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"writtenUnderLast\" class=\"class-15\" value=\"נכתב על ידי קודם\"> \n"
  + "            <" + "span>   \n"
  + "              (סמן אם כן) <" + "/span> \n"
  + "          <" + "/label> \n"
@@ -2657,9 +2795,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "label class=\"class-2\"> \n"
  + "              <" + "span class=\"class-3\">טלפון:<" + "/span> \n"
  + "              <" + "div class=\"class-4\"> \n"
- + "                <" + "div>__________<" + "/div> \n"
+ + "                <" + "div>_____________<" + "/div> \n"
  + " \n"
- + "                <" + "input type=\"number\" name=\"numba\" class=\"class-6 class-11\"> \n"
+ + "                <" + "input class=\"class-6 class-11\" pattern=\"\d{10}\" name=\"numba\" class=\"class-6 class-11\"> \n"
  + "              <" + "/div> \n"
  + " \n"
  + "            <" + "/label> \n"
@@ -2706,7 +2844,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "                  <" + "canvas id=\"signature\"><" + "/canvas> \n"
  + "                <" + "/div> \n"
  + " \n"
- + "                <" + "div id=\"zoom-wrapper\" onclick=\"zoomSignature()\"> \n"
+ + "                <" + "button type=\"button\" id=\"zoom-wrapper\"> \n"
  + "                  <" + "svg id=\"zoom-in\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" \n"
  + "                    stroke-width=\"1.5\" stroke=\"currentColor\" class=\"size-6\"> \n"
  + "                    <" + "path stroke-linecap=\"round\" stroke-linejoin=\"round\" \n"
@@ -2720,7 +2858,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "                      d=\"m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM13.5 10.5h-6\" /> \n"
  + "                  <" + "/svg> \n"
  + " \n"
- + "                <" + "/div> \n"
+ + "                <" + "/button> \n"
  + " \n"
  + "              <" + "/div> \n"
  + " \n"
@@ -2729,7 +2867,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "            <" + "/label> \n"
  + " \n"
- + "            <" + "button type=\"button\" onclick=\"clearSignature()\">נקה חתימה<" + "/button> \n"
+ + "            <" + "button class=\"normal-button\" id=\"clear-signature-button\" type=\"button\">נקה חתימה<" + "/button> \n"
  + " \n"
  + "          <" + "/div> \n"
  + " \n"
@@ -2869,14 +3007,14 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "label class=\"class-2\"> \n"
  + "              <" + "span class=\"class-3\">טלפון:<" + "/span> \n"
  + "              <" + "div class=\"class-4\"> \n"
- + "                <" + "div>__________<" + "/div> \n"
+ + "                <" + "div>_____________<" + "/div> \n"
  + " \n"
  + "                <" + "input type=\"text\" name=\"commander2Phone\" class=\"class-6 class-11\" pattern=\"\d{10}\"> \n"
  + "              <" + "/div> \n"
  + " \n"
  + "            <" + "/label> \n"
  + " \n"
- + "            <" + "button type=\"button\" id=\"send-form\">הורד טופס<" + "/button> \n"
+ + "            <" + "button type=\"submit\" class=\"normal-button\" id=\"send-form\">הורד טופס<" + "/button> \n"
  + " \n"
  + "          <" + "/div> \n"
  + " \n"
@@ -2893,7 +3031,6 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "  <" + "script> \n"
  + " \n"
- + " \n"
  + "    var canvas = document.getElementById('signature'); \n"
  + " \n"
  + " \n"
@@ -2904,7 +3041,10 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "    var signature = document.getElementsByName('signature')[0]; \n"
  + " \n"
  + "    function runStuff() { \n"
+ + "      monitorElements() \n"
  + "      saveCanvas() \n"
+ + "      // enforceRowsTextArea() \n"
+ + " \n"
  + "      canvas.addEventListener(\"mousemove\", draw); \n"
  + "      document.addEventListener(\"mouseup\", stop); \n"
  + "      canvas.addEventListener(\"mousedown\", start); \n"
@@ -2916,7 +3056,54 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "      makeSureOnlyOneSelected() \n"
  + " \n"
+ + " \n"
+ + "      document.getElementById(\"zoom-wrapper\").addEventListener(\"click\", zoomSignature) \n"
+ + "      document.getElementById(\"clear-signature-button\").addEventListener(\"click\", clearSignature) \n"
+ + " \n"
  + "    } \n"
+ + "   \n"
+ + " \n"
+ + "    function checkOverflowAndPrevent(e) { \n"
+ + "      const element = e.target; \n"
+ + " \n"
+ + "      // Save the old value of the element before the update \n"
+ + "      const oldValue = element.getAttribute('data-old-value') || ''; \n"
+ + " \n"
+ + "      // Compare old and new values \n"
+ + "      const newValue = element.value; \n"
+ + " \n"
+ + "      // Check if the value changed (i.e., if newValue is different from oldValue) \n"
+ + "      if (oldValue !== newValue) { \n"
+ + " \n"
+ + "        // Check if scrollHeight is greater than offsetHeight (overflow check) \n"
+ + "        if (element.scrollHeight > element.offsetHeight || element.scrollWidth > element.offsetWidth) { \n"
+ + "          // Prevent the new character from being added if overflow occurs \n"
+ + "          element.value = oldValue; // Revert to the old value \n"
+ + " \n"
+ + "        } \n"
+ + " \n"
+ + "        else { \n"
+ + "          // Set the old value to the new value for the next comparison \n"
+ + "          element.setAttribute('data-old-value', newValue); \n"
+ + "        } \n"
+ + "      } \n"
+ + "    } \n"
+ + " \n"
+ + " \n"
+ + " \n"
+ + "    // Monitor all input and textarea elements for the input event \n"
+ + "    function monitorElements() { \n"
+ + "      const inputs = document.querySelectorAll('input, textarea'); \n"
+ + " \n"
+ + "      inputs.forEach(input => { \n"
+ + "        // Set the initial value of the element to its current value \n"
+ + "        input.setAttribute('data-old-value', input.value); \n"
+ + " \n"
+ + "        // Listen for the 'input' event \n"
+ + "        input.addEventListener('input', checkOverflowAndPrevent); \n"
+ + "      }); \n"
+ + "    } \n"
+ + " \n"
  + " \n"
  + "    function genCellEventListener(cell) { \n"
  + " \n"
@@ -3100,13 +3287,6 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      signature.value = \"\"; \n"
  + "    } \n"
  + " \n"
- + "    // function onSubmit(e) { \n"
- + "    //     console.log({ \n"
- + "    //         'name': document.getElementsByName('name')[0].value, \n"
- + "    //         'signature': signature.value, \n"
- + "    //     }); \n"
- + "    //     return false; \n"
- + "    // } \n"
  + " \n"
  + " \n"
  + "    function restoreSelectionsFromInputs() { \n"
@@ -3154,6 +3334,8 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + " \n"
  + " \n"
+ + " \n"
+ + " \n"
  + "    runStuff() \n"
  + " \n"
  + " \n"
@@ -3167,9 +3349,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
 // שליחת הטופס במייל
 function submitAndEmail(e) {
 
-    alert("siuuu")
-
-    // e.preventDefault()
+    e.preventDefault()
 
     const form = document.getElementById('feedback-form');
     if (!form.checkValidity()) {
@@ -3183,19 +3363,36 @@ function submitAndEmail(e) {
 
         const element = document.querySelector(`[name="${name}"]`);
         if (element.type === 'checkbox') {
-            script_str += (`document.getElementById("${name}").querySelector('input[value="${val}"]').checked = true;\n`)
+            script_str += (`document.querySelector( 'input[value="${val}"][name="${name}"]' ).checked = true;\n`)
         }
-        else{
+        else {
             script_str += ("document.getElementsByName('" + name + "')[0].value = '" + val + "';\n")
         }
-        console.log(name, val)
+        // console.log(name, val)
     }
 
     htmlFile = htmlStart
         + "\n<" + "script>\n"
         + script_str
-        + "\ndocument.querySelector('fieldset').disabled = true;\n "
-        + "\ndocument.getElementById('send-form').style.display = 'none';\n "
+        + "\ndocument.querySelector('fieldset').disabled = true;\n " //+ No cursor pointer! + No grey input!
+        + "\ndocument.querySelectorAll('button').forEach(button => {button.style.display = 'none';});;\n "
+        //Click if zoomed in to signature(boo)
+        + "\nif (document.getElementById('zoom-out')?.offsetHeight > 0) document.getElementById('zoom-wrapper').click();;\n"
+        
+        
+        //Remove cursor pointer:
+
+        + `\ndocument.querySelectorAll('*').forEach(el => {
+            const computedStyle = window.getComputedStyle(el);
+            if (computedStyle.cursor === 'pointer') {
+                el.style.removeProperty('cursor'); // Remove the 'cursor' property if it's set
+            }
+            });\n`
+
+        + "document.body.classList.toggle('default-backgrounds');"
+        + "document.body.offsetHeight;"
+
+        + "\ndocument.querySelectorAll('*').forEach(el => { if (window.getComputedStyle(el).cursor === 'pointer') el.style.cursor = 'default'; });\n"
         + "\nsetCanvasElFromHiddenInput()\n;"
         + "\ncanvas.style.pointerEvents='none' \n"
         + '\nrestoreSelectionsFromInputs()\n'
