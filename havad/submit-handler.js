@@ -1,14 +1,22 @@
 
 // שליחת הטופס במייל
-function submitAndEmail(e) {
+function submitEventHandler(e) {
 
-    e.preventDefault()
+
+    alert("here")
 
     const form = document.getElementById('feedback-form');
     if (!form.checkValidity()) {
         form.reportValidity();
         return;
     }
+
+
+    e.preventDefault()
+
+
+    alert("here again")
+
     const formData = new FormData(form);
     script_str = ""
 
@@ -19,10 +27,10 @@ function submitAndEmail(e) {
             script_str += (`document.querySelector( 'input[value="${val}"][name="${name}"]' ).checked = true;\n`)
         }
         else {
-            script_str += ("document.getElementsByName(" + JSON.stringify(name) + ")[0].value = " + 
-            JSON.stringify(val) + ";\n")
-            console.log("document.getElementsByName('" + JSON.stringify(name) + "')[0].value = '" 
-            + JSON.stringify(val) + "';\n")
+            script_str += ("document.getElementsByName(" + JSON.stringify(name) + ")[0].value = " +
+                JSON.stringify(val) + ";\n")
+            console.log("document.getElementsByName('" + JSON.stringify(name) + "')[0].value = '"
+                + JSON.stringify(val) + "';\n")
         }
         // console.log(name, val)
     }
@@ -34,8 +42,8 @@ function submitAndEmail(e) {
         + "\ndocument.querySelectorAll('button').forEach(button => {button.style.display = 'none';});;\n "
         //Click if zoomed in to signature(boo)
         + "\nif (document.getElementById('zoom-out')?.offsetHeight > 0) document.getElementById('zoom-wrapper').click();;\n"
-        
-        
+
+
         //Remove cursor pointer:
 
         + `\ndocument.querySelectorAll('*').forEach(el => {
@@ -67,7 +75,23 @@ function submitAndEmail(e) {
 
 }
 
-document.getElementById("send-form").addEventListener("click", submitAndEmail)
+// document.addEventListener("DOMContentLoaded", () => {
+
+//     const form = document.getElementById("feedback-form");
+//     if (form) {
+//       form.addEventListener("submit", submitEventHandler);
+    // } else {
+    //   console.error("No element with ID 'feedback-form' found.");
+    // }
+//   });
+
+
+
+const form = document.getElementById("feedback-form");
+form.addEventListener("submit", () => {
+    alert("submitting")
+});
+  
 
 
 // document.getElementById("date-label").addEventListener("click", () => {
