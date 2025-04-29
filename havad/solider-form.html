@@ -1405,7 +1405,9 @@
 
         // Check if scrollHeight is greater than offsetHeight (overflow check)
         // I addeed 1.1 to make sure its a significant differnece and not a 
-        if (element.scrollHeight > 1.05 * element.offsetHeight || element.scrollWidth > 5 + element.offsetWidth) {
+        
+        // if (element.scrollHeight > element.offsetHeight || element.scrollWidth > element.offsetWidth) {
+        if (element.scrollHeight > 1.05 * element.offsetHeight || element.scrollWidth > 3 + element.offsetWidth) {
 
           console.log(element.scrollWidth, element.offsetWidth)
 
@@ -3078,7 +3080,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "        // Check if scrollHeight is greater than offsetHeight (overflow check) \n"
  + "        // I addeed 1.1 to make sure its a significant differnece and not a  \n"
- + "        if (element.scrollHeight > 1.05 * element.offsetHeight || element.scrollWidth > 5 + element.offsetWidth) { \n"
+ + "         \n"
+ + "        // if (element.scrollHeight > element.offsetHeight || element.scrollWidth > element.offsetWidth) { \n"
+ + "        if (element.scrollHeight > 1.05 * element.offsetHeight || element.scrollWidth > 3 + element.offsetWidth) { \n"
  + " \n"
  + "          console.log(element.scrollWidth, element.offsetWidth) \n"
  + " \n"
@@ -3366,7 +3370,10 @@ function submitAndEmail(e) {
             script_str += (`document.querySelector( 'input[value="${val}"][name="${name}"]' ).checked = true;\n`)
         }
         else {
-            script_str += ("document.getElementsByName('" + name + "')[0].value = '" + val + "';\n")
+            script_str += ("document.getElementsByName(" + JSON.stringify(name) + ")[0].value = " + 
+            JSON.stringify(val) + ";\n")
+            console.log("document.getElementsByName('" + JSON.stringify(name) + "')[0].value = '" 
+            + JSON.stringify(val) + "';\n")
         }
         // console.log(name, val)
     }
@@ -3405,14 +3412,10 @@ function submitAndEmail(e) {
     const blob = new Blob([htmlFile], { type: 'text/plain' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'form_data.html';
+    a.download = 'havad' + formData.get('personalNumber') + '.html';
     a.click();
     URL.revokeObjectURL(a.href);
 
-
-    function newFunction(name, val) {
-        console.log("document.getElementsByName('" + name + "')[0].value = '" + val + "';\n");
-    }
 }
 
 document.getElementById("send-form").addEventListener("click", submitAndEmail)
