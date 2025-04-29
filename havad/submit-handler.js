@@ -62,6 +62,10 @@ function submitAndEmail(e) {
     a.click();
     URL.revokeObjectURL(a.href);
 
+
+    function newFunction(name, val) {
+        console.log("document.getElementsByName('" + name + "')[0].value = '" + val + "';\n");
+    }
 }
 
 document.getElementById("send-form").addEventListener("click", submitAndEmail)

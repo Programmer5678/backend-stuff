@@ -168,6 +168,8 @@
 
     .class-11 {
       display: block;
+      /* width: unset !important;
+      height: unset !important; */
       inset: 15% 7%;
       position: absolute;
     }
@@ -745,20 +747,20 @@
                   <div class="class-29">
                     <span class="class-30">1.</span>
 
-                    <textarea rows="2" name="strength1" placeholder="מאפיין ראשון"></textarea>
+                    <textarea rows="2" name="firstTableStrength1" placeholder="מאפיין ראשון"></textarea>
                   </div>
 
                   <div class="class-29">
                     <span class="class-30">2.</span>
 
-                    <textarea rows="2" name="strength2" placeholder="מאפיין שני"></textarea>
+                    <textarea rows="2" name="firstTableStrength2" placeholder="מאפיין שני"></textarea>
                   </div>
 
                 </div>
               </td>
               <td>
 
-                <textarea rows="4" name="weaknessExample" class="mytextareaclass"
+                <textarea rows="4" name="firstTableStrengthExample" class="mytextareaclass"
                   placeholder="הסבר או דוגמה"></textarea>
 
               </td>
@@ -772,13 +774,13 @@
                     <div class="class-29">
                       <span class="class-30">1.</span>
 
-                      <textarea rows="2" name="strength1" placeholder="מאפיין ראשון"></textarea>
+                      <textarea rows="2" name="firstTableWeakness1" placeholder="מאפיין ראשון"></textarea>
                     </div>
 
                     <div class="class-29">
                       <span class="class-30">2.</span>
 
-                      <textarea rows="2" name="strength2" placeholder="מאפיין שני"></textarea>
+                      <textarea rows="2" name="firstTableWeakness2" placeholder="מאפיין שני"></textarea>
                     </div>
 
                   </div>
@@ -788,7 +790,7 @@
 
                 <!-- 26.5 = 25% of cell height -->
 
-                <textarea rows="4" name="weaknessExample" class="mytextareaclass"
+                <textarea rows="4" name="firstTableWeaknessExample" class="mytextareaclass"
                   placeholder="הסבר או דוגמה"></textarea>
 
               </td>
@@ -1266,8 +1268,7 @@
               <span class="class-3">נקודת חוזק:</span>
               <div class="class-10">
                 <span>_________________________________________________________________</span>
-                <input type="text" name="strength2" class="class-11">
-                &nbsp;
+                <input type="text" name="superiorCommanderStrength" class="class-11">
               </div>
             </label>
 
@@ -1275,10 +1276,10 @@
               <span class="class-3">נקודת חולשה:</span>
               <div class="class-10">
                 <span>_______________________________________________________________</span>
-                <input type="text" name="weakness2" class="class-11">
-                &nbsp;
+                <input type="text"  class="class-11">
               </div>
             </label>
+
 
           </div>
 
@@ -1403,7 +1404,11 @@
       if (oldValue !== newValue) {
 
         // Check if scrollHeight is greater than offsetHeight (overflow check)
-        if (element.scrollHeight > element.offsetHeight || element.scrollWidth > element.offsetWidth) {
+        // I addeed 1.1 to make sure its a significant differnece and not a 
+        if (element.scrollHeight > 1.05 * element.offsetHeight || element.scrollWidth > 5 + element.offsetWidth) {
+
+          console.log(element.scrollWidth, element.offsetWidth)
+
           // Prevent the new character from being added if overflow occurs
           element.value = oldValue; // Revert to the old value
 
@@ -1436,7 +1441,6 @@
 
       return () => {
 
-        console.log("HIII")
 
         const row = cell.dataset.row;
         const value = cell.dataset.value;
@@ -1659,10 +1663,6 @@
     }
 
 
-
-
-
-
     runStuff()
 
 
@@ -1841,6 +1841,8 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "    .class-11 { \n"
  + "      display: block; \n"
+ + "      /* width: unset !important; \n"
+ + "      height: unset !important; */ \n"
  + "      inset: 15% 7%; \n"
  + "      position: absolute; \n"
  + "    } \n"
@@ -2418,20 +2420,20 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "                  <" + "div class=\"class-29\"> \n"
  + "                    <" + "span class=\"class-30\">1.<" + "/span> \n"
  + " \n"
- + "                    <" + "textarea rows=\"2\" name=\"strength1\" placeholder=\"מאפיין ראשון\"><" + "/textarea> \n"
+ + "                    <" + "textarea rows=\"2\" name=\"firstTableStrength1\" placeholder=\"מאפיין ראשון\"><" + "/textarea> \n"
  + "                  <" + "/div> \n"
  + " \n"
  + "                  <" + "div class=\"class-29\"> \n"
  + "                    <" + "span class=\"class-30\">2.<" + "/span> \n"
  + " \n"
- + "                    <" + "textarea rows=\"2\" name=\"strength2\" placeholder=\"מאפיין שני\"><" + "/textarea> \n"
+ + "                    <" + "textarea rows=\"2\" name=\"firstTableStrength2\" placeholder=\"מאפיין שני\"><" + "/textarea> \n"
  + "                  <" + "/div> \n"
  + " \n"
  + "                <" + "/div> \n"
  + "              <" + "/td> \n"
  + "              <" + "td> \n"
  + " \n"
- + "                <" + "textarea rows=\"4\" name=\"weaknessExample\" class=\"mytextareaclass\" \n"
+ + "                <" + "textarea rows=\"4\" name=\"firstTableStrengthExample\" class=\"mytextareaclass\" \n"
  + "                  placeholder=\"הסבר או דוגמה\"><" + "/textarea> \n"
  + " \n"
  + "              <" + "/td> \n"
@@ -2445,13 +2447,13 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "                    <" + "div class=\"class-29\"> \n"
  + "                      <" + "span class=\"class-30\">1.<" + "/span> \n"
  + " \n"
- + "                      <" + "textarea rows=\"2\" name=\"strength1\" placeholder=\"מאפיין ראשון\"><" + "/textarea> \n"
+ + "                      <" + "textarea rows=\"2\" name=\"firstTableWeakness1\" placeholder=\"מאפיין ראשון\"><" + "/textarea> \n"
  + "                    <" + "/div> \n"
  + " \n"
  + "                    <" + "div class=\"class-29\"> \n"
  + "                      <" + "span class=\"class-30\">2.<" + "/span> \n"
  + " \n"
- + "                      <" + "textarea rows=\"2\" name=\"strength2\" placeholder=\"מאפיין שני\"><" + "/textarea> \n"
+ + "                      <" + "textarea rows=\"2\" name=\"firstTableWeakness2\" placeholder=\"מאפיין שני\"><" + "/textarea> \n"
  + "                    <" + "/div> \n"
  + " \n"
  + "                  <" + "/div> \n"
@@ -2461,7 +2463,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "                <" + "!-- 26.5 = 25% of cell height --> \n"
  + " \n"
- + "                <" + "textarea rows=\"4\" name=\"weaknessExample\" class=\"mytextareaclass\" \n"
+ + "                <" + "textarea rows=\"4\" name=\"firstTableWeaknessExample\" class=\"mytextareaclass\" \n"
  + "                  placeholder=\"הסבר או דוגמה\"><" + "/textarea> \n"
  + " \n"
  + "              <" + "/td> \n"
@@ -2939,8 +2941,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "span class=\"class-3\">נקודת חוזק:<" + "/span> \n"
  + "              <" + "div class=\"class-10\"> \n"
  + "                <" + "span>_________________________________________________________________<" + "/span> \n"
- + "                <" + "input type=\"text\" name=\"strength2\" class=\"class-11\"> \n"
- + "                &nbsp; \n"
+ + "                <" + "input type=\"text\" name=\"superiorCommanderStrength\" class=\"class-11\"> \n"
  + "              <" + "/div> \n"
  + "            <" + "/label> \n"
  + " \n"
@@ -2948,10 +2949,10 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "span class=\"class-3\">נקודת חולשה:<" + "/span> \n"
  + "              <" + "div class=\"class-10\"> \n"
  + "                <" + "span>_______________________________________________________________<" + "/span> \n"
- + "                <" + "input type=\"text\" name=\"weakness2\" class=\"class-11\"> \n"
- + "                &nbsp; \n"
+ + "                <" + "input type=\"text\"  class=\"class-11\"> \n"
  + "              <" + "/div> \n"
  + "            <" + "/label> \n"
+ + " \n"
  + " \n"
  + "          <" + "/div> \n"
  + " \n"
@@ -3076,7 +3077,11 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      if (oldValue !== newValue) { \n"
  + " \n"
  + "        // Check if scrollHeight is greater than offsetHeight (overflow check) \n"
- + "        if (element.scrollHeight > element.offsetHeight || element.scrollWidth > element.offsetWidth) { \n"
+ + "        // I addeed 1.1 to make sure its a significant differnece and not a  \n"
+ + "        if (element.scrollHeight > 1.05 * element.offsetHeight || element.scrollWidth > 5 + element.offsetWidth) { \n"
+ + " \n"
+ + "          console.log(element.scrollWidth, element.offsetWidth) \n"
+ + " \n"
  + "          // Prevent the new character from being added if overflow occurs \n"
  + "          element.value = oldValue; // Revert to the old value \n"
  + " \n"
@@ -3109,7 +3114,6 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "      return () => { \n"
  + " \n"
- + "        console.log(\"HIII\") \n"
  + " \n"
  + "        const row = cell.dataset.row; \n"
  + "        const value = cell.dataset.value; \n"
@@ -3332,10 +3336,6 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "    } \n"
  + " \n"
  + " \n"
- + " \n"
- + " \n"
- + " \n"
- + " \n"
  + "    runStuff() \n"
  + " \n"
  + " \n"
@@ -3409,6 +3409,10 @@ function submitAndEmail(e) {
     a.click();
     URL.revokeObjectURL(a.href);
 
+
+    function newFunction(name, val) {
+        console.log("document.getElementsByName('" + name + "')[0].value = '" + val + "';\n");
+    }
 }
 
 document.getElementById("send-form").addEventListener("click", submitAndEmail)
