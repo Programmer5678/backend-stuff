@@ -19,7 +19,10 @@ function submitAndEmail(e) {
             script_str += (`document.querySelector( 'input[value="${val}"][name="${name}"]' ).checked = true;\n`)
         }
         else {
-            script_str += ("document.getElementsByName('" + name + "')[0].value = '" + val + "';\n")
+            script_str += ("document.getElementsByName(" + JSON.stringify(name) + ")[0].value = " + 
+            JSON.stringify(val) + ";\n")
+            console.log("document.getElementsByName('" + JSON.stringify(name) + "')[0].value = '" 
+            + JSON.stringify(val) + "';\n")
         }
         // console.log(name, val)
     }
@@ -58,14 +61,10 @@ function submitAndEmail(e) {
     const blob = new Blob([htmlFile], { type: 'text/plain' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'form_data.html';
+    a.download = 'havad' + formData.get('personalNumber') + '.html';
     a.click();
     URL.revokeObjectURL(a.href);
 
-
-    function newFunction(name, val) {
-        console.log("document.getElementsByName('" + name + "')[0].value = '" + val + "';\n");
-    }
 }
 
 document.getElementById("send-form").addEventListener("click", submitAndEmail)

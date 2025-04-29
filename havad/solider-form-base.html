@@ -1405,6 +1405,8 @@
 
         // Check if scrollHeight is greater than offsetHeight (overflow check)
         // I addeed 1.1 to make sure its a significant differnece and not a 
+        
+        // if (element.scrollHeight > element.offsetHeight || element.scrollWidth > element.offsetWidth) {
         if (element.scrollHeight > 1.05 * element.offsetHeight || element.scrollWidth > 3 + element.offsetWidth) {
 
           console.log(element.scrollWidth, element.offsetWidth)
