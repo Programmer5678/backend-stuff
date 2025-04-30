@@ -272,10 +272,11 @@
       padding: 4px
     }
 
+    /* 
     .class-31 {
       display: none;
 
-    }
+    } */
 
     .class-32 {
       display: flex;
@@ -580,6 +581,17 @@
     input {
       font-size: 12px;
     }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
   </style>
 
 </head>
@@ -825,15 +837,8 @@
           </thead>
           <tbody>
             <tr>
-              <td class="eval-feature">עצמאות בביצוע משימות</td>
-              <td class="eval-cell" data-row="0" data-value="גבוה מאוד"></td>
-              <td class="eval-cell" data-row="0" data-value="גבוה"></td>
-              <td class="eval-cell" data-row="0" data-value="בינוני"></td>
-              <td class="eval-cell" data-row="0" data-value="נמוך"></td>
-              <td class="eval-cell" data-row="0" data-value="נמוך מאוד"></td>
-              <td class="eval-cell" data-row="0" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_0" id="hidden-input-0" hidden="">
+              <td class="eval-feature">עצמאות בביצוע משימות
+                <select required name="rating_0" id="hidden-input-0" class="sr-only">
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -843,18 +848,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
+              <td class="eval-cell" data-row="0" data-value="גבוה מאוד"></td>
+              <td class="eval-cell" data-row="0" data-value="גבוה"></td>
+              <td class="eval-cell" data-row="0" data-value="בינוני"></td>
+              <td class="eval-cell" data-row="0" data-value="נמוך"></td>
+              <td class="eval-cell" data-row="0" data-value="נמוך מאוד"></td>
+              <td class="eval-cell" data-row="0" data-value="לא ניתן להעריך"></td>
+
             </tr>
 
             <tr>
-              <td class="eval-feature">תפקוד יעיל בלחץ ובעומס</td>
-              <td class="eval-cell" data-row="1" data-value="גבוה מאוד"></td>
-              <td class="eval-cell" data-row="1" data-value="גבוה"></td>
-              <td class="eval-cell" data-row="1" data-value="בינוני"></td>
-              <td class="eval-cell" data-row="1" data-value="נמוך"></td>
-              <td class="eval-cell" data-row="1" data-value="נמוך מאוד"></td>
-              <td class="eval-cell" data-row="1" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_1" id="hidden-input-1" hidden="">
+              <td class="eval-feature">תפקוד יעיל בלחץ ובעומס
+                <select required name="rating_1" id="hidden-input-1"  class="sr-only" >
                   <option value=""></option>
                   <option id="babulele" value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -864,18 +869,39 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
+              <td class="eval-cell" data-row="1" data-value="גבוה מאוד"></td>
+              <td class="eval-cell" data-row="1" data-value="גבוה"></td>
+              <td class="eval-cell" data-row="1" data-value="בינוני"></td>
+              <td class="eval-cell" data-row="1" data-value="נמוך"></td>
+              <td class="eval-cell" data-row="1" data-value="נמוך מאוד"></td>
+              <td class="eval-cell" data-row="1" data-value="לא ניתן להעריך"></td>
+
             </tr>
 
             <tr>
-              <td class="eval-feature">קבלת החלטות</td>
+              <td class="eval-feature">קבלת החלטות
+                <select required name="rating_2" id="hidden-input-2"  class="sr-only" >
+                  <option value=""></option>
+                  <option value="גבוה מאוד"></option>
+                  <option value="גבוה"></option>
+                  <option value="בינוני"></option>
+                  <option value="נמוך"></option>
+                  <option value="נמוך מאוד"></option>
+                  <option value="לא ניתן להעריך"></option>
+                </select>
+              </td>
               <td class="eval-cell" data-row="2" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="2" data-value="גבוה"></td>
               <td class="eval-cell" data-row="2" data-value="בינוני"></td>
               <td class="eval-cell" data-row="2" data-value="נמוך"></td>
               <td class="eval-cell" data-row="2" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="2" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_2" id="hidden-input-2" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">משמעת והסתגלות לצרכי המערכת
+                <select required name="rating_3" id="hidden-input-3"  class="sr-only" >
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -885,18 +911,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">משמעת והסתגלות לצרכי המערכת</td>
               <td class="eval-cell" data-row="3" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="3" data-value="גבוה"></td>
               <td class="eval-cell" data-row="3" data-value="בינוני"></td>
               <td class="eval-cell" data-row="3" data-value="נמוך"></td>
               <td class="eval-cell" data-row="3" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="3" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_3" id="hidden-input-3" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">יכולת חשיבה ולמידה עצמית
+                <select required name="rating_4" id="hidden-input-4"  class="sr-only" >
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -906,18 +932,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">יכולת חשיבה ולמידה עצמית</td>
               <td class="eval-cell" data-row="4" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="4" data-value="גבוה"></td>
               <td class="eval-cell" data-row="4" data-value="בינוני"></td>
               <td class="eval-cell" data-row="4" data-value="נמוך"></td>
               <td class="eval-cell" data-row="4" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="4" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_4" id="hidden-input-4" hidden="">
+    
+            </tr>
+
+            <tr>
+              <td class="eval-feature">עבודת צוות
+                <select required name="rating_5" id="hidden-input-5"  class="sr-only" >
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -927,18 +953,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">עבודת צוות</td>
               <td class="eval-cell" data-row="5" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="5" data-value="גבוה"></td>
               <td class="eval-cell" data-row="5" data-value="בינוני"></td>
               <td class="eval-cell" data-row="5" data-value="נמוך"></td>
               <td class="eval-cell" data-row="5" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="5" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_5" id="hidden-input-5" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">אסרטיביות ויכולת הובלה
+                <select required name="rating_6" id="hidden-input-6"  class="sr-only" >
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -948,18 +974,19 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">אסרטיביות ויכולת הובלה</td>
               <td class="eval-cell" data-row="6" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="6" data-value="גבוה"></td>
               <td class="eval-cell" data-row="6" data-value="בינוני"></td>
               <td class="eval-cell" data-row="6" data-value="נמוך"></td>
               <td class="eval-cell" data-row="6" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="6" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_6" id="hidden-input-6" hidden="">
+
+            </tr>
+
+
+            <tr>
+              <td class="eval-feature">אומץ, איתנות וקור רוח
+                <select required name="rating_7" id="hidden-input-7"  class="sr-only" >
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -969,19 +996,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-
-            <tr>
-              <td class="eval-feature">אומץ, איתנות וקור רוח</td>
               <td class="eval-cell" data-row="7" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="7" data-value="גבוה"></td>
               <td class="eval-cell" data-row="7" data-value="בינוני"></td>
               <td class="eval-cell" data-row="7" data-value="נמוך"></td>
               <td class="eval-cell" data-row="7" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="7" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_7" id="hidden-input-7" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">אסרטיביות ויכולת הובלה
+                <select required name="rating_8" id="hidden-input-8"  class="sr-only" >
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -991,18 +1017,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">אסרטיביות ויכולת הובלה</td>
               <td class="eval-cell" data-row="8" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="8" data-value="גבוה"></td>
               <td class="eval-cell" data-row="8" data-value="בינוני"></td>
               <td class="eval-cell" data-row="8" data-value="נמוך"></td>
               <td class="eval-cell" data-row="8" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="8" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_8" id="hidden-input-8" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">אחריות והשקעה במשימה
+                <select required name="rating_9" id="hidden-input-9"  class="sr-only" >
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -1012,18 +1038,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">אחריות והשקעה במשימה</td>
               <td class="eval-cell" data-row="9" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="9" data-value="גבוה"></td>
               <td class="eval-cell" data-row="9" data-value="בינוני"></td>
               <td class="eval-cell" data-row="9" data-value="נמוך"></td>
               <td class="eval-cell" data-row="9" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="9" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_9" id="hidden-input-9" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">קבלת ביקורת
+                <select required name="rating_10" id="hidden-input-10"  class="sr-only" >
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -1033,27 +1059,13 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">קבלת ביקורת</td>
               <td class="eval-cell" data-row="10" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="10" data-value="גבוה"></td>
               <td class="eval-cell" data-row="10" data-value="בינוני"></td>
               <td class="eval-cell" data-row="10" data-value="נמוך"></td>
               <td class="eval-cell" data-row="10" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="10" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_10" id="hidden-input-10" hidden="">
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
-              </td>
+ 
             </tr>
 
           </tbody>
@@ -1675,6 +1687,16 @@
     runStuff()
 
 
+  </script>
+
+  <script>
+
+    document.querySelector("form").addEventListener("submit", checkWorks)
+
+    function checkWorks(e) {
+      e.preventDefault();
+      alert("Submitting form and sending email...");
+    }
   </script>
 
 </body>
