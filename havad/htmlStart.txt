@@ -272,10 +272,11 @@
       padding: 4px
     }
 
+    /* 
     .class-31 {
       display: none;
 
-    }
+    } */
 
     .class-32 {
       display: flex;
@@ -580,13 +581,24 @@
     input {
       font-size: 12px;
     }
+
+    /* .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    } */
   </style>
 
 </head>
 
 <body class="default-backgrounds">
 
-  <form id="feedback-form">
+  <form novalidate id="feedback-form">
 
     <fieldset>
 
@@ -599,7 +611,12 @@
             <div class="class-4">
               <div>__________</div>
 
-              <input requried type="date" name="date" class="class-5 class-11">
+              <div class="class-5 class-11" id="bulbulim">
+                <input required type="date" name="date" style="width: 100%; display: block;
+                height: 100%;">
+                <!-- <div style="width: 100%; display: block; background-color: grey;
+                height: 100%;"></div> -->
+              </div>
             </div>
 
           </label>
@@ -609,7 +626,7 @@
             <div class="class-4">
               <div>__________</div>
 
-              <input requried type="number" name="samkhut" class="class-6 class-11">
+              <input required type="number" name="samkhut" class="class-6 class-11">
             </div>
 
           </label>
@@ -641,7 +658,7 @@
             <span class="class-3">שם פרטי בלבד:</span>
             <div class="class-10">
               <span>__________________</span>
-              <input requried type="text" name="firstName" class="class-11">
+              <input required type="text" name="firstName" class="class-11">
               &nbsp;
             </div>
           </label>
@@ -650,7 +667,7 @@
             <span class="class-3">מ"א:</span>
             <div class="class-10">
               <span>_____________</span>
-              <input requried type="text" name="personalNumber" pattern="\d{7}" class="class-6 class-11">
+              <input required type="text" name="personalNumber" pattern="\d{7}" class="class-6 class-11">
             </div>
           </label>
 
@@ -666,7 +683,7 @@
             </span>
             <div class="class-10">
               <span>___</span>
-              <input requried type="text" pattern="\d{1,2}" name="monthsUnder" class="class-6 class-11">
+              <input required type="text" pattern="\d{1,2}" name="monthsUnder" class="class-6 class-11">
             </div>
             <span>  
               חודשים.
@@ -678,7 +695,7 @@
             <span class="class-3">
               החו"ד נכתב יחד עם המפקד הקודם:  
             </span>
-            <input requried type="checkbox" name="writtenUnderLast" class="class-15" value="נכתב על ידי קודם">
+            <input required type="checkbox" name="writtenUnderLast" class="class-15" value="נכתב על ידי קודם">
             <span>  
               (סמן אם כן) </span>
           </label>
@@ -690,22 +707,22 @@
           <span class="class-3">מידת היכרות עם החייל/ת:</span>
 
           <label class="class-17">
-            <input requried type="checkbox" name="familiarity" value="טובה מאוד">
+            <input required type="checkbox" name="familiarity" value="טובה מאוד">
             טובה מאוד
           </label>
 
           <label class="class-17">
-            <input requried type="checkbox" name="familiarity" value="די טובה">
+            <input required type="checkbox" name="familiarity" value="די טובה">
             די טובה
           </label>
 
           <label class="class-17">
-            <input requried type="checkbox" name="familiarity" value="בינונית">
+            <input required type="checkbox" name="familiarity" value="בינונית">
             בינונית
           </label>
 
           <label class="class-17">
-            <input requried type="checkbox" name="familiarity" value="קלושה">
+            <input required type="checkbox" name="familiarity" value="קלושה">
             קלושה
           </label>
         </div>
@@ -715,7 +732,7 @@
           <span class="class-3">תפקידו/ה הנוכחי של החייל/ת (פירוט ברמת בלמ"ס בלבד):</span>
           <div class="class-10">
             <span>___________________</span>
-            <input requried type="text" name="role" class="class-11">
+            <input required type="text" name="role" class="class-11">
           </div>
         </label>
 
@@ -825,15 +842,8 @@
           </thead>
           <tbody>
             <tr>
-              <td class="eval-feature">עצמאות בביצוע משימות</td>
-              <td class="eval-cell" data-row="0" data-value="גבוה מאוד"></td>
-              <td class="eval-cell" data-row="0" data-value="גבוה"></td>
-              <td class="eval-cell" data-row="0" data-value="בינוני"></td>
-              <td class="eval-cell" data-row="0" data-value="נמוך"></td>
-              <td class="eval-cell" data-row="0" data-value="נמוך מאוד"></td>
-              <td class="eval-cell" data-row="0" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_0" id="hidden-input-0" hidden="">
+              <td class="eval-feature">עצמאות בביצוע משימות
+                <select name="rating_0" id="hidden-input-0" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -843,18 +853,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
+              <td class="eval-cell" data-row="0" data-value="גבוה מאוד"></td>
+              <td class="eval-cell" data-row="0" data-value="גבוה"></td>
+              <td class="eval-cell" data-row="0" data-value="בינוני"></td>
+              <td class="eval-cell" data-row="0" data-value="נמוך"></td>
+              <td class="eval-cell" data-row="0" data-value="נמוך מאוד"></td>
+              <td class="eval-cell" data-row="0" data-value="לא ניתן להעריך"></td>
+
             </tr>
 
             <tr>
-              <td class="eval-feature">תפקוד יעיל בלחץ ובעומס</td>
-              <td class="eval-cell" data-row="1" data-value="גבוה מאוד"></td>
-              <td class="eval-cell" data-row="1" data-value="גבוה"></td>
-              <td class="eval-cell" data-row="1" data-value="בינוני"></td>
-              <td class="eval-cell" data-row="1" data-value="נמוך"></td>
-              <td class="eval-cell" data-row="1" data-value="נמוך מאוד"></td>
-              <td class="eval-cell" data-row="1" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_1" id="hidden-input-1" hidden="">
+              <td class="eval-feature">תפקוד יעיל בלחץ ובעומס
+                <select name="rating_1" id="hidden-input-1" hidden>
                   <option value=""></option>
                   <option id="babulele" value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -864,18 +874,39 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
+              <td class="eval-cell" data-row="1" data-value="גבוה מאוד"></td>
+              <td class="eval-cell" data-row="1" data-value="גבוה"></td>
+              <td class="eval-cell" data-row="1" data-value="בינוני"></td>
+              <td class="eval-cell" data-row="1" data-value="נמוך"></td>
+              <td class="eval-cell" data-row="1" data-value="נמוך מאוד"></td>
+              <td class="eval-cell" data-row="1" data-value="לא ניתן להעריך"></td>
+
             </tr>
 
             <tr>
-              <td class="eval-feature">קבלת החלטות</td>
+              <td class="eval-feature">קבלת החלטות
+                <select name="rating_2" id="hidden-input-2" hidden>
+                  <option value=""></option>
+                  <option value="גבוה מאוד"></option>
+                  <option value="גבוה"></option>
+                  <option value="בינוני"></option>
+                  <option value="נמוך"></option>
+                  <option value="נמוך מאוד"></option>
+                  <option value="לא ניתן להעריך"></option>
+                </select>
+              </td>
               <td class="eval-cell" data-row="2" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="2" data-value="גבוה"></td>
               <td class="eval-cell" data-row="2" data-value="בינוני"></td>
               <td class="eval-cell" data-row="2" data-value="נמוך"></td>
               <td class="eval-cell" data-row="2" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="2" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_2" id="hidden-input-2" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">משמעת והסתגלות לצרכי המערכת
+                <select name="rating_3" id="hidden-input-3" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -885,18 +916,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">משמעת והסתגלות לצרכי המערכת</td>
               <td class="eval-cell" data-row="3" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="3" data-value="גבוה"></td>
               <td class="eval-cell" data-row="3" data-value="בינוני"></td>
               <td class="eval-cell" data-row="3" data-value="נמוך"></td>
               <td class="eval-cell" data-row="3" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="3" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_3" id="hidden-input-3" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">יכולת חשיבה ולמידה עצמית
+                <select name="rating_4" id="hidden-input-4" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -906,18 +937,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">יכולת חשיבה ולמידה עצמית</td>
               <td class="eval-cell" data-row="4" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="4" data-value="גבוה"></td>
               <td class="eval-cell" data-row="4" data-value="בינוני"></td>
               <td class="eval-cell" data-row="4" data-value="נמוך"></td>
               <td class="eval-cell" data-row="4" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="4" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_4" id="hidden-input-4" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">עבודת צוות
+                <select name="rating_5" id="hidden-input-5" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -927,18 +958,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">עבודת צוות</td>
               <td class="eval-cell" data-row="5" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="5" data-value="גבוה"></td>
               <td class="eval-cell" data-row="5" data-value="בינוני"></td>
               <td class="eval-cell" data-row="5" data-value="נמוך"></td>
               <td class="eval-cell" data-row="5" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="5" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_5" id="hidden-input-5" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">אסרטיביות ויכולת הובלה
+                <select name="rating_6" id="hidden-input-6" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -948,18 +979,19 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">אסרטיביות ויכולת הובלה</td>
               <td class="eval-cell" data-row="6" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="6" data-value="גבוה"></td>
               <td class="eval-cell" data-row="6" data-value="בינוני"></td>
               <td class="eval-cell" data-row="6" data-value="נמוך"></td>
               <td class="eval-cell" data-row="6" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="6" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_6" id="hidden-input-6" hidden="">
+
+            </tr>
+
+
+            <tr>
+              <td class="eval-feature">אומץ, איתנות וקור רוח
+                <select name="rating_7" id="hidden-input-7" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -969,19 +1001,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-
-            <tr>
-              <td class="eval-feature">אומץ, איתנות וקור רוח</td>
               <td class="eval-cell" data-row="7" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="7" data-value="גבוה"></td>
               <td class="eval-cell" data-row="7" data-value="בינוני"></td>
               <td class="eval-cell" data-row="7" data-value="נמוך"></td>
               <td class="eval-cell" data-row="7" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="7" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_7" id="hidden-input-7" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">אסרטיביות ויכולת הובלה
+                <select name="rating_8" id="hidden-input-8" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -991,18 +1022,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">אסרטיביות ויכולת הובלה</td>
               <td class="eval-cell" data-row="8" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="8" data-value="גבוה"></td>
               <td class="eval-cell" data-row="8" data-value="בינוני"></td>
               <td class="eval-cell" data-row="8" data-value="נמוך"></td>
               <td class="eval-cell" data-row="8" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="8" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_8" id="hidden-input-8" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">אחריות והשקעה במשימה
+                <select name="rating_9" id="hidden-input-9" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -1012,18 +1043,18 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">אחריות והשקעה במשימה</td>
               <td class="eval-cell" data-row="9" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="9" data-value="גבוה"></td>
               <td class="eval-cell" data-row="9" data-value="בינוני"></td>
               <td class="eval-cell" data-row="9" data-value="נמוך"></td>
               <td class="eval-cell" data-row="9" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="9" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_9" id="hidden-input-9" hidden="">
+
+            </tr>
+
+            <tr>
+              <td class="eval-feature">קבלת ביקורת
+                <select name="rating_10" id="hidden-input-10" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -1033,27 +1064,13 @@
                   <option value="לא ניתן להעריך"></option>
                 </select>
               </td>
-            </tr>
-
-            <tr>
-              <td class="eval-feature">קבלת ביקורת</td>
               <td class="eval-cell" data-row="10" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="10" data-value="גבוה"></td>
               <td class="eval-cell" data-row="10" data-value="בינוני"></td>
               <td class="eval-cell" data-row="10" data-value="נמוך"></td>
               <td class="eval-cell" data-row="10" data-value="נמוך מאוד"></td>
               <td class="eval-cell" data-row="10" data-value="לא ניתן להעריך"></td>
-              <td class="class-31">
-                <select required name="rating_10" id="hidden-input-10" hidden="">
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
-              </td>
+
             </tr>
 
           </tbody>
@@ -1064,12 +1081,12 @@
 
         <span style="font-weight: bold;">3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה?</span>
         <div id="motivation" class="class-32">
-          <label class="class-17"><input requried type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה
+          <label class="class-17"><input required type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה
             מאוד</label>
-          <label class="class-17"><input requried type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
-          <label class="class-17"><input requried type="checkbox" name="motivation" value="בינונית"> בינונית</label>
-          <label class="class-17"><input requried type="checkbox" name="motivation" value="נמוכה"> נמוכה</label>
-          <label class="class-17"><input requried type="checkbox" name="motivation" value="איני רוצה לצאת"> איני רוצה
+          <label class="class-17"><input required type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
+          <label class="class-17"><input required type="checkbox" name="motivation" value="בינונית"> בינונית</label>
+          <label class="class-17"><input required type="checkbox" name="motivation" value="נמוכה"> נמוכה</label>
+          <label class="class-17"><input required type="checkbox" name="motivation" value="איני רוצה לצאת"> איני רוצה
             לצאת
             לקצונה</label>
         </div>
@@ -1079,18 +1096,18 @@
 
         <span style="font-weight: bold;">5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?</span>
         <div id="suitabilityCompared" class="class-33">
-          <label class="class-17"><input requried type="checkbox" name="suitabilityCompared"
+          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
               value="יותר מרוב החיילים בתפקידים דומים"> יותר מרוב
             החיילים בתפקידים דומים</label>
-          <label class="class-17"><input requried type="checkbox" name="suitabilityCompared"
+          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
               value="כמו רוב החיילים בתפקידים דומים"> כמו רוב
             החיילים
             בתפקידים דומים</label>
 
-          <label class="class-17"><input requried type="checkbox" name="suitabilityCompared"
+          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
               value="פחות מרוב החיילים בתפקידים דומים"> פחות מרוב
             החיילים בתפקידים דומים</label>
-          <label class="class-17"><input requried type="checkbox" name="suitabilityCompared"
+          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
               value="אינו מתאים/ה כלל לקצונה">אינו
             מתאים/ה כלל
             לקצונה</label>
@@ -1100,16 +1117,16 @@
           6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה?
         </span>
         <div id="willingnessCommand" class="class-32">
-          <label class="class-17"><input requried type="checkbox" name="willingnessCommand" value="במידה רבה מאוד">
+          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה רבה מאוד">
             במידה רבה
             מאוד</label>
-          <label class="class-17"><input requried type="checkbox" name="willingnessCommand" value="במידה רבה"> במידה
+          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה רבה"> במידה
             רבה</label>
-          <label class="class-17"><input requried type="checkbox" name="willingnessCommand" value="במידה בינונית"> במידה
+          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה בינונית"> במידה
             בינונית</label>
-          <label class="class-17"><input requried type="checkbox" name="willingnessCommand" value="במידה מועטה"> במידה
+          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה מועטה"> במידה
             מועטה</label>
-          <label class="class-17"><input requried type="checkbox" name="willingnessCommand" value="לא מעוניין כלל"> איני
+          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="לא מעוניין כלל"> איני
             מעוניין/ת כלל</label>
         </div>
 
@@ -1122,7 +1139,7 @@
               <div class="class-4">
                 <div>__________</div>
 
-                <input requried type="text" name="kidName" class="class-11">
+                <input required type="text" name="kidName" class="class-11">
               </div>
             </label>
 
@@ -1131,7 +1148,7 @@
               <div class="class-4">
                 <div>_____________</div>
 
-                <input requried class="class-6 class-11" pattern="\d{10}" name="numba" class="class-6 class-11">
+                <input required class="class-6 class-11" pattern="\d{10}" name="numba" class="class-6 class-11">
               </div>
 
             </label>
@@ -1163,7 +1180,7 @@
             <div class="class-4">
               <div>____________________</div>
 
-              <input requried type="text" name="feedbackName" class="class-11">
+              <input required type="text" name="feedbackName" class="class-11">
             </div>
 
           </label>
@@ -1197,7 +1214,7 @@
               </div>
 
 
-              <input requried type="hidden" name="signature" />
+              <input required type="hidden" name="signature" />
 
             </label>
 
@@ -1220,7 +1237,7 @@
           <span class="class-3">1.&emsp; משך היכרותיך עם החייל בחודשים &nbsp;</span>
           <div class="class-10">
             <span>___</span>
-            <input requried type="text" pattern="\d{1,2}" name="monthsUnder2" class="class-6 class-11">
+            <input required type="text" pattern="\d{1,2}" name="monthsUnder2" class="class-6 class-11">
           </div>
 
         </label>
@@ -1230,27 +1247,27 @@
           <span class="class-3">מידת ההיכרות:</span>
 
           <label class="class-17">
-            <input requried type="checkbox" name="familiarity2" value="טובה מאוד">
+            <input required type="checkbox" name="familiarity2" value="טובה מאוד">
             טובה מאוד
           </label>
 
           <label class="class-17">
-            <input requried type="checkbox" name="familiarity2" value="די טובה">
+            <input required type="checkbox" name="familiarity2" value="די טובה">
             די טובה
           </label>
 
           <label class="class-17">
-            <input requried type="checkbox" name="familiarity2" value="בינונית">
+            <input required type="checkbox" name="familiarity2" value="בינונית">
             בינונית
           </label>
 
           <label class="class-17">
-            <input requried type="checkbox" name="familiarity2" value="קלושה">
+            <input required type="checkbox" name="familiarity2" value="קלושה">
             קלושה
           </label>
 
           <label class="class-17">
-            <input requried type="checkbox" name="familiarity2" value="איני יודע להעריך">
+            <input required type="checkbox" name="familiarity2" value="איני יודע להעריך">
             איני יודע להעריך
           </label>
 
@@ -1273,7 +1290,7 @@
               <span class="class-3">נקודת חוזק:</span>
               <div class="class-10">
                 <span>_________________________________________________________________</span>
-                <input requried type="text" name="superiorCommanderStrength" class="class-11">
+                <input required type="text" name="superiorCommanderStrength" class="class-11">
               </div>
             </label>
 
@@ -1281,7 +1298,7 @@
               <span class="class-3">נקודת חולשה:</span>
               <div class="class-10">
                 <span>_______________________________________________________________</span>
-                <input requried type="text" class="class-11">
+                <input required type="text" class="class-11">
               </div>
             </label>
 
@@ -1297,13 +1314,13 @@
 
             <b>באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ"א)</b>
             <div id="willingnessCommand2">
-              <label><input requried type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה
+              <label><input required type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה
                 מאוד</label>
-              <label><input requried type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
-              <label><input requried type="checkbox" name="willingnessCommand2" value="במידה בינונית"> במידה
+              <label><input required type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
+              <label><input required type="checkbox" name="willingnessCommand2" value="במידה בינונית"> במידה
                 בינונית</label>
-              <label><input requried type="checkbox" name="willingnessCommand2" value="במידה מועטה"> במידה מועטה</label>
-              <label><input requried type="checkbox" id="siuu" name="willingnessCommand2" value="איני מעוניין/ת כלל">
+              <label><input required type="checkbox" name="willingnessCommand2" value="במידה מועטה"> במידה מועטה</label>
+              <label><input required type="checkbox" id="siuu" name="willingnessCommand2" value="איני מעוניין/ת כלל">
                 איני מעוניין/ת כלל
               </label>
 
@@ -1335,7 +1352,7 @@
               <div class="class-4">
                 <div>__________</div>
 
-                <input requried type="text" name="commander2Name" class="class-11">
+                <input required type="text" name="commander2Name" class="class-11">
               </div>
             </label>
 
@@ -1344,7 +1361,7 @@
               <div class="class-4">
                 <div>_____________</div>
 
-                <input requried type="text" name="commander2Phone" class="class-6 class-11" pattern="\d{10}">
+                <input required type="text" name="commander2Phone" class="class-6 class-11" pattern="\d{10}">
               </div>
 
             </label>
@@ -1677,11 +1694,4 @@
 
   </script>
 
-
-  <script>
-    const form = document.getElementById("feedback-form");
-    form.addEventListener("submit", () => {
-      alert("submitting")
-    });
-  </script>
 
