@@ -592,6 +592,13 @@
       white-space: nowrap;
       border: 0;
     } */
+
+
+    .wrapped-input {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 
 </head>
@@ -611,11 +618,8 @@
             <div class="class-4">
               <div>__________</div>
 
-              <div class="class-5 class-11" id="bulbulim">
-                <input required type="date" name="date" style="width: 100%; display: block;
-                height: 100%;">
-                <!-- <div style="width: 100%; display: block; background-color: grey;
-                height: 100%;"></div> -->
+              <div class="class-5 class-11" id="date-wrapper">
+                <input type="date" name="date" class="wrapped-input">
               </div>
             </div>
 
@@ -626,7 +630,9 @@
             <div class="class-4">
               <div>__________</div>
 
-              <input required type="number" name="samkhut" class="class-6 class-11">
+              <div id="samkhut-wrapper" class="class-6 class-11">
+                <input type="number" name="samkhut" class="wrapped-input">
+              </div>
             </div>
 
           </label>
@@ -658,7 +664,9 @@
             <span class="class-3">שם פרטי בלבד:</span>
             <div class="class-10">
               <span>__________________</span>
-              <input required type="text" name="firstName" class="class-11">
+              <div id="firstName-wrapper" class="class-11">
+                <input required type="text" name="firstName" class="wrapped-input">
+              </div>
               &nbsp;
             </div>
           </label>
@@ -667,7 +675,9 @@
             <span class="class-3">מ"א:</span>
             <div class="class-10">
               <span>_____________</span>
-              <input required type="text" name="personalNumber" pattern="\d{7}" class="class-6 class-11">
+              <div id="personalNumber-wrapper" class="class-6 class-11">
+                <input required type="text" name="personalNumber" pattern="\d{7}" class="wrapped-input">
+              </div>
             </div>
           </label>
 
@@ -683,7 +693,9 @@
             </span>
             <div class="class-10">
               <span>___</span>
-              <input required type="text" pattern="\d{1,2}" name="monthsUnder" class="class-6 class-11">
+              <div id="monthsUnder-wrapper" class="class-6 class-11">
+                <input required type="text" pattern="\d{1,2}" name="monthsUnder" class="wrapped-input">
+              </div>
             </div>
             <span>  
               חודשים.
@@ -732,7 +744,9 @@
           <span class="class-3">תפקידו/ה הנוכחי של החייל/ת (פירוט ברמת בלמ"ס בלבד):</span>
           <div class="class-10">
             <span>___________________</span>
-            <input required type="text" name="role" class="class-11">
+            <div id="role-wrapper" class="class-11">
+              <input required type="text" name="role" class="wrapped-input">
+            </div>
           </div>
         </label>
 
@@ -843,15 +857,20 @@
           <tbody>
             <tr>
               <td class="eval-feature">עצמאות בביצוע משימות
-                <select name="rating_0" id="hidden-input-0" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+
+                <div id="rating_0-wrapper" style="position: relative;">
+                  <select name="rating_0" id="hidden-input-0" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
+
+
               </td>
               <td class="eval-cell" data-row="0" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="0" data-value="גבוה"></td>
@@ -864,15 +883,17 @@
 
             <tr>
               <td class="eval-feature">תפקוד יעיל בלחץ ובעומס
-                <select name="rating_1" id="hidden-input-1" hidden>
-                  <option value=""></option>
-                  <option id="babulele" value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_1-wrapper" style="position: relative;">
+                  <select name="rating_1" id="hidden-input-1" hidden>
+                    <option value=""></option>
+                    <option id="babulele" value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="1" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="1" data-value="גבוה"></td>
@@ -885,15 +906,17 @@
 
             <tr>
               <td class="eval-feature">קבלת החלטות
-                <select name="rating_2" id="hidden-input-2" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_2-wrapper" style="position: relative;">
+                  <select name="rating_2" id="hidden-input-2" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="2" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="2" data-value="גבוה"></td>
@@ -906,15 +929,18 @@
 
             <tr>
               <td class="eval-feature">משמעת והסתגלות לצרכי המערכת
-                <select name="rating_3" id="hidden-input-3" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_3-wrapper" style="position: relative;">
+                  <select name="rating_3" id="hidden-input-3" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
+
               </td>
               <td class="eval-cell" data-row="3" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="3" data-value="גבוה"></td>
@@ -927,15 +953,17 @@
 
             <tr>
               <td class="eval-feature">יכולת חשיבה ולמידה עצמית
-                <select name="rating_4" id="hidden-input-4" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_4-wrapper" style="position: relative;">
+                  <select name="rating_4" id="hidden-input-4" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="4" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="4" data-value="גבוה"></td>
@@ -948,15 +976,17 @@
 
             <tr>
               <td class="eval-feature">עבודת צוות
-                <select name="rating_5" id="hidden-input-5" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_5-wrapper" style="position: relative;">
+                  <select name="rating_5" id="hidden-input-5" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="5" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="5" data-value="גבוה"></td>
@@ -969,15 +999,17 @@
 
             <tr>
               <td class="eval-feature">אסרטיביות ויכולת הובלה
-                <select name="rating_6" id="hidden-input-6" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_6-wrapper" style="position: relative;">
+                  <select name="rating_6" id="hidden-input-6" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="6" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="6" data-value="גבוה"></td>
@@ -991,15 +1023,17 @@
 
             <tr>
               <td class="eval-feature">אומץ, איתנות וקור רוח
-                <select name="rating_7" id="hidden-input-7" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_7-wrapper" style="position: relative;">
+                  <select name="rating_7" id="hidden-input-7" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="7" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="7" data-value="גבוה"></td>
@@ -1012,15 +1046,17 @@
 
             <tr>
               <td class="eval-feature">אסרטיביות ויכולת הובלה
-                <select name="rating_8" id="hidden-input-8" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_8-wrapper" style="position: relative;">
+                  <select name="rating_8" id="hidden-input-8" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="8" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="8" data-value="גבוה"></td>
@@ -1033,15 +1069,17 @@
 
             <tr>
               <td class="eval-feature">אחריות והשקעה במשימה
-                <select name="rating_9" id="hidden-input-9" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_9-wrapper" style="position: relative;">
+                  <select name="rating_9" id="hidden-input-9" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="9" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="9" data-value="גבוה"></td>
@@ -1053,7 +1091,7 @@
             </tr>
 
             <tr>
-              <td class="eval-feature">קבלת ביקורת
+              <td class="eval-feature" style="position: relative;">קבלת ביקורת
                 <select name="rating_10" id="hidden-input-10" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
@@ -1139,7 +1177,9 @@
               <div class="class-4">
                 <div>__________</div>
 
-                <input required type="text" name="kidName" class="class-11">
+                <div id="kidName-wrapper" class="class-11">
+                  <input required type="text" name="kidName" class="wrapped-input">
+                </div>
               </div>
             </label>
 
@@ -1148,7 +1188,9 @@
               <div class="class-4">
                 <div>_____________</div>
 
-                <input required class="class-6 class-11" pattern="\d{10}" name="numba" class="class-6 class-11">
+                <div id="numba-wrapper" class="class-6 class-11">
+                  <input required pattern="\d{10}" name="numba" class="wrapped-input">
+                </div>
               </div>
 
             </label>
@@ -1180,7 +1222,9 @@
             <div class="class-4">
               <div>____________________</div>
 
-              <input required type="text" name="feedbackName" class="class-11">
+              <div id="feedbackName-wrapper" class="class-11">
+                <input required type="text" name="feedbackName" class="wrapped-input">
+              </div>
             </div>
 
           </label>
@@ -1214,7 +1258,7 @@
               </div>
 
 
-              <input required type="hidden" name="signature" />
+              <input required type="hidden" name="signature" class="wrapped-input" />
 
             </label>
 
@@ -1237,7 +1281,9 @@
           <span class="class-3">1.&emsp; משך היכרותיך עם החייל בחודשים &nbsp;</span>
           <div class="class-10">
             <span>___</span>
-            <input required type="text" pattern="\d{1,2}" name="monthsUnder2" class="class-6 class-11">
+            <div id="monthsUnder2-wrapper" class="class-6 class-11">
+              <input required type="text" pattern="\d{1,2}" name="monthsUnder2" class="wrapped-input">
+            </div>
           </div>
 
         </label>
@@ -1290,7 +1336,9 @@
               <span class="class-3">נקודת חוזק:</span>
               <div class="class-10">
                 <span>_________________________________________________________________</span>
-                <input required type="text" name="superiorCommanderStrength" class="class-11">
+                <div id="superiorCommanderStrength-wrapper" class="class-11">
+                  <input required type="text" name="superiorCommanderStrength" class="wrapped-input">
+                </div>
               </div>
             </label>
 
@@ -1298,7 +1346,9 @@
               <span class="class-3">נקודת חולשה:</span>
               <div class="class-10">
                 <span>_______________________________________________________________</span>
-                <input required type="text" class="class-11">
+                <div id="superiorCommanderWeakness-wrapper" class="class-11">
+                  <input required type="text" name="superiorCommanderWeakness" class="wrapped-input">
+                </div>
               </div>
             </label>
 
@@ -1334,8 +1384,9 @@
           <span class="class-3">4.&emsp; הערות נוספות:</span>
           <div class="class-10">
             <span>________</span>
-            <input type="text" name="additionalComments" class="class-11">
-            &nbsp;
+            <div id="additionalComments-wrapper" class="class-11">
+              <input type="text" name="additionalComments">
+            </div> &nbsp;
           </div>
         </label>
 
@@ -1352,7 +1403,9 @@
               <div class="class-4">
                 <div>__________</div>
 
-                <input required type="text" name="commander2Name" class="class-11">
+                <div id="commander2Name-wrapper" class="class-11">
+                  <input required type="text" name="commander2Name" class="wrapped-input">
+                </div>
               </div>
             </label>
 
@@ -1361,7 +1414,9 @@
               <div class="class-4">
                 <div>_____________</div>
 
-                <input required type="text" name="commander2Phone" class="class-6 class-11" pattern="\d{10}">
+                <div id="commander2Phone-wrapper" class="class-6 class-11">
+                  <input required type="text" name="commander2Phone" pattern="\d{10}" class="wrapped-input">
+                </div>
               </div>
 
             </label>
@@ -1474,6 +1529,7 @@
         if (isSelectAllowed(value)) {
           // עדכון select הנסתר
           const select = document.getElementById(`hidden-input-${row}`);
+          select.dispatchEvent(new Event('input', { bubbles: true }));
           select.value = value;
           console.log("changing", select.id, select.value)
 

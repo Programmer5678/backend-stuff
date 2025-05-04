@@ -1,37 +1,13 @@
 
-// שליחת הטופס במייל
-function submitEventHandler(e) {
-
-    alert("here")
-
-    e.preventDefault()
-
-    alert("here")
-
-    const form = document.getElementById('feedback-form');
-    // if (!form.checkValidity()) {
-    //     form.reportValidity();
-    //     return;
-    // }
-
-
-    for (const el of form.elements) {
-        if (el.value == "") {
-
-            console.log("element info: ", el.name, el.id)
-
-            el.name+"-wrapper"
-
-
-            const svgNS = "http://www.w3.org/2000/svg";
+//Can just copy this... its just one element
+function genPopUp(){
+    const svgNS = "http://www.w3.org/2000/svg";
 
             viewBox = [0, 0, 170, 105]
             // Create SVG element
             const newEl = document.createElementNS(svgNS, "svg");
             newEl.setAttribute("viewBox", viewBox.join(" ")); // 300x180 viewBox
             newEl.setAttribute("xmlns", svgNS);
-
-            
 
             newEl.style.width = "100%"
             newEl.style.height = "100%"
@@ -93,17 +69,74 @@ function submitEventHandler(e) {
 
             newElWrapper = document.createElement("div")
             newElWrapper.style.position = "absolute";
-            newElWrapper.style.top = "70%";
+            newElWrapper.style.top = "50%";
             newElWrapper.style.right = "40%"; // Position it at the bottom-right corner
             newElWrapper.style.width = "240px"; // Width of the SVG element
             newElWrapper.style.height = "150px"; // Height of the SVG element
             // newElWrapper.style.backgroundColor = "lightblue"; // Just to see the background
             newElWrapper.style.zIndex = "1"
 
-            newElWrapper.id = "newEl" + el.name;
-
             newElWrapper.appendChild(newEl)
-            document.getElementById("bulbulim").appendChild(newElWrapper)
+
+            return newElWrapper
+
+
+}
+
+//Handle an empty input element. get the input wrapper.
+//  add the popup to it. add event listeners to close it
+function handleEmptyInput( inputEl ){
+
+    const inputWrapper=document.getElementById( inputEl.name + "-wrapper")
+    console.log( "inputEl", inputEl, "inputWrapper", inputWrapper )
+
+    if(inputWrapper){
+
+        const popUpWrapper = genPopUp()
+        inputWrapper.appendChild( popUpWrapper )
+
+        const eventListener = () => {
+            popUpWrapper.remove()
+        }
+
+        inputEl.addEventListener("click" ,  eventListener)
+        inputEl.addEventListener("input" ,  eventListener)
+
+        popUpWrapper.addEventListener("click", eventListener)
+
+    }
+
+    else {
+        console.log(" does not work...")
+    }
+
+}
+
+// שליחת הטופס במייל
+function submitEventHandler(e) {
+
+
+
+    alert("here")
+
+    e.preventDefault()
+
+    alert("here")
+
+    const form = document.getElementById('feedback-form');
+    // if (!form.checkValidity()) {
+    //     form.reportValidity();
+    //     return;
+    // }
+
+
+    for (const el of form.elements) {
+
+        console.log("element: ", el.name, el.value )
+
+        if (el.value == "") {
+
+            handleEmptyInput(el)
 
         }
 

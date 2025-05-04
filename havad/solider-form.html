@@ -592,6 +592,13 @@
       white-space: nowrap;
       border: 0;
     } */
+
+
+    .wrapped-input {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 
 </head>
@@ -611,11 +618,8 @@
             <div class="class-4">
               <div>__________</div>
 
-              <div class="class-5 class-11" id="bulbulim">
-                <input required type="date" name="date" style="width: 100%; display: block;
-                height: 100%;">
-                <!-- <div style="width: 100%; display: block; background-color: grey;
-                height: 100%;"></div> -->
+              <div class="class-5 class-11" id="date-wrapper">
+                <input type="date" name="date" class="wrapped-input">
               </div>
             </div>
 
@@ -626,7 +630,9 @@
             <div class="class-4">
               <div>__________</div>
 
-              <input required type="number" name="samkhut" class="class-6 class-11">
+              <div id="samkhut-wrapper" class="class-6 class-11">
+                <input type="number" name="samkhut" class="wrapped-input">
+              </div>
             </div>
 
           </label>
@@ -658,7 +664,9 @@
             <span class="class-3">שם פרטי בלבד:</span>
             <div class="class-10">
               <span>__________________</span>
-              <input required type="text" name="firstName" class="class-11">
+              <div id="firstName-wrapper" class="class-11">
+                <input required type="text" name="firstName" class="wrapped-input">
+              </div>
               &nbsp;
             </div>
           </label>
@@ -667,7 +675,9 @@
             <span class="class-3">מ"א:</span>
             <div class="class-10">
               <span>_____________</span>
-              <input required type="text" name="personalNumber" pattern="\d{7}" class="class-6 class-11">
+              <div id="personalNumber-wrapper" class="class-6 class-11">
+                <input required type="text" name="personalNumber" pattern="\d{7}" class="wrapped-input">
+              </div>
             </div>
           </label>
 
@@ -683,7 +693,9 @@
             </span>
             <div class="class-10">
               <span>___</span>
-              <input required type="text" pattern="\d{1,2}" name="monthsUnder" class="class-6 class-11">
+              <div id="monthsUnder-wrapper" class="class-6 class-11">
+                <input required type="text" pattern="\d{1,2}" name="monthsUnder" class="wrapped-input">
+              </div>
             </div>
             <span>  
               חודשים.
@@ -732,7 +744,9 @@
           <span class="class-3">תפקידו/ה הנוכחי של החייל/ת (פירוט ברמת בלמ"ס בלבד):</span>
           <div class="class-10">
             <span>___________________</span>
-            <input required type="text" name="role" class="class-11">
+            <div id="role-wrapper" class="class-11">
+              <input required type="text" name="role" class="wrapped-input">
+            </div>
           </div>
         </label>
 
@@ -843,15 +857,20 @@
           <tbody>
             <tr>
               <td class="eval-feature">עצמאות בביצוע משימות
-                <select name="rating_0" id="hidden-input-0" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+
+                <div id="rating_0-wrapper" style="position: relative;">
+                  <select name="rating_0" id="hidden-input-0" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
+
+
               </td>
               <td class="eval-cell" data-row="0" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="0" data-value="גבוה"></td>
@@ -864,15 +883,17 @@
 
             <tr>
               <td class="eval-feature">תפקוד יעיל בלחץ ובעומס
-                <select name="rating_1" id="hidden-input-1" hidden>
-                  <option value=""></option>
-                  <option id="babulele" value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_1-wrapper" style="position: relative;">
+                  <select name="rating_1" id="hidden-input-1" hidden>
+                    <option value=""></option>
+                    <option id="babulele" value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="1" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="1" data-value="גבוה"></td>
@@ -885,15 +906,17 @@
 
             <tr>
               <td class="eval-feature">קבלת החלטות
-                <select name="rating_2" id="hidden-input-2" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_2-wrapper" style="position: relative;">
+                  <select name="rating_2" id="hidden-input-2" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="2" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="2" data-value="גבוה"></td>
@@ -906,15 +929,18 @@
 
             <tr>
               <td class="eval-feature">משמעת והסתגלות לצרכי המערכת
-                <select name="rating_3" id="hidden-input-3" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_3-wrapper" style="position: relative;">
+                  <select name="rating_3" id="hidden-input-3" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
+
               </td>
               <td class="eval-cell" data-row="3" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="3" data-value="גבוה"></td>
@@ -927,15 +953,17 @@
 
             <tr>
               <td class="eval-feature">יכולת חשיבה ולמידה עצמית
-                <select name="rating_4" id="hidden-input-4" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_4-wrapper" style="position: relative;">
+                  <select name="rating_4" id="hidden-input-4" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="4" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="4" data-value="גבוה"></td>
@@ -948,15 +976,17 @@
 
             <tr>
               <td class="eval-feature">עבודת צוות
-                <select name="rating_5" id="hidden-input-5" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_5-wrapper" style="position: relative;">
+                  <select name="rating_5" id="hidden-input-5" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="5" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="5" data-value="גבוה"></td>
@@ -969,15 +999,17 @@
 
             <tr>
               <td class="eval-feature">אסרטיביות ויכולת הובלה
-                <select name="rating_6" id="hidden-input-6" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_6-wrapper" style="position: relative;">
+                  <select name="rating_6" id="hidden-input-6" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="6" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="6" data-value="גבוה"></td>
@@ -991,15 +1023,17 @@
 
             <tr>
               <td class="eval-feature">אומץ, איתנות וקור רוח
-                <select name="rating_7" id="hidden-input-7" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_7-wrapper" style="position: relative;">
+                  <select name="rating_7" id="hidden-input-7" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="7" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="7" data-value="גבוה"></td>
@@ -1012,15 +1046,17 @@
 
             <tr>
               <td class="eval-feature">אסרטיביות ויכולת הובלה
-                <select name="rating_8" id="hidden-input-8" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_8-wrapper" style="position: relative;">
+                  <select name="rating_8" id="hidden-input-8" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="8" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="8" data-value="גבוה"></td>
@@ -1033,15 +1069,17 @@
 
             <tr>
               <td class="eval-feature">אחריות והשקעה במשימה
-                <select name="rating_9" id="hidden-input-9" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+                <div id="rating_9-wrapper" style="position: relative;">
+                  <select name="rating_9" id="hidden-input-9" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="9" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="9" data-value="גבוה"></td>
@@ -1053,7 +1091,7 @@
             </tr>
 
             <tr>
-              <td class="eval-feature">קבלת ביקורת
+              <td class="eval-feature" style="position: relative;">קבלת ביקורת
                 <select name="rating_10" id="hidden-input-10" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
@@ -1139,7 +1177,9 @@
               <div class="class-4">
                 <div>__________</div>
 
-                <input required type="text" name="kidName" class="class-11">
+                <div id="kidName-wrapper" class="class-11">
+                  <input required type="text" name="kidName" class="wrapped-input">
+                </div>
               </div>
             </label>
 
@@ -1148,7 +1188,9 @@
               <div class="class-4">
                 <div>_____________</div>
 
-                <input required class="class-6 class-11" pattern="\d{10}" name="numba" class="class-6 class-11">
+                <div id="numba-wrapper" class="class-6 class-11">
+                  <input required pattern="\d{10}" name="numba" class="wrapped-input">
+                </div>
               </div>
 
             </label>
@@ -1180,7 +1222,9 @@
             <div class="class-4">
               <div>____________________</div>
 
-              <input required type="text" name="feedbackName" class="class-11">
+              <div id="feedbackName-wrapper" class="class-11">
+                <input required type="text" name="feedbackName" class="wrapped-input">
+              </div>
             </div>
 
           </label>
@@ -1214,7 +1258,7 @@
               </div>
 
 
-              <input required type="hidden" name="signature" />
+              <input required type="hidden" name="signature" class="wrapped-input" />
 
             </label>
 
@@ -1237,7 +1281,9 @@
           <span class="class-3">1.&emsp; משך היכרותיך עם החייל בחודשים &nbsp;</span>
           <div class="class-10">
             <span>___</span>
-            <input required type="text" pattern="\d{1,2}" name="monthsUnder2" class="class-6 class-11">
+            <div id="monthsUnder2-wrapper" class="class-6 class-11">
+              <input required type="text" pattern="\d{1,2}" name="monthsUnder2" class="wrapped-input">
+            </div>
           </div>
 
         </label>
@@ -1290,7 +1336,9 @@
               <span class="class-3">נקודת חוזק:</span>
               <div class="class-10">
                 <span>_________________________________________________________________</span>
-                <input required type="text" name="superiorCommanderStrength" class="class-11">
+                <div id="superiorCommanderStrength-wrapper" class="class-11">
+                  <input required type="text" name="superiorCommanderStrength" class="wrapped-input">
+                </div>
               </div>
             </label>
 
@@ -1298,7 +1346,9 @@
               <span class="class-3">נקודת חולשה:</span>
               <div class="class-10">
                 <span>_______________________________________________________________</span>
-                <input required type="text" class="class-11">
+                <div id="superiorCommanderWeakness-wrapper" class="class-11">
+                  <input required type="text" name="superiorCommanderWeakness" class="wrapped-input">
+                </div>
               </div>
             </label>
 
@@ -1334,8 +1384,9 @@
           <span class="class-3">4.&emsp; הערות נוספות:</span>
           <div class="class-10">
             <span>________</span>
-            <input type="text" name="additionalComments" class="class-11">
-            &nbsp;
+            <div id="additionalComments-wrapper" class="class-11">
+              <input type="text" name="additionalComments">
+            </div> &nbsp;
           </div>
         </label>
 
@@ -1352,7 +1403,9 @@
               <div class="class-4">
                 <div>__________</div>
 
-                <input required type="text" name="commander2Name" class="class-11">
+                <div id="commander2Name-wrapper" class="class-11">
+                  <input required type="text" name="commander2Name" class="wrapped-input">
+                </div>
               </div>
             </label>
 
@@ -1361,7 +1414,9 @@
               <div class="class-4">
                 <div>_____________</div>
 
-                <input required type="text" name="commander2Phone" class="class-6 class-11" pattern="\d{10}">
+                <div id="commander2Phone-wrapper" class="class-6 class-11">
+                  <input required type="text" name="commander2Phone" pattern="\d{10}" class="wrapped-input">
+                </div>
               </div>
 
             </label>
@@ -1474,6 +1529,7 @@
         if (isSelectAllowed(value)) {
           // עדכון select הנסתר
           const select = document.getElementById(`hidden-input-${row}`);
+          select.dispatchEvent(new Event('input', { bubbles: true }));
           select.value = value;
           console.log("changing", select.id, select.value)
 
@@ -2291,6 +2347,13 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      white-space: nowrap; \n"
  + "      border: 0; \n"
  + "    } */ \n"
+ + " \n"
+ + " \n"
+ + "    .wrapped-input { \n"
+ + "      display: block; \n"
+ + "      width: 100%; \n"
+ + "      height: 100%; \n"
+ + "    } \n"
  + "  <" + "/style> \n"
  + " \n"
  + "<" + "/head> \n"
@@ -2310,11 +2373,8 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "div class=\"class-4\"> \n"
  + "              <" + "div>__________<" + "/div> \n"
  + " \n"
- + "              <" + "div class=\"class-5 class-11\" id=\"bulbulim\"> \n"
- + "                <" + "input required type=\"date\" name=\"date\" style=\"width: 100%; display: block; \n"
- + "                height: 100%;\"> \n"
- + "                <" + "!-- <" + "div style=\"width: 100%; display: block; background-color: grey; \n"
- + "                height: 100%;\"><" + "/div> --> \n"
+ + "              <" + "div class=\"class-5 class-11\" id=\"date-wrapper\"> \n"
+ + "                <" + "input type=\"date\" name=\"date\" class=\"wrapped-input\"> \n"
  + "              <" + "/div> \n"
  + "            <" + "/div> \n"
  + " \n"
@@ -2325,7 +2385,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "div class=\"class-4\"> \n"
  + "              <" + "div>__________<" + "/div> \n"
  + " \n"
- + "              <" + "input required type=\"number\" name=\"samkhut\" class=\"class-6 class-11\"> \n"
+ + "              <" + "div id=\"samkhut-wrapper\" class=\"class-6 class-11\"> \n"
+ + "                <" + "input type=\"number\" name=\"samkhut\" class=\"wrapped-input\"> \n"
+ + "              <" + "/div> \n"
  + "            <" + "/div> \n"
  + " \n"
  + "          <" + "/label> \n"
@@ -2357,7 +2419,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "span class=\"class-3\">שם פרטי בלבד:<" + "/span> \n"
  + "            <" + "div class=\"class-10\"> \n"
  + "              <" + "span>__________________<" + "/span> \n"
- + "              <" + "input required type=\"text\" name=\"firstName\" class=\"class-11\"> \n"
+ + "              <" + "div id=\"firstName-wrapper\" class=\"class-11\"> \n"
+ + "                <" + "input required type=\"text\" name=\"firstName\" class=\"wrapped-input\"> \n"
+ + "              <" + "/div> \n"
  + "              &nbsp; \n"
  + "            <" + "/div> \n"
  + "          <" + "/label> \n"
@@ -2366,7 +2430,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "span class=\"class-3\">מ\"א:<" + "/span> \n"
  + "            <" + "div class=\"class-10\"> \n"
  + "              <" + "span>_____________<" + "/span> \n"
- + "              <" + "input required type=\"text\" name=\"personalNumber\" pattern=\"\d{7}\" class=\"class-6 class-11\"> \n"
+ + "              <" + "div id=\"personalNumber-wrapper\" class=\"class-6 class-11\"> \n"
+ + "                <" + "input required type=\"text\" name=\"personalNumber\" pattern=\"\d{7}\" class=\"wrapped-input\"> \n"
+ + "              <" + "/div> \n"
  + "            <" + "/div> \n"
  + "          <" + "/label> \n"
  + " \n"
@@ -2382,7 +2448,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "/span> \n"
  + "            <" + "div class=\"class-10\"> \n"
  + "              <" + "span>___<" + "/span> \n"
- + "              <" + "input required type=\"text\" pattern=\"\d{1,2}\" name=\"monthsUnder\" class=\"class-6 class-11\"> \n"
+ + "              <" + "div id=\"monthsUnder-wrapper\" class=\"class-6 class-11\"> \n"
+ + "                <" + "input required type=\"text\" pattern=\"\d{1,2}\" name=\"monthsUnder\" class=\"wrapped-input\"> \n"
+ + "              <" + "/div> \n"
  + "            <" + "/div> \n"
  + "            <" + "span>   \n"
  + "              חודשים. \n"
@@ -2431,7 +2499,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          <" + "span class=\"class-3\">תפקידו/ה הנוכחי של החייל/ת (פירוט ברמת בלמ\"ס בלבד):<" + "/span> \n"
  + "          <" + "div class=\"class-10\"> \n"
  + "            <" + "span>___________________<" + "/span> \n"
- + "            <" + "input required type=\"text\" name=\"role\" class=\"class-11\"> \n"
+ + "            <" + "div id=\"role-wrapper\" class=\"class-11\"> \n"
+ + "              <" + "input required type=\"text\" name=\"role\" class=\"wrapped-input\"> \n"
+ + "            <" + "/div> \n"
  + "          <" + "/div> \n"
  + "        <" + "/label> \n"
  + " \n"
@@ -2542,15 +2612,20 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          <" + "tbody> \n"
  + "            <" + "tr> \n"
  + "              <" + "td class=\"eval-feature\">עצמאות בביצוע משימות \n"
- + "                <" + "select name=\"rating_0\" id=\"hidden-input-0\" hidden> \n"
- + "                  <" + "option value=\"\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                  <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "                <" + "/select> \n"
+ + " \n"
+ + "                <" + "div id=\"rating_0-wrapper\" style=\"position: relative;\"> \n"
+ + "                  <" + "select name=\"rating_0\" id=\"hidden-input-0\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/div> \n"
+ + " \n"
+ + " \n"
  + "              <" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"גבוה מאוד\"><" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"0\" data-value=\"גבוה\"><" + "/td> \n"
@@ -2563,15 +2638,17 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "            <" + "tr> \n"
  + "              <" + "td class=\"eval-feature\">תפקוד יעיל בלחץ ובעומס \n"
- + "                <" + "select name=\"rating_1\" id=\"hidden-input-1\" hidden> \n"
- + "                  <" + "option value=\"\"><" + "/option> \n"
- + "                  <" + "option id=\"babulele\" value=\"גבוה מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                  <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "                <" + "/select> \n"
+ + "                <" + "div id=\"rating_1-wrapper\" style=\"position: relative;\"> \n"
+ + "                  <" + "select name=\"rating_1\" id=\"hidden-input-1\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option id=\"babulele\" value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"גבוה מאוד\"><" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"1\" data-value=\"גבוה\"><" + "/td> \n"
@@ -2584,15 +2661,17 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "            <" + "tr> \n"
  + "              <" + "td class=\"eval-feature\">קבלת החלטות \n"
- + "                <" + "select name=\"rating_2\" id=\"hidden-input-2\" hidden> \n"
- + "                  <" + "option value=\"\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                  <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "                <" + "/select> \n"
+ + "                <" + "div id=\"rating_2-wrapper\" style=\"position: relative;\"> \n"
+ + "                  <" + "select name=\"rating_2\" id=\"hidden-input-2\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"גבוה מאוד\"><" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"2\" data-value=\"גבוה\"><" + "/td> \n"
@@ -2605,15 +2684,18 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "            <" + "tr> \n"
  + "              <" + "td class=\"eval-feature\">משמעת והסתגלות לצרכי המערכת \n"
- + "                <" + "select name=\"rating_3\" id=\"hidden-input-3\" hidden> \n"
- + "                  <" + "option value=\"\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                  <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "                <" + "/select> \n"
+ + "                <" + "div id=\"rating_3-wrapper\" style=\"position: relative;\"> \n"
+ + "                  <" + "select name=\"rating_3\" id=\"hidden-input-3\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/div> \n"
+ + " \n"
  + "              <" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"גבוה מאוד\"><" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"3\" data-value=\"גבוה\"><" + "/td> \n"
@@ -2626,15 +2708,17 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "            <" + "tr> \n"
  + "              <" + "td class=\"eval-feature\">יכולת חשיבה ולמידה עצמית \n"
- + "                <" + "select name=\"rating_4\" id=\"hidden-input-4\" hidden> \n"
- + "                  <" + "option value=\"\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                  <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "                <" + "/select> \n"
+ + "                <" + "div id=\"rating_4-wrapper\" style=\"position: relative;\"> \n"
+ + "                  <" + "select name=\"rating_4\" id=\"hidden-input-4\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"גבוה מאוד\"><" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"4\" data-value=\"גבוה\"><" + "/td> \n"
@@ -2647,15 +2731,17 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "            <" + "tr> \n"
  + "              <" + "td class=\"eval-feature\">עבודת צוות \n"
- + "                <" + "select name=\"rating_5\" id=\"hidden-input-5\" hidden> \n"
- + "                  <" + "option value=\"\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                  <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "                <" + "/select> \n"
+ + "                <" + "div id=\"rating_5-wrapper\" style=\"position: relative;\"> \n"
+ + "                  <" + "select name=\"rating_5\" id=\"hidden-input-5\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"גבוה מאוד\"><" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"5\" data-value=\"גבוה\"><" + "/td> \n"
@@ -2668,15 +2754,17 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "            <" + "tr> \n"
  + "              <" + "td class=\"eval-feature\">אסרטיביות ויכולת הובלה \n"
- + "                <" + "select name=\"rating_6\" id=\"hidden-input-6\" hidden> \n"
- + "                  <" + "option value=\"\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                  <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "                <" + "/select> \n"
+ + "                <" + "div id=\"rating_6-wrapper\" style=\"position: relative;\"> \n"
+ + "                  <" + "select name=\"rating_6\" id=\"hidden-input-6\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"גבוה מאוד\"><" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"6\" data-value=\"גבוה\"><" + "/td> \n"
@@ -2690,15 +2778,17 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "            <" + "tr> \n"
  + "              <" + "td class=\"eval-feature\">אומץ, איתנות וקור רוח \n"
- + "                <" + "select name=\"rating_7\" id=\"hidden-input-7\" hidden> \n"
- + "                  <" + "option value=\"\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                  <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "                <" + "/select> \n"
+ + "                <" + "div id=\"rating_7-wrapper\" style=\"position: relative;\"> \n"
+ + "                  <" + "select name=\"rating_7\" id=\"hidden-input-7\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"7\" data-value=\"גבוה מאוד\"><" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"7\" data-value=\"גבוה\"><" + "/td> \n"
@@ -2711,15 +2801,17 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "            <" + "tr> \n"
  + "              <" + "td class=\"eval-feature\">אסרטיביות ויכולת הובלה \n"
- + "                <" + "select name=\"rating_8\" id=\"hidden-input-8\" hidden> \n"
- + "                  <" + "option value=\"\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                  <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "                <" + "/select> \n"
+ + "                <" + "div id=\"rating_8-wrapper\" style=\"position: relative;\"> \n"
+ + "                  <" + "select name=\"rating_8\" id=\"hidden-input-8\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"8\" data-value=\"גבוה מאוד\"><" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"8\" data-value=\"גבוה\"><" + "/td> \n"
@@ -2732,15 +2824,17 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "            <" + "tr> \n"
  + "              <" + "td class=\"eval-feature\">אחריות והשקעה במשימה \n"
- + "                <" + "select name=\"rating_9\" id=\"hidden-input-9\" hidden> \n"
- + "                  <" + "option value=\"\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"גבוה\"><" + "/option> \n"
- + "                  <" + "option value=\"בינוני\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך\"><" + "/option> \n"
- + "                  <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
- + "                  <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
- + "                <" + "/select> \n"
+ + "                <" + "div id=\"rating_9-wrapper\" style=\"position: relative;\"> \n"
+ + "                  <" + "select name=\"rating_9\" id=\"hidden-input-9\" hidden> \n"
+ + "                    <" + "option value=\"\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"גבוה\"><" + "/option> \n"
+ + "                    <" + "option value=\"בינוני\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך\"><" + "/option> \n"
+ + "                    <" + "option value=\"נמוך מאוד\"><" + "/option> \n"
+ + "                    <" + "option value=\"לא ניתן להעריך\"><" + "/option> \n"
+ + "                  <" + "/select> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"9\" data-value=\"גבוה מאוד\"><" + "/td> \n"
  + "              <" + "td class=\"eval-cell\" data-row=\"9\" data-value=\"גבוה\"><" + "/td> \n"
@@ -2752,7 +2846,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "/tr> \n"
  + " \n"
  + "            <" + "tr> \n"
- + "              <" + "td class=\"eval-feature\">קבלת ביקורת \n"
+ + "              <" + "td class=\"eval-feature\" style=\"position: relative;\">קבלת ביקורת \n"
  + "                <" + "select name=\"rating_10\" id=\"hidden-input-10\" hidden> \n"
  + "                  <" + "option value=\"\"><" + "/option> \n"
  + "                  <" + "option value=\"גבוה מאוד\"><" + "/option> \n"
@@ -2838,7 +2932,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "div class=\"class-4\"> \n"
  + "                <" + "div>__________<" + "/div> \n"
  + " \n"
- + "                <" + "input required type=\"text\" name=\"kidName\" class=\"class-11\"> \n"
+ + "                <" + "div id=\"kidName-wrapper\" class=\"class-11\"> \n"
+ + "                  <" + "input required type=\"text\" name=\"kidName\" class=\"wrapped-input\"> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + "            <" + "/label> \n"
  + " \n"
@@ -2847,7 +2943,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "div class=\"class-4\"> \n"
  + "                <" + "div>_____________<" + "/div> \n"
  + " \n"
- + "                <" + "input required class=\"class-6 class-11\" pattern=\"\d{10}\" name=\"numba\" class=\"class-6 class-11\"> \n"
+ + "                <" + "div id=\"numba-wrapper\" class=\"class-6 class-11\"> \n"
+ + "                  <" + "input required pattern=\"\d{10}\" name=\"numba\" class=\"wrapped-input\"> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + " \n"
  + "            <" + "/label> \n"
@@ -2879,7 +2977,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "div class=\"class-4\"> \n"
  + "              <" + "div>____________________<" + "/div> \n"
  + " \n"
- + "              <" + "input required type=\"text\" name=\"feedbackName\" class=\"class-11\"> \n"
+ + "              <" + "div id=\"feedbackName-wrapper\" class=\"class-11\"> \n"
+ + "                <" + "input required type=\"text\" name=\"feedbackName\" class=\"wrapped-input\"> \n"
+ + "              <" + "/div> \n"
  + "            <" + "/div> \n"
  + " \n"
  + "          <" + "/label> \n"
@@ -2913,7 +3013,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "/div> \n"
  + " \n"
  + " \n"
- + "              <" + "input required type=\"hidden\" name=\"signature\" /> \n"
+ + "              <" + "input required type=\"hidden\" name=\"signature\" class=\"wrapped-input\" /> \n"
  + " \n"
  + "            <" + "/label> \n"
  + " \n"
@@ -2936,7 +3036,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          <" + "span class=\"class-3\">1.&emsp; משך היכרותיך עם החייל בחודשים &nbsp;<" + "/span> \n"
  + "          <" + "div class=\"class-10\"> \n"
  + "            <" + "span>___<" + "/span> \n"
- + "            <" + "input required type=\"text\" pattern=\"\d{1,2}\" name=\"monthsUnder2\" class=\"class-6 class-11\"> \n"
+ + "            <" + "div id=\"monthsUnder2-wrapper\" class=\"class-6 class-11\"> \n"
+ + "              <" + "input required type=\"text\" pattern=\"\d{1,2}\" name=\"monthsUnder2\" class=\"wrapped-input\"> \n"
+ + "            <" + "/div> \n"
  + "          <" + "/div> \n"
  + " \n"
  + "        <" + "/label> \n"
@@ -2989,7 +3091,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "span class=\"class-3\">נקודת חוזק:<" + "/span> \n"
  + "              <" + "div class=\"class-10\"> \n"
  + "                <" + "span>_________________________________________________________________<" + "/span> \n"
- + "                <" + "input required type=\"text\" name=\"superiorCommanderStrength\" class=\"class-11\"> \n"
+ + "                <" + "div id=\"superiorCommanderStrength-wrapper\" class=\"class-11\"> \n"
+ + "                  <" + "input required type=\"text\" name=\"superiorCommanderStrength\" class=\"wrapped-input\"> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + "            <" + "/label> \n"
  + " \n"
@@ -2997,7 +3101,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "span class=\"class-3\">נקודת חולשה:<" + "/span> \n"
  + "              <" + "div class=\"class-10\"> \n"
  + "                <" + "span>_______________________________________________________________<" + "/span> \n"
- + "                <" + "input required type=\"text\" class=\"class-11\"> \n"
+ + "                <" + "div id=\"superiorCommanderWeakness-wrapper\" class=\"class-11\"> \n"
+ + "                  <" + "input required type=\"text\" name=\"superiorCommanderWeakness\" class=\"wrapped-input\"> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + "            <" + "/label> \n"
  + " \n"
@@ -3033,8 +3139,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          <" + "span class=\"class-3\">4.&emsp; הערות נוספות:<" + "/span> \n"
  + "          <" + "div class=\"class-10\"> \n"
  + "            <" + "span>________<" + "/span> \n"
- + "            <" + "input type=\"text\" name=\"additionalComments\" class=\"class-11\"> \n"
- + "            &nbsp; \n"
+ + "            <" + "div id=\"additionalComments-wrapper\" class=\"class-11\"> \n"
+ + "              <" + "input type=\"text\" name=\"additionalComments\"> \n"
+ + "            <" + "/div> &nbsp; \n"
  + "          <" + "/div> \n"
  + "        <" + "/label> \n"
  + " \n"
@@ -3051,7 +3158,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "div class=\"class-4\"> \n"
  + "                <" + "div>__________<" + "/div> \n"
  + " \n"
- + "                <" + "input required type=\"text\" name=\"commander2Name\" class=\"class-11\"> \n"
+ + "                <" + "div id=\"commander2Name-wrapper\" class=\"class-11\"> \n"
+ + "                  <" + "input required type=\"text\" name=\"commander2Name\" class=\"wrapped-input\"> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + "            <" + "/label> \n"
  + " \n"
@@ -3060,7 +3169,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "div class=\"class-4\"> \n"
  + "                <" + "div>_____________<" + "/div> \n"
  + " \n"
- + "                <" + "input required type=\"text\" name=\"commander2Phone\" class=\"class-6 class-11\" pattern=\"\d{10}\"> \n"
+ + "                <" + "div id=\"commander2Phone-wrapper\" class=\"class-6 class-11\"> \n"
+ + "                  <" + "input required type=\"text\" name=\"commander2Phone\" pattern=\"\d{10}\" class=\"wrapped-input\"> \n"
+ + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + " \n"
  + "            <" + "/label> \n"
@@ -3173,6 +3284,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "        if (isSelectAllowed(value)) { \n"
  + "          // עדכון select הנסתר \n"
  + "          const select = document.getElementById(`hidden-input-${row}`); \n"
+ + "          select.dispatchEvent(new Event('input', { bubbles: true })); \n"
  + "          select.value = value; \n"
  + "          console.log(\"changing\", select.id, select.value) \n"
  + " \n"
@@ -3398,37 +3510,15 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "<" + "/html> \n"
 ;
-// שליחת הטופס במייל
-function submitEventHandler(e) {
-
-    alert("here")
-
-    e.preventDefault()
-
-    alert("here")
-
-    const form = document.getElementById('feedback-form');
-    // if (!form.checkValidity()) {
-    //     form.reportValidity();
-    //     return;
-    // }
-
-
-    for (const el of form.elements) {
-        if (el.value == "") {
-
-            console.log("element info: ", el.name, el.id)
-
-
-            const svgNS = "http://www.w3.org/2000/svg";
+//Can just copy this... its just one element
+function genPopUp(){
+    const svgNS = "http://www.w3.org/2000/svg";
 
             viewBox = [0, 0, 170, 105]
             // Create SVG element
             const newEl = document.createElementNS(svgNS, "svg");
             newEl.setAttribute("viewBox", viewBox.join(" ")); // 300x180 viewBox
             newEl.setAttribute("xmlns", svgNS);
-
-            
 
             newEl.style.width = "100%"
             newEl.style.height = "100%"
@@ -3490,17 +3580,75 @@ function submitEventHandler(e) {
 
             newElWrapper = document.createElement("div")
             newElWrapper.style.position = "absolute";
-            newElWrapper.style.top = "70%";
+            newElWrapper.style.top = "50%";
             newElWrapper.style.right = "40%"; // Position it at the bottom-right corner
             newElWrapper.style.width = "240px"; // Width of the SVG element
             newElWrapper.style.height = "150px"; // Height of the SVG element
             // newElWrapper.style.backgroundColor = "lightblue"; // Just to see the background
             newElWrapper.style.zIndex = "1"
 
-            newElWrapper.id = "newEl" + el.name;
-
             newElWrapper.appendChild(newEl)
-            document.getElementById("bulbulim").appendChild(newElWrapper)
+
+            return newElWrapper
+
+
+}
+
+//Handle an empty input element. get the input wrapper.
+//  add the popup to it. add event listeners to close it
+function handleEmptyInput( inputEl ){
+
+    const inputWrapper=document.getElementById( inputEl.name + "-wrapper")
+    console.log( "inputEl", inputEl, "inputWrapper", inputWrapper )
+
+    if(inputWrapper){
+
+        const popUpWrapper = genPopUp()
+        inputWrapper.appendChild( popUpWrapper )
+
+        const eventListener = () => {
+            alert('its trigga')
+            popUpWrapper.remove()
+        }
+
+        inputEl.addEventListener("click" ,  eventListener)
+        inputEl.addEventListener("input" ,  eventListener)
+
+        popUpWrapper.addEventListener("click", eventListener)
+
+    }
+
+    else {
+        console.log(" does not work...")
+    }
+
+}
+
+// שליחת הטופס במייל
+function submitEventHandler(e) {
+
+
+
+    alert("here")
+
+    e.preventDefault()
+
+    alert("here")
+
+    const form = document.getElementById('feedback-form');
+    // if (!form.checkValidity()) {
+    //     form.reportValidity();
+    //     return;
+    // }
+
+
+    for (const el of form.elements) {
+
+        console.log("element: ", el.name, el.value )
+
+        if (el.value == "") {
+
+            handleEmptyInput(el)
 
         }
 
