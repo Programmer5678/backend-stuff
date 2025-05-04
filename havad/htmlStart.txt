@@ -599,6 +599,7 @@
       width: 100%;
       height: 100%;
     }
+
   </style>
 
 </head>
@@ -778,22 +779,28 @@
                   <div class="class-29">
                     <span class="class-30">1.</span>
 
-                    <textarea rows="2" name="firstTableStrength1" placeholder="מאפיין ראשון"></textarea>
+                    <div id="firstTableStrength1-wrapper"  style="position: relative;">
+                      <textarea class="wrapped-input" rows="2" name="firstTableStrength1" placeholder="מאפיין ראשון"></textarea>
+                    </div>
                   </div>
 
                   <div class="class-29">
                     <span class="class-30">2.</span>
 
-                    <textarea rows="2" name="firstTableStrength2" placeholder="מאפיין שני"></textarea>
+                    <div id="firstTableStrength2-wrapper" style="position: relative;">
+                      <textarea class="wrapped-input" rows="2" name="firstTableStrength2" placeholder="מאפיין שני"></textarea>
+                    </div>
                   </div>
 
                 </div>
               </td>
               <td>
-
-                <textarea rows="4" name="firstTableStrengthExample" class="mytextareaclass"
-                  placeholder="הסבר או דוגמה"></textarea>
-
+              
+                <div id="firstTableStrengthExample-wrapper" style="position: relative;">
+                  <textarea rows="4" name="firstTableStrengthExample" 
+                  class="mytextareaclass wrapped-input"
+                    placeholder="הסבר או דוגמה"></textarea>
+                </div>
               </td>
             </tr>
             <tr class="class-27">
@@ -805,13 +812,18 @@
                     <div class="class-29">
                       <span class="class-30">1.</span>
 
-                      <textarea rows="2" name="firstTableWeakness1" placeholder="מאפיין ראשון"></textarea>
+                      <div id="firstTableWeakness1-wrapper" style="position: relative;">
+                        <textarea class="wrapped-input" rows="2" name="firstTableWeakness1" placeholder="מאפיין ראשון"></textarea>
+                      </div>
                     </div>
 
                     <div class="class-29">
                       <span class="class-30">2.</span>
 
-                      <textarea rows="2" name="firstTableWeakness2" placeholder="מאפיין שני"></textarea>
+                      <div id="firstTableWeakness2-wrapper" style="position: relative;">
+                        <textarea class="wrapped-input"
+                        rows="2" name="firstTableWeakness2" placeholder="מאפיין שני"></textarea>
+                      </div>
                     </div>
 
                   </div>
@@ -821,8 +833,11 @@
 
                 <!-- 26.5 = 25% of cell height -->
 
-                <textarea rows="4" name="firstTableWeaknessExample" class="mytextareaclass"
-                  placeholder="הסבר או דוגמה"></textarea>
+                <div id="firstTableWeaknessExample-wrapper" style="position: relative;">
+                  <textarea rows="4" name="firstTableWeaknessExample" 
+                  class="mytextareaclass wrapped-input"
+                    placeholder="הסבר או דוגמה"></textarea>
+                </div>
 
               </td>
             </tr>
@@ -1092,7 +1107,8 @@
 
             <tr>
               <td class="eval-feature" style="position: relative;">קבלת ביקורת
-                <select name="rating_10" id="hidden-input-10" hidden>
+                <select id="rating_10-wrapper"
+                 name="rating_10" id="hidden-input-10" hidden>
                   <option value=""></option>
                   <option value="גבוה מאוד"></option>
                   <option value="גבוה"></option>
@@ -1130,7 +1146,10 @@
         </div>
 
         <label style="font-weight: bold;">4. תחומים בהם החייל/ת עלול/ה להתקשות בקורס קצינים / בתפקיד:</label>
-        <textarea name="difficultyAreas" rows="2" class="mytextareaclass2"></textarea>
+        <div id="difficultyAreas-wrapper" style="position: relative;">
+          <textarea name="difficultyAreas" rows="2" class="wrapped-input mytextareaclass2"></textarea>
+        </div>
+
 
         <span style="font-weight: bold;">5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?</span>
         <div id="suitabilityCompared" class="class-33">
@@ -1530,9 +1549,9 @@
           // עדכון select הנסתר
           const select = document.getElementById(`hidden-input-${row}`);
           select.dispatchEvent(new Event('input', { bubbles: true }));
+          //Manual change --> so input veent has to be dispatched manually
           select.value = value;
           console.log("changing", select.id, select.value)
-
 
           restoreSelectionsFromInputs()
 
