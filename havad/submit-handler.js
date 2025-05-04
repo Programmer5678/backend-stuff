@@ -69,7 +69,7 @@ function genPopUp(){
 
             newElWrapper = document.createElement("div")
             newElWrapper.style.position = "absolute";
-            newElWrapper.style.top = "50%";
+            newElWrapper.style.top = "30%";
             newElWrapper.style.right = "40%"; // Position it at the bottom-right corner
             newElWrapper.style.width = "240px"; // Width of the SVG element
             newElWrapper.style.height = "150px"; // Height of the SVG element
