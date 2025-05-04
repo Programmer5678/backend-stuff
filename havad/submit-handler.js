@@ -18,7 +18,10 @@ function submitEventHandler(e) {
     for (const el of form.elements) {
         if (el.value == "") {
 
-            console.log("tsup ", el.name)
+            console.log("element info: ", el.name, el.id)
+
+            el.name+"-wrapper"
+
 
             const svgNS = "http://www.w3.org/2000/svg";
 
@@ -27,23 +30,11 @@ function submitEventHandler(e) {
             const newEl = document.createElementNS(svgNS, "svg");
             newEl.setAttribute("viewBox", viewBox.join(" ")); // 300x180 viewBox
             newEl.setAttribute("xmlns", svgNS);
-            // newEl.setAttribute("width", "500")
-            // newEl.setAttribute("height", "500")
 
-
-            // // Style the SVG element
-            // newEl.style.position = "absolute";
-            // newEl.style.top = "94%";
-            // newEl.style.right = "70%"; // Position it at the bottom-right corner
-            // newEl.style.width = "1200px"; // Width of the SVG element
-            // newEl.style.height = "690px"; // Height of the SVG element
-            // newEl.style.backgroundColor = "lightblue"; // Just to see the background
+            
 
             newEl.style.width = "100%"
             newEl.style.height = "100%"
-            newEl.style.backgroundColor = "brown"
-
-            // newEl.setAttribute("style", "width:1900px; height:690px; background-color: lightblue; position: absolute; top: 94%; right: 70%;");
 
             // Create the path element
             const path = document.createElementNS(svgNS, "path");
@@ -102,11 +93,11 @@ function submitEventHandler(e) {
 
             newElWrapper = document.createElement("div")
             newElWrapper.style.position = "absolute";
-            newElWrapper.style.top = "94%";
-            newElWrapper.style.right = "70%"; // Position it at the bottom-right corner
+            newElWrapper.style.top = "70%";
+            newElWrapper.style.right = "40%"; // Position it at the bottom-right corner
             newElWrapper.style.width = "240px"; // Width of the SVG element
             newElWrapper.style.height = "150px"; // Height of the SVG element
-            newElWrapper.style.backgroundColor = "lightblue"; // Just to see the background
+            // newElWrapper.style.backgroundColor = "lightblue"; // Just to see the background
             newElWrapper.style.zIndex = "1"
 
             newElWrapper.id = "newEl" + el.name;
@@ -114,7 +105,6 @@ function submitEventHandler(e) {
             newElWrapper.appendChild(newEl)
             document.getElementById("bulbulim").appendChild(newElWrapper)
 
-            console.log("The new element: ", document.getElementById("newEl" + el.name))
         }
 
         else {
