@@ -437,50 +437,51 @@
     }
 
     .mytextareaclass {
-      width: 100%;
-      height: 100%;
+      /* width: 100%;
+      height: 400px ; */
+
+      height: 120px !important;
       display: block;
       line-height: 26.5px;
-
     }
 
-    .mytextareaclass {
+    /* .mytextareaclass {
 
       background: repeating-linear-gradient(to bottom,
-          transparent 0%,
-          transparent 25%,
-          black 25%,
-          black calc(25% + 1px),
-          transparent calc(25% + 1px),
-          transparent 50%,
-          black 50%,
-          black calc(50% + 1px),
-          transparent calc(50% + 1px),
-          transparent 75%,
-          black 75%,
-          black calc(75% + 1px),
-          transparent calc(75% + 1px),
-          transparent 100%) !important;
+          transparent 0px,
+          transparent 30px,
+          black 30px,
+          black 31px,
+          transparent 31px,
+          transparent 59px,
+          black 59px,
+          black 60px,
+          transparent 60px,
+          transparent 90px,
+          black 90px,
+          black 91px,
+          transparent 91px,
+          transparent 120px) !important;
     }
 
     .default-backgrounds .mytextareaclass {
 
       background: repeating-linear-gradient(to bottom,
-          grey 0%,
-          grey 25%,
-          black 25%,
-          black calc(25% + 1px),
-          grey calc(25% + 1px),
-          grey 50%,
-          black 50%,
-          black calc(50% + 1px),
-          grey calc(50% + 1px),
-          grey 75%,
-          black 75%,
-          black calc(75% + 1px),
-          grey calc(75% + 1px),
-          grey 100%) !important;
-    }
+          grey 0px,
+          grey 30px,
+          black 30px,
+          black 31px,
+          grey 31px,
+          grey 59px,
+          black 59px,
+          black 60px,
+          grey 60px,
+          grey 90px,
+          black 90px,
+          black 91px,
+          grey 91px,
+          grey 120px) !important;
+    } */
 
 
     .mytextareaclass2 {
@@ -490,6 +491,9 @@
 
       height: 58px;
 
+    }
+
+    /* .mytextareaclass2 {
       background: repeating-linear-gradient(to bottom,
           transparent 0px,
           transparent 26.5px,
@@ -518,7 +522,7 @@
           grey 54px,
           grey 100%) !important;
 
-    }
+    } */
 
     #signature-stuff {
       display: flex;
@@ -599,7 +603,6 @@
       width: 100%;
       height: 100%;
     }
-
   </style>
 
 </head>
@@ -708,15 +711,20 @@
             <span class="class-3">
               החו"ד נכתב יחד עם המפקד הקודם:  
             </span>
-            <input required type="checkbox" name="writtenUnderLast" class="class-15" value="נכתב על ידי קודם">
+            <div id="writtenUnderLast-wrapper" style="position: relative;">
+              <input required type="checkbox" name="writtenUnderLast" class="class-15 wrapped-input"
+                value="נכתב על ידי קודם">
+            </div>
             <span>  
               (סמן אם כן) </span>
+
           </label>
 
         </div>
 
 
-        <div class="class-16">
+
+        <div class="class-16" id="familiarity-wrapper" style="position:relative">
           <span class="class-3">מידת היכרות עם החייל/ת:</span>
 
           <label class="class-17">
@@ -779,8 +787,9 @@
                   <div class="class-29">
                     <span class="class-30">1.</span>
 
-                    <div id="firstTableStrength1-wrapper"  style="position: relative;">
-                      <textarea class="wrapped-input" rows="2" name="firstTableStrength1" placeholder="מאפיין ראשון"></textarea>
+                    <div id="firstTableStrength1-wrapper" style="position: relative;">
+                      <textarea class="wrapped-input" rows="2" name="firstTableStrength1"
+                        placeholder="מאפיין ראשון"></textarea>
                     </div>
                   </div>
 
@@ -788,17 +797,17 @@
                     <span class="class-30">2.</span>
 
                     <div id="firstTableStrength2-wrapper" style="position: relative;">
-                      <textarea class="wrapped-input" rows="2" name="firstTableStrength2" placeholder="מאפיין שני"></textarea>
+                      <textarea class="wrapped-input" rows="2" name="firstTableStrength2"
+                        placeholder="מאפיין שני"></textarea>
                     </div>
                   </div>
 
                 </div>
               </td>
               <td>
-              
+
                 <div id="firstTableStrengthExample-wrapper" style="position: relative;">
-                  <textarea rows="4" name="firstTableStrengthExample" 
-                  class="mytextareaclass wrapped-input"
+                  <textarea rows="4" name="firstTableStrengthExample" class="mytextareaclass wrapped-input"
                     placeholder="הסבר או דוגמה"></textarea>
                 </div>
               </td>
@@ -813,7 +822,8 @@
                       <span class="class-30">1.</span>
 
                       <div id="firstTableWeakness1-wrapper" style="position: relative;">
-                        <textarea class="wrapped-input" rows="2" name="firstTableWeakness1" placeholder="מאפיין ראשון"></textarea>
+                        <textarea class="wrapped-input" rows="2" name="firstTableWeakness1"
+                          placeholder="מאפיין ראשון"></textarea>
                       </div>
                     </div>
 
@@ -821,8 +831,8 @@
                       <span class="class-30">2.</span>
 
                       <div id="firstTableWeakness2-wrapper" style="position: relative;">
-                        <textarea class="wrapped-input"
-                        rows="2" name="firstTableWeakness2" placeholder="מאפיין שני"></textarea>
+                        <textarea class="wrapped-input" rows="2" name="firstTableWeakness2"
+                          placeholder="מאפיין שני"></textarea>
                       </div>
                     </div>
 
@@ -834,8 +844,7 @@
                 <!-- 26.5 = 25% of cell height -->
 
                 <div id="firstTableWeaknessExample-wrapper" style="position: relative;">
-                  <textarea rows="4" name="firstTableWeaknessExample" 
-                  class="mytextareaclass wrapped-input"
+                  <textarea rows="4" name="firstTableWeaknessExample" class="mytextareaclass wrapped-input"
                     placeholder="הסבר או דוגמה"></textarea>
                 </div>
 
@@ -1106,17 +1115,18 @@
             </tr>
 
             <tr>
-              <td class="eval-feature" style="position: relative;">קבלת ביקורת
-                <select id="rating_10-wrapper"
-                 name="rating_10" id="hidden-input-10" hidden>
-                  <option value=""></option>
-                  <option value="גבוה מאוד"></option>
-                  <option value="גבוה"></option>
-                  <option value="בינוני"></option>
-                  <option value="נמוך"></option>
-                  <option value="נמוך מאוד"></option>
-                  <option value="לא ניתן להעריך"></option>
-                </select>
+              <td class="eval-feature">קבלת ביקורת
+                <div id="rating_10-wrapper" style="position: relative;">
+                  <select name="rating_10" id="hidden-input-10" hidden>
+                    <option value=""></option>
+                    <option value="גבוה מאוד"></option>
+                    <option value="גבוה"></option>
+                    <option value="בינוני"></option>
+                    <option value="נמוך"></option>
+                    <option value="נמוך מאוד"></option>
+                    <option value="לא ניתן להעריך"></option>
+                  </select>
+                </div>
               </td>
               <td class="eval-cell" data-row="10" data-value="גבוה מאוד"></td>
               <td class="eval-cell" data-row="10" data-value="גבוה"></td>
@@ -1127,6 +1137,8 @@
 
             </tr>
 
+
+
           </tbody>
         </table>
       </div>
@@ -1134,7 +1146,7 @@
       <div style="border-right: 2px solid black;">
 
         <span style="font-weight: bold;">3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה?</span>
-        <div id="motivation" class="class-32">
+        <div class="class-32" id="motivation-wrapper" style="position:relative">
           <label class="class-17"><input required type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה
             מאוד</label>
           <label class="class-17"><input required type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
@@ -1152,7 +1164,7 @@
 
 
         <span style="font-weight: bold;">5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?</span>
-        <div id="suitabilityCompared" class="class-33">
+        <div id="suitabilityCompared-wrapper" class="class-33" style="position:relative">
           <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
               value="יותר מרוב החיילים בתפקידים דומים"> יותר מרוב
             החיילים בתפקידים דומים</label>
@@ -1173,7 +1185,7 @@
         <span style="font-weight: bold;">
           6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה?
         </span>
-        <div id="willingnessCommand" class="class-32">
+        <div id="willingnessCommand-wrapper" class="class-32" style="position:relative">
           <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה רבה מאוד">
             במידה רבה
             מאוד</label>
@@ -1277,7 +1289,7 @@
               </div>
 
 
-              <input required type="hidden" name="signature" class="wrapped-input" />
+              <input required type="hidden" name="signature" />
 
             </label>
 
@@ -1308,7 +1320,7 @@
         </label>
 
 
-        <div class="class-16">
+        <div class="class-16" id="familiarity2-wrapper" style="position:relative">
           <span class="class-3">מידת ההיכרות:</span>
 
           <label class="class-17">
@@ -1382,7 +1394,7 @@
           <div style="display: flex; flex-direction: column; gap:15px;">
 
             <b>באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ"א)</b>
-            <div id="willingnessCommand2">
+            <div id="willingnessCommand2-wrapper" style="position:relative">
               <label><input required type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה
                 מאוד</label>
               <label><input required type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
@@ -1403,15 +1415,10 @@
           <span class="class-3">4.&emsp; הערות נוספות:</span>
           <div class="class-10">
             <span>________</span>
-            <div id="additionalComments-wrapper" class="class-11">
-              <input type="text" name="additionalComments">
-            </div> &nbsp;
+            <input type="text" name="additionalComments" class="class-11">
+            &nbsp;
           </div>
         </label>
-
-
-
-
 
         <div class="info">
           <h3>פרטי מפקדו של המפקד הישיר</h3>
@@ -1467,6 +1474,8 @@
     var signature = document.getElementsByName('signature')[0];
 
     function runStuff() {
+
+      addStyles()
       monitorElements()
       saveCanvas()
       // enforceRowsTextArea()
@@ -1505,9 +1514,11 @@
         // I addeed 1.1 to make sure its a significant differnece and not a 
 
         // if (element.scrollHeight > element.offsetHeight || element.scrollWidth > element.offsetWidth) {
-        if (element.scrollHeight > 1.05 * element.offsetHeight || element.scrollWidth > 3 + element.offsetWidth) {
+        if (element.scrollHeight > 1.05 * (element.offsetHeight + 3) || element.scrollWidth > 3 + element.offsetWidth) {
 
           console.log(element.scrollWidth, element.offsetWidth)
+          console.log(element.scrollHeight, element.offsetHeight)
+
 
           // Prevent the new character from being added if overflow occurs
           element.value = oldValue; // Revert to the old value
@@ -1545,13 +1556,23 @@
         const row = cell.dataset.row;
         const value = cell.dataset.value;
 
+        console.log("value is... ", value)
+
         if (isSelectAllowed(value)) {
           // עדכון select הנסתר
           const select = document.getElementById(`hidden-input-${row}`);
+          console.log("select is...", select)
+
+
+          select.addEventListener("input", () => {
+            console.log("event listener working on", select )
+          })
+
           select.dispatchEvent(new Event('input', { bubbles: true }));
-          //Manual change --> so input veent has to be dispatched manually
+
+          //Manual change --> so input event has to be dispatched manually
           select.value = value;
-          console.log("changing", select.id, select.value)
+          // console.log("changing", select.id, select.value)
 
           restoreSelectionsFromInputs()
 
@@ -1725,7 +1746,9 @@
       const rows = document.querySelectorAll('.eval-table tbody tr');
 
       rows.forEach((row, rowIndex) => {
+
         const select = document.getElementById(`hidden-input-${rowIndex}`);
+
         const selectedValue = select.value;
 
         if (!selectedValue) return;
@@ -1762,6 +1785,94 @@
         });
       });
     }
+
+    //add styles that are repetitive using find and replace..
+    function addStyles() {
+      const baseSelector = '.mytextareaclass';
+      const themedSelector = '.default-backgrounds ' + baseSelector;
+
+      const baseGradient = `
+  background: repeating-linear-gradient(to bottom,
+    transparent 0px,
+    transparent 30px,
+    black 30px,
+    black 31px,
+    transparent 31px,
+    transparent 59px,
+    black 59px,
+    black 60px,
+    transparent 60px,
+    transparent 90px,
+    black 90px,
+    black 91px,
+    transparent 91px,
+    transparent 120px
+  ) !important;
+`;
+
+      const themedGradient = baseGradient.replace(/transparent/g, 'grey');
+
+      const style = document.createElement('style');
+      style.textContent = `
+  ${baseSelector} {
+    ${baseGradient}
+  }
+
+  ${themedSelector} {
+    ${themedGradient}
+  }
+`;
+      document.head.appendChild(style);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Same with other style
+
+      const baseSelector2 = '.mytextareaclass2';
+      const themedSelector2 = '.default-backgrounds .mytextareaclass2';
+
+      const baseGradient2 = `
+  background: repeating-linear-gradient(to bottom,
+    transparent 0px,
+    transparent 26.5px,
+    black 26.5px,
+    black 27.5px,
+    transparent 27.5px,
+    transparent 53px,
+    black 53px,
+    black 54px,
+    transparent 54px,
+    transparent 100%
+  ) !important;
+`;
+
+      const themedGradient2 = baseGradient2.replace(/transparent/g, 'grey');
+
+      const style2 = document.createElement('style');
+      style2.textContent = `
+  ${baseSelector2} {
+    ${baseGradient2}
+  }
+
+  ${themedSelector2} {
+    ${themedGradient2}
+  }
+`;
+      document.head.appendChild(style2);
+    }
+
+
 
 
     runStuff()

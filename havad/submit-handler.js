@@ -1,20 +1,20 @@
 
 //Can just copy this... its just one element
-function genPopUp(){
+function genPopUp() {
     const svgNS = "http://www.w3.org/2000/svg";
 
-            viewBox = [0, 0, 170, 105]
-            // Create SVG element
-            const newEl = document.createElementNS(svgNS, "svg");
-            newEl.setAttribute("viewBox", viewBox.join(" ")); // 300x180 viewBox
-            newEl.setAttribute("xmlns", svgNS);
+    viewBox = [0, 0, 170, 105]
+    // Create SVG element
+    const newEl = document.createElementNS(svgNS, "svg");
+    newEl.setAttribute("viewBox", viewBox.join(" ")); // 300x180 viewBox
+    newEl.setAttribute("xmlns", svgNS);
 
-            newEl.style.width = "100%"
-            newEl.style.height = "100%"
+    newEl.style.width = "100%"
+    newEl.style.height = "100%"
 
-            // Create the path element
-            const path = document.createElementNS(svgNS, "path");
-            path.setAttribute("d", `
+    // Create the path element
+    const path = document.createElementNS(svgNS, "path");
+    path.setAttribute("d", `
             M20,100
             h140
             a10,10 0 0 0 10,-10
@@ -29,80 +29,92 @@ function genPopUp(){
             a10,10 0 0 0 10,10
             z`);
 
-            path.setAttribute("fill", "#ffffff");
-            path.setAttribute("stroke", "#000000");
-            path.setAttribute("stroke-width", "2");
+    path.setAttribute("fill", "#ffffff");
+    path.setAttribute("stroke", "#000000");
+    path.setAttribute("stroke-width", "2");
 
 
-            // Create the <text> element
-            const text = document.createElementNS(svgNS, "text");
-            text.setAttribute("x", "85");
-            text.setAttribute("y", "52.5");
-            text.setAttribute("font-size", "25");
-            text.setAttribute("fill", "red");
-            text.setAttribute("text-anchor", "middle");
-            text.setAttribute("dominant-baseline", "middle");
+    // Create the <text> element
+    const text = document.createElementNS(svgNS, "text");
+    text.setAttribute("x", "85");
+    text.setAttribute("y", "52.5");
+    text.setAttribute("font-size", "25");
+    text.setAttribute("fill", "red");
+    text.setAttribute("text-anchor", "middle");
+    text.setAttribute("dominant-baseline", "middle");
 
-            // Create first <tspan>
-            const tspan1 = document.createElementNS(svgNS, "tspan");
-            tspan1.setAttribute("x", "85");
-            tspan1.setAttribute("dy", "0");
-            tspan1.textContent = "שדה זה הוא";
+    // Create first <tspan>
+    const tspan1 = document.createElementNS(svgNS, "tspan");
+    tspan1.setAttribute("x", "85");
+    tspan1.setAttribute("dy", "0");
+    tspan1.textContent = "שדה זה הוא";
 
-            // Create second <tspan>
-            const tspan2 = document.createElementNS(svgNS, "tspan");
-            tspan2.setAttribute("x", "85");
-            tspan2.setAttribute("dy", "1.2em");
-            tspan2.textContent = "שדה חובה";
+    // Create second <tspan>
+    const tspan2 = document.createElementNS(svgNS, "tspan");
+    tspan2.setAttribute("x", "85");
+    tspan2.setAttribute("dy", "1.2em");
+    tspan2.textContent = "שדה חובה";
 
-            // Append <tspan> elements to <text>
-            text.appendChild(tspan1);
-            text.appendChild(tspan2);
+    // Append <tspan> elements to <text>
+    text.appendChild(tspan1);
+    text.appendChild(tspan2);
 
-            // // Set the text content
+    // // Set the text content
 
-            // Append path to SVG
-            newEl.appendChild(path);
+    // Append path to SVG
+    newEl.appendChild(path);
 
-            // Append text to SVG
-            newEl.appendChild(text);
+    // Append text to SVG
+    newEl.appendChild(text);
 
-            newElWrapper = document.createElement("div")
-            newElWrapper.style.position = "absolute";
-            newElWrapper.style.top = "30%";
-            newElWrapper.style.right = "40%"; // Position it at the bottom-right corner
-            newElWrapper.style.width = "240px"; // Width of the SVG element
-            newElWrapper.style.height = "150px"; // Height of the SVG element
-            // newElWrapper.style.backgroundColor = "lightblue"; // Just to see the background
-            newElWrapper.style.zIndex = "1"
+    newElWrapper = document.createElement("div")
+    newElWrapper.style.position = "absolute";
+    newElWrapper.style.top = "0";
+    newElWrapper.style.right = "40%"; // Position it at the bottom-right corner
+    newElWrapper.style.width = "240px"; // Width of the SVG element
+    newElWrapper.style.height = "150px"; // Height of the SVG element
+    // newElWrapper.style.backgroundColor = "lightblue"; // Just to see the background
+    newElWrapper.style.zIndex = "1"
 
-            newElWrapper.appendChild(newEl)
+    newElWrapper.appendChild(newEl)
 
-            return newElWrapper
+
+    return newElWrapper
 
 
 }
 
 //Handle an empty input element. get the input wrapper.
 //  add the popup to it. add event listeners to close it
-function handleEmptyInput( inputEl ){
+function handleEmptyInput(inputEl) {
 
-    const inputWrapper=document.getElementById( inputEl.name + "-wrapper")
-    console.log( "inputEl", inputEl, "inputWrapper", inputWrapper )
+    const inputWrapper = document.getElementById(inputEl.name + "-wrapper")
+    console.log("inputEl", inputEl, "inputWrapper", inputWrapper)
 
-    if(inputWrapper){
+    if (inputWrapper) {
 
         const popUpWrapper = genPopUp()
-        inputWrapper.appendChild( popUpWrapper )
+
+        // popUpWrapper.style.transform = "scale(100)"
+
+        inputWrapper.appendChild(popUpWrapper)
 
         const eventListener = () => {
-            popUpWrapper.remove()
+            popUpWrapper.remove() //If exists(safe function), remove
         }
 
-        inputEl.addEventListener("click" ,  eventListener)
-        inputEl.addEventListener("input" ,  eventListener)
 
-        popUpWrapper.addEventListener("click", eventListener)
+        // All inputs with shared name as our empty input - realistically only that input unless
+        // other checkboxes in case we add the event listener to all checkboxes 
+        document.querySelectorAll(`input[name="${inputEl.name}"], select[name="${inputEl.name}"], textarea[name="${inputEl.name}"]`)
+        .forEach(el => {
+            el.addEventListener('input', eventListener);
+            el.addEventListener('change', eventListener);
+        });
+
+        inputWrapper.addEventListener("click", eventListener)
+        //the input wrapper which includes both popup and the input(/s) 
+        // itself(themselves in case of checkbox) is here.
 
     }
 
@@ -111,6 +123,13 @@ function handleEmptyInput( inputEl ){
     }
 
 }
+
+// document.addEventListener("input", (e) => {
+//     console.log("e.target" ,e.target)
+//     e.target.addEventListener("input", () => {
+//         console.log("same thing from inside")
+//     })
+// })
 
 // שליחת הטופס במייל
 function submitEventHandler(e) {
@@ -132,16 +151,20 @@ function submitEventHandler(e) {
 
     for (const el of form.elements) {
 
-        console.log("element: ", el.name, el.value )
+        console.log("element: ", el.name, el.value)
 
-        if (el.value == "") {
+        if (
+            el.value == "" ||
+            (el.type == "checkbox"
+                && document.querySelectorAll(`input[name=${el.name}]:checked`).length == 0
+            )) {
 
             handleEmptyInput(el)
 
         }
 
         else {
-            console.log("vallejo", el.value)
+            console.log("vallejo", el.type, el.value)
         }
     }
 
