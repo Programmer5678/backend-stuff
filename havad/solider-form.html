@@ -609,7 +609,7 @@
 
 <body class="default-backgrounds">
 
-  <form novalidate id="feedback-form">
+  <form id="feedback-form">
 
     <fieldset>
 
@@ -669,7 +669,7 @@
             <div class="class-10">
               <span>__________________</span>
               <div id="firstName-wrapper" class="class-11">
-                <input required type="text" name="firstName" class="wrapped-input">
+                <input type="text" name="firstName" class="wrapped-input">
               </div>
               &nbsp;
             </div>
@@ -680,7 +680,7 @@
             <div class="class-10">
               <span>_____________</span>
               <div id="personalNumber-wrapper" class="class-6 class-11">
-                <input required type="text" name="personalNumber" pattern="\d{7}" class="wrapped-input">
+                <input type="text" name="personalNumber" pattern="\d{7}" class="wrapped-input">
               </div>
             </div>
           </label>
@@ -698,7 +698,7 @@
             <div class="class-10">
               <span>___</span>
               <div id="monthsUnder-wrapper" class="class-6 class-11">
-                <input required type="text" pattern="\d{1,2}" name="monthsUnder" class="wrapped-input">
+                <input type="text" pattern="\d{1,2}" name="monthsUnder" class="wrapped-input">
               </div>
             </div>
             <span>  
@@ -711,7 +711,7 @@
             <span class="class-3">
               החו"ד נכתב יחד עם המפקד הקודם:  
             </span>
-            <input required type="checkbox" name="writtenUnderLast" class="class-15" value="נכתב על ידי קודם">
+            <input type="checkbox" name="writtenUnderLast" class="class-15" value="נכתב על ידי קודם">
             <span>  
               (סמן אם כן) </span>
           </label>
@@ -725,22 +725,22 @@
           <span class="class-3">מידת היכרות עם החייל/ת:</span>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity" value="טובה מאוד">
+            <input type="checkbox" name="familiarity" value="טובה מאוד">
             טובה מאוד
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity" value="די טובה">
+            <input type="checkbox" name="familiarity" value="די טובה">
             די טובה
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity" value="בינונית">
+            <input type="checkbox" name="familiarity" value="בינונית">
             בינונית
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity" value="קלושה">
+            <input type="checkbox" name="familiarity" value="קלושה">
             קלושה
           </label>
         </div>
@@ -751,7 +751,7 @@
           <div class="class-10">
             <span>___________________</span>
             <div id="role-wrapper" class="class-11">
-              <input required type="text" name="role" class="wrapped-input">
+              <input type="text" name="role" class="wrapped-input">
             </div>
           </div>
         </label>
@@ -1144,12 +1144,12 @@
 
         <span style="font-weight: bold;">3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה?</span>
         <div class="class-32" id="motivation-wrapper" style="position:relative">
-          <label class="class-17"><input required type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה
+          <label class="class-17"><input type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה
             מאוד</label>
-          <label class="class-17"><input required type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
-          <label class="class-17"><input required type="checkbox" name="motivation" value="בינונית"> בינונית</label>
-          <label class="class-17"><input required type="checkbox" name="motivation" value="נמוכה"> נמוכה</label>
-          <label class="class-17"><input required type="checkbox" name="motivation" value="איני רוצה לצאת"> איני רוצה
+          <label class="class-17"><input type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
+          <label class="class-17"><input type="checkbox" name="motivation" value="בינונית"> בינונית</label>
+          <label class="class-17"><input type="checkbox" name="motivation" value="נמוכה"> נמוכה</label>
+          <label class="class-17"><input type="checkbox" name="motivation" value="איני רוצה לצאת"> איני רוצה
             לצאת
             לקצונה</label>
         </div>
@@ -1162,19 +1162,18 @@
 
         <span style="font-weight: bold;">5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?</span>
         <div id="suitabilityCompared-wrapper" class="class-33" style="position:relative">
-          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared"
               value="יותר מרוב החיילים בתפקידים דומים"> יותר מרוב
             החיילים בתפקידים דומים</label>
-          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared"
               value="כמו רוב החיילים בתפקידים דומים"> כמו רוב
             החיילים
             בתפקידים דומים</label>
 
-          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared"
               value="פחות מרוב החיילים בתפקידים דומים"> פחות מרוב
             החיילים בתפקידים דומים</label>
-          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
-              value="אינו מתאים/ה כלל לקצונה">אינו
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared" value="אינו מתאים/ה כלל לקצונה">אינו
             מתאים/ה כלל
             לקצונה</label>
         </div>
@@ -1183,16 +1182,16 @@
           6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה?
         </span>
         <div id="willingnessCommand-wrapper" class="class-32" style="position:relative">
-          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה רבה מאוד">
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה רבה מאוד">
             במידה רבה
             מאוד</label>
-          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה רבה"> במידה
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה רבה"> במידה
             רבה</label>
-          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה בינונית"> במידה
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה בינונית"> במידה
             בינונית</label>
-          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה מועטה"> במידה
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה מועטה"> במידה
             מועטה</label>
-          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="לא מעוניין כלל"> איני
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="לא מעוניין כלל"> איני
             מעוניין/ת כלל</label>
         </div>
 
@@ -1206,7 +1205,7 @@
                 <div>__________</div>
 
                 <div id="kidName-wrapper" class="class-11">
-                  <input required type="text" name="kidName" class="wrapped-input">
+                  <input type="text" name="kidName" class="wrapped-input">
                 </div>
               </div>
             </label>
@@ -1216,8 +1215,8 @@
               <div class="class-4">
                 <div>_____________</div>
 
-                <div id="numba-wrapper" class="class-6 class-11">
-                  <input required pattern="\d{10}" name="numba" class="wrapped-input">
+                <div id="commanderPhone-wrapper" class="class-6 class-11">
+                  <input pattern="\d{10}" name="commanderPhone" class="wrapped-input">
                 </div>
               </div>
 
@@ -1251,7 +1250,7 @@
               <div>____________________</div>
 
               <div id="feedbackName-wrapper" class="class-11">
-                <input required type="text" name="feedbackName" class="wrapped-input">
+                <input type="text" name="feedbackName" class="wrapped-input">
               </div>
             </div>
 
@@ -1285,8 +1284,9 @@
 
               </div>
 
-
-              <input required type="hidden" name="signature" />
+              <div id="signature-wrapper" style="position: relative;">
+                <input type="hidden" name="signature" />
+              </div>
 
             </label>
 
@@ -1310,7 +1310,7 @@
           <div class="class-10">
             <span>___</span>
             <div id="monthsUnder2-wrapper" class="class-6 class-11">
-              <input required type="text" pattern="\d{1,2}" name="monthsUnder2" class="wrapped-input">
+              <input type="text" pattern="\d{1,2}" name="monthsUnder2" class="wrapped-input">
             </div>
           </div>
 
@@ -1321,27 +1321,27 @@
           <span class="class-3">מידת ההיכרות:</span>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity2" value="טובה מאוד">
+            <input type="checkbox" name="familiarity2" value="טובה מאוד">
             טובה מאוד
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity2" value="די טובה">
+            <input type="checkbox" name="familiarity2" value="די טובה">
             די טובה
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity2" value="בינונית">
+            <input type="checkbox" name="familiarity2" value="בינונית">
             בינונית
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity2" value="קלושה">
+            <input type="checkbox" name="familiarity2" value="קלושה">
             קלושה
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity2" value="איני יודע להעריך">
+            <input type="checkbox" name="familiarity2" value="איני יודע להעריך">
             איני יודע להעריך
           </label>
 
@@ -1365,7 +1365,7 @@
               <div class="class-10">
                 <span>_________________________________________________________________</span>
                 <div id="superiorCommanderStrength-wrapper" class="class-11">
-                  <input required type="text" name="superiorCommanderStrength" class="wrapped-input">
+                  <input type="text" name="superiorCommanderStrength" class="wrapped-input">
                 </div>
               </div>
             </label>
@@ -1375,7 +1375,7 @@
               <div class="class-10">
                 <span>_______________________________________________________________</span>
                 <div id="superiorCommanderWeakness-wrapper" class="class-11">
-                  <input required type="text" name="superiorCommanderWeakness" class="wrapped-input">
+                  <input type="text" name="superiorCommanderWeakness" class="wrapped-input">
                 </div>
               </div>
             </label>
@@ -1392,13 +1392,13 @@
 
             <b>באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ"א)</b>
             <div id="willingnessCommand2-wrapper" style="position:relative">
-              <label><input required type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה
                 מאוד</label>
-              <label><input required type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
-              <label><input required type="checkbox" name="willingnessCommand2" value="במידה בינונית"> במידה
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה בינונית"> במידה
                 בינונית</label>
-              <label><input required type="checkbox" name="willingnessCommand2" value="במידה מועטה"> במידה מועטה</label>
-              <label><input required type="checkbox" id="siuu" name="willingnessCommand2" value="איני מעוניין/ת כלל">
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה מועטה"> במידה מועטה</label>
+              <label><input type="checkbox" id="siuu" name="willingnessCommand2" value="איני מעוניין/ת כלל">
                 איני מעוניין/ת כלל
               </label>
 
@@ -1427,7 +1427,7 @@
                 <div>__________</div>
 
                 <div id="commander2Name-wrapper" class="class-11">
-                  <input required type="text" name="commander2Name" class="wrapped-input">
+                  <input type="text" name="commander2Name" class="wrapped-input">
                 </div>
               </div>
             </label>
@@ -1438,7 +1438,7 @@
                 <div>_____________</div>
 
                 <div id="commander2Phone-wrapper" class="class-6 class-11">
-                  <input required type="text" name="commander2Phone" pattern="\d{10}" class="wrapped-input">
+                  <input type="text" name="commander2Phone" pattern="\d{10}" class="wrapped-input">
                 </div>
               </div>
 
@@ -1562,7 +1562,7 @@
 
 
           select.addEventListener("input", () => {
-            console.log("event listener working on", select )
+            console.log("event listener working on", select)
           })
 
           select.dispatchEvent(new Event('input', { bubbles: true }));
@@ -1834,7 +1834,7 @@
 
 
 
-//Same with other style
+      //Same with other style
 
       const baseSelector2 = '.mytextareaclass2';
       const themedSelector2 = '.default-backgrounds .mytextareaclass2';
@@ -2491,7 +2491,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "<" + "body class=\"default-backgrounds\"> \n"
  + " \n"
- + "  <" + "form novalidate id=\"feedback-form\"> \n"
+ + "  <" + "form id=\"feedback-form\"> \n"
  + " \n"
  + "    <" + "fieldset> \n"
  + " \n"
@@ -2551,7 +2551,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "div class=\"class-10\"> \n"
  + "              <" + "span>__________________<" + "/span> \n"
  + "              <" + "div id=\"firstName-wrapper\" class=\"class-11\"> \n"
- + "                <" + "input required type=\"text\" name=\"firstName\" class=\"wrapped-input\"> \n"
+ + "                <" + "input type=\"text\" name=\"firstName\" class=\"wrapped-input\"> \n"
  + "              <" + "/div> \n"
  + "              &nbsp; \n"
  + "            <" + "/div> \n"
@@ -2562,7 +2562,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "div class=\"class-10\"> \n"
  + "              <" + "span>_____________<" + "/span> \n"
  + "              <" + "div id=\"personalNumber-wrapper\" class=\"class-6 class-11\"> \n"
- + "                <" + "input required type=\"text\" name=\"personalNumber\" pattern=\"\d{7}\" class=\"wrapped-input\"> \n"
+ + "                <" + "input type=\"text\" name=\"personalNumber\" pattern=\"\d{7}\" class=\"wrapped-input\"> \n"
  + "              <" + "/div> \n"
  + "            <" + "/div> \n"
  + "          <" + "/label> \n"
@@ -2580,7 +2580,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "div class=\"class-10\"> \n"
  + "              <" + "span>___<" + "/span> \n"
  + "              <" + "div id=\"monthsUnder-wrapper\" class=\"class-6 class-11\"> \n"
- + "                <" + "input required type=\"text\" pattern=\"\d{1,2}\" name=\"monthsUnder\" class=\"wrapped-input\"> \n"
+ + "                <" + "input type=\"text\" pattern=\"\d{1,2}\" name=\"monthsUnder\" class=\"wrapped-input\"> \n"
  + "              <" + "/div> \n"
  + "            <" + "/div> \n"
  + "            <" + "span>   \n"
@@ -2593,7 +2593,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "            <" + "span class=\"class-3\"> \n"
  + "              החו\"ד נכתב יחד עם המפקד הקודם:   \n"
  + "            <" + "/span> \n"
- + "            <" + "input required type=\"checkbox\" name=\"writtenUnderLast\" class=\"class-15\" value=\"נכתב על ידי קודם\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"writtenUnderLast\" class=\"class-15\" value=\"נכתב על ידי קודם\"> \n"
  + "            <" + "span>   \n"
  + "              (סמן אם כן) <" + "/span> \n"
  + "          <" + "/label> \n"
@@ -2607,22 +2607,22 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          <" + "span class=\"class-3\">מידת היכרות עם החייל/ת:<" + "/span> \n"
  + " \n"
  + "          <" + "label class=\"class-17\"> \n"
- + "            <" + "input required type=\"checkbox\" name=\"familiarity\" value=\"טובה מאוד\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity\" value=\"טובה מאוד\"> \n"
  + "            טובה מאוד \n"
  + "          <" + "/label> \n"
  + " \n"
  + "          <" + "label class=\"class-17\"> \n"
- + "            <" + "input required type=\"checkbox\" name=\"familiarity\" value=\"די טובה\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity\" value=\"די טובה\"> \n"
  + "            די טובה \n"
  + "          <" + "/label> \n"
  + " \n"
  + "          <" + "label class=\"class-17\"> \n"
- + "            <" + "input required type=\"checkbox\" name=\"familiarity\" value=\"בינונית\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity\" value=\"בינונית\"> \n"
  + "            בינונית \n"
  + "          <" + "/label> \n"
  + " \n"
  + "          <" + "label class=\"class-17\"> \n"
- + "            <" + "input required type=\"checkbox\" name=\"familiarity\" value=\"קלושה\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity\" value=\"קלושה\"> \n"
  + "            קלושה \n"
  + "          <" + "/label> \n"
  + "        <" + "/div> \n"
@@ -2633,7 +2633,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          <" + "div class=\"class-10\"> \n"
  + "            <" + "span>___________________<" + "/span> \n"
  + "            <" + "div id=\"role-wrapper\" class=\"class-11\"> \n"
- + "              <" + "input required type=\"text\" name=\"role\" class=\"wrapped-input\"> \n"
+ + "              <" + "input type=\"text\" name=\"role\" class=\"wrapped-input\"> \n"
  + "            <" + "/div> \n"
  + "          <" + "/div> \n"
  + "        <" + "/label> \n"
@@ -3026,12 +3026,12 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "        <" + "span style=\"font-weight: bold;\">3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה?<" + "/span> \n"
  + "        <" + "div class=\"class-32\" id=\"motivation-wrapper\" style=\"position:relative\"> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"motivation\" value=\"גבוהה מאוד\"> גבוהה \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"motivation\" value=\"גבוהה מאוד\"> גבוהה \n"
  + "            מאוד<" + "/label> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"motivation\" value=\"גבוהה\"> גבוהה<" + "/label> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"motivation\" value=\"בינונית\"> בינונית<" + "/label> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"motivation\" value=\"נמוכה\"> נמוכה<" + "/label> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"motivation\" value=\"איני רוצה לצאת\"> איני רוצה \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"motivation\" value=\"גבוהה\"> גבוהה<" + "/label> \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"motivation\" value=\"בינונית\"> בינונית<" + "/label> \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"motivation\" value=\"נמוכה\"> נמוכה<" + "/label> \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"motivation\" value=\"איני רוצה לצאת\"> איני רוצה \n"
  + "            לצאת \n"
  + "            לקצונה<" + "/label> \n"
  + "        <" + "/div> \n"
@@ -3044,19 +3044,18 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "        <" + "span style=\"font-weight: bold;\">5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?<" + "/span> \n"
  + "        <" + "div id=\"suitabilityCompared-wrapper\" class=\"class-33\" style=\"position:relative\"> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"suitabilityCompared\" \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"suitabilityCompared\" \n"
  + "              value=\"יותר מרוב החיילים בתפקידים דומים\"> יותר מרוב \n"
  + "            החיילים בתפקידים דומים<" + "/label> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"suitabilityCompared\" \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"suitabilityCompared\" \n"
  + "              value=\"כמו רוב החיילים בתפקידים דומים\"> כמו רוב \n"
  + "            החיילים \n"
  + "            בתפקידים דומים<" + "/label> \n"
  + " \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"suitabilityCompared\" \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"suitabilityCompared\" \n"
  + "              value=\"פחות מרוב החיילים בתפקידים דומים\"> פחות מרוב \n"
  + "            החיילים בתפקידים דומים<" + "/label> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"suitabilityCompared\" \n"
- + "              value=\"אינו מתאים/ה כלל לקצונה\">אינו \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"suitabilityCompared\" value=\"אינו מתאים/ה כלל לקצונה\">אינו \n"
  + "            מתאים/ה כלל \n"
  + "            לקצונה<" + "/label> \n"
  + "        <" + "/div> \n"
@@ -3065,16 +3064,16 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה? \n"
  + "        <" + "/span> \n"
  + "        <" + "div id=\"willingnessCommand-wrapper\" class=\"class-32\" style=\"position:relative\"> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה רבה מאוד\"> \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה רבה מאוד\"> \n"
  + "            במידה רבה \n"
  + "            מאוד<" + "/label> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה רבה\"> במידה \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה רבה\"> במידה \n"
  + "            רבה<" + "/label> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה בינונית\"> במידה \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה בינונית\"> במידה \n"
  + "            בינונית<" + "/label> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה מועטה\"> במידה \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"במידה מועטה\"> במידה \n"
  + "            מועטה<" + "/label> \n"
- + "          <" + "label class=\"class-17\"><" + "input required type=\"checkbox\" name=\"willingnessCommand\" value=\"לא מעוניין כלל\"> איני \n"
+ + "          <" + "label class=\"class-17\"><" + "input type=\"checkbox\" name=\"willingnessCommand\" value=\"לא מעוניין כלל\"> איני \n"
  + "            מעוניין/ת כלל<" + "/label> \n"
  + "        <" + "/div> \n"
  + " \n"
@@ -3088,7 +3087,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "                <" + "div>__________<" + "/div> \n"
  + " \n"
  + "                <" + "div id=\"kidName-wrapper\" class=\"class-11\"> \n"
- + "                  <" + "input required type=\"text\" name=\"kidName\" class=\"wrapped-input\"> \n"
+ + "                  <" + "input type=\"text\" name=\"kidName\" class=\"wrapped-input\"> \n"
  + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + "            <" + "/label> \n"
@@ -3098,8 +3097,8 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "div class=\"class-4\"> \n"
  + "                <" + "div>_____________<" + "/div> \n"
  + " \n"
- + "                <" + "div id=\"numba-wrapper\" class=\"class-6 class-11\"> \n"
- + "                  <" + "input required pattern=\"\d{10}\" name=\"numba\" class=\"wrapped-input\"> \n"
+ + "                <" + "div id=\"commanderPhone-wrapper\" class=\"class-6 class-11\"> \n"
+ + "                  <" + "input pattern=\"\d{10}\" name=\"commanderPhone\" class=\"wrapped-input\"> \n"
  + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + " \n"
@@ -3133,7 +3132,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "div>____________________<" + "/div> \n"
  + " \n"
  + "              <" + "div id=\"feedbackName-wrapper\" class=\"class-11\"> \n"
- + "                <" + "input required type=\"text\" name=\"feedbackName\" class=\"wrapped-input\"> \n"
+ + "                <" + "input type=\"text\" name=\"feedbackName\" class=\"wrapped-input\"> \n"
  + "              <" + "/div> \n"
  + "            <" + "/div> \n"
  + " \n"
@@ -3167,8 +3166,9 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "              <" + "/div> \n"
  + " \n"
- + " \n"
- + "              <" + "input required type=\"hidden\" name=\"signature\" /> \n"
+ + "              <" + "div id=\"signature-wrapper\" style=\"position: relative;\"> \n"
+ + "                <" + "input type=\"hidden\" name=\"signature\" /> \n"
+ + "              <" + "/div> \n"
  + " \n"
  + "            <" + "/label> \n"
  + " \n"
@@ -3192,7 +3192,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          <" + "div class=\"class-10\"> \n"
  + "            <" + "span>___<" + "/span> \n"
  + "            <" + "div id=\"monthsUnder2-wrapper\" class=\"class-6 class-11\"> \n"
- + "              <" + "input required type=\"text\" pattern=\"\d{1,2}\" name=\"monthsUnder2\" class=\"wrapped-input\"> \n"
+ + "              <" + "input type=\"text\" pattern=\"\d{1,2}\" name=\"monthsUnder2\" class=\"wrapped-input\"> \n"
  + "            <" + "/div> \n"
  + "          <" + "/div> \n"
  + " \n"
@@ -3203,27 +3203,27 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          <" + "span class=\"class-3\">מידת ההיכרות:<" + "/span> \n"
  + " \n"
  + "          <" + "label class=\"class-17\"> \n"
- + "            <" + "input required type=\"checkbox\" name=\"familiarity2\" value=\"טובה מאוד\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity2\" value=\"טובה מאוד\"> \n"
  + "            טובה מאוד \n"
  + "          <" + "/label> \n"
  + " \n"
  + "          <" + "label class=\"class-17\"> \n"
- + "            <" + "input required type=\"checkbox\" name=\"familiarity2\" value=\"די טובה\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity2\" value=\"די טובה\"> \n"
  + "            די טובה \n"
  + "          <" + "/label> \n"
  + " \n"
  + "          <" + "label class=\"class-17\"> \n"
- + "            <" + "input required type=\"checkbox\" name=\"familiarity2\" value=\"בינונית\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity2\" value=\"בינונית\"> \n"
  + "            בינונית \n"
  + "          <" + "/label> \n"
  + " \n"
  + "          <" + "label class=\"class-17\"> \n"
- + "            <" + "input required type=\"checkbox\" name=\"familiarity2\" value=\"קלושה\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity2\" value=\"קלושה\"> \n"
  + "            קלושה \n"
  + "          <" + "/label> \n"
  + " \n"
  + "          <" + "label class=\"class-17\"> \n"
- + "            <" + "input required type=\"checkbox\" name=\"familiarity2\" value=\"איני יודע להעריך\"> \n"
+ + "            <" + "input type=\"checkbox\" name=\"familiarity2\" value=\"איני יודע להעריך\"> \n"
  + "            איני יודע להעריך \n"
  + "          <" + "/label> \n"
  + " \n"
@@ -3247,7 +3247,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "div class=\"class-10\"> \n"
  + "                <" + "span>_________________________________________________________________<" + "/span> \n"
  + "                <" + "div id=\"superiorCommanderStrength-wrapper\" class=\"class-11\"> \n"
- + "                  <" + "input required type=\"text\" name=\"superiorCommanderStrength\" class=\"wrapped-input\"> \n"
+ + "                  <" + "input type=\"text\" name=\"superiorCommanderStrength\" class=\"wrapped-input\"> \n"
  + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + "            <" + "/label> \n"
@@ -3257,7 +3257,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "div class=\"class-10\"> \n"
  + "                <" + "span>_______________________________________________________________<" + "/span> \n"
  + "                <" + "div id=\"superiorCommanderWeakness-wrapper\" class=\"class-11\"> \n"
- + "                  <" + "input required type=\"text\" name=\"superiorCommanderWeakness\" class=\"wrapped-input\"> \n"
+ + "                  <" + "input type=\"text\" name=\"superiorCommanderWeakness\" class=\"wrapped-input\"> \n"
  + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + "            <" + "/label> \n"
@@ -3274,13 +3274,13 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "            <" + "b>באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ\"א)<" + "/b> \n"
  + "            <" + "div id=\"willingnessCommand2-wrapper\" style=\"position:relative\"> \n"
- + "              <" + "label><" + "input required type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה מאוד\"> במידה רבה \n"
+ + "              <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה מאוד\"> במידה רבה \n"
  + "                מאוד<" + "/label> \n"
- + "              <" + "label><" + "input required type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה\"> במידה רבה<" + "/label> \n"
- + "              <" + "label><" + "input required type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה בינונית\"> במידה \n"
+ + "              <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה רבה\"> במידה רבה<" + "/label> \n"
+ + "              <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה בינונית\"> במידה \n"
  + "                בינונית<" + "/label> \n"
- + "              <" + "label><" + "input required type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה מועטה\"> במידה מועטה<" + "/label> \n"
- + "              <" + "label><" + "input required type=\"checkbox\" id=\"siuu\" name=\"willingnessCommand2\" value=\"איני מעוניין/ת כלל\"> \n"
+ + "              <" + "label><" + "input type=\"checkbox\" name=\"willingnessCommand2\" value=\"במידה מועטה\"> במידה מועטה<" + "/label> \n"
+ + "              <" + "label><" + "input type=\"checkbox\" id=\"siuu\" name=\"willingnessCommand2\" value=\"איני מעוניין/ת כלל\"> \n"
  + "                איני מעוניין/ת כלל \n"
  + "              <" + "/label> \n"
  + " \n"
@@ -3309,7 +3309,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "                <" + "div>__________<" + "/div> \n"
  + " \n"
  + "                <" + "div id=\"commander2Name-wrapper\" class=\"class-11\"> \n"
- + "                  <" + "input required type=\"text\" name=\"commander2Name\" class=\"wrapped-input\"> \n"
+ + "                  <" + "input type=\"text\" name=\"commander2Name\" class=\"wrapped-input\"> \n"
  + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + "            <" + "/label> \n"
@@ -3320,7 +3320,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "                <" + "div>_____________<" + "/div> \n"
  + " \n"
  + "                <" + "div id=\"commander2Phone-wrapper\" class=\"class-6 class-11\"> \n"
- + "                  <" + "input required type=\"text\" name=\"commander2Phone\" pattern=\"\d{10}\" class=\"wrapped-input\"> \n"
+ + "                  <" + "input type=\"text\" name=\"commander2Phone\" pattern=\"\d{10}\" class=\"wrapped-input\"> \n"
  + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + " \n"
@@ -3444,7 +3444,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + " \n"
  + "          select.addEventListener(\"input\", () => { \n"
- + "            console.log(\"event listener working on\", select ) \n"
+ + "            console.log(\"event listener working on\", select) \n"
  + "          }) \n"
  + " \n"
  + "          select.dispatchEvent(new Event('input', { bubbles: true })); \n"
@@ -3716,7 +3716,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + " \n"
  + " \n"
- + "//Same with other style \n"
+ + "      //Same with other style \n"
  + " \n"
  + "      const baseSelector2 = '.mytextareaclass2'; \n"
  + "      const themedSelector2 = '.default-backgrounds .mytextareaclass2'; \n"
@@ -3764,8 +3764,8 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "<" + "/html> \n"
 ;
-//Can just copy this... its just one element
-function genPopUp() {
+//Generate a popu element! used for form validation
+function genPopUp(...textRows) {
     const svgNS = "http://www.w3.org/2000/svg";
 
     viewBox = [0, 0, 170, 105]
@@ -3803,26 +3803,27 @@ function genPopUp() {
     const text = document.createElementNS(svgNS, "text");
     text.setAttribute("x", "85");
     text.setAttribute("y", "52.5");
-    text.setAttribute("font-size", "25");
+    text.setAttribute("font-size", "5");
     text.setAttribute("fill", "red");
     text.setAttribute("text-anchor", "middle");
     text.setAttribute("dominant-baseline", "middle");
 
-    // Create first <tspan>
-    const tspan1 = document.createElementNS(svgNS, "tspan");
-    tspan1.setAttribute("x", "85");
-    tspan1.setAttribute("dy", "0");
-    tspan1.textContent = "שדה זה הוא";
 
-    // Create second <tspan>
-    const tspan2 = document.createElementNS(svgNS, "tspan");
-    tspan2.setAttribute("x", "85");
-    tspan2.setAttribute("dy", "1.2em");
-    tspan2.textContent = "שדה חובה";
+    //dy is the differnece in ys between tspan inside an svg text. increase by 1.2em each row
+    let dy = 0
+    for (const textRow of textRows) {
+        const tspan = document.createElementNS(svgNS, "tspan");
+        tspan.setAttribute("x", "85");
+        tspan.setAttribute("dy", String(dy) + "em");
+        tspan.textContent = textRow; // add text content
+        text.appendChild(tspan);
+
+        dy+=1.2
+    }
+
 
     // Append <tspan> elements to <text>
-    text.appendChild(tspan1);
-    text.appendChild(tspan2);
+
 
     // // Set the text content
 
@@ -3838,15 +3839,12 @@ function genPopUp() {
     newElWrapper.style.right = "40%"; // Position it at the bottom-right corner
     newElWrapper.style.width = "240px"; // Width of the SVG element
     newElWrapper.style.height = "150px"; // Height of the SVG element
-    newElWrapper.style.backgroundColor = "lightblue"; // Just to see the background
+    // newElWrapper.style.backgroundColor = "lightblue"; // Just to see the background
     newElWrapper.style.zIndex = "1"
 
     newElWrapper.appendChild(newEl)
 
     // newElWrapperCopy = newElWrapper.cloneNode(true)
-
-   
-
 
     return newElWrapper
 
@@ -3854,6 +3852,7 @@ function genPopUp() {
 
 //Handle an empty input element. get the input wrapper.
 //  add the popup to it. add event listeners to close it
+//If it is required, return true
 function handleEmptyInput(inputEl) {
 
     const inputWrapper = document.getElementById(inputEl.name + "-wrapper")
@@ -3862,7 +3861,7 @@ function handleEmptyInput(inputEl) {
     if (inputWrapper) {
 
         //Generate popup
-        const popUpWrapper = genPopUp()
+        const popUpWrapper = genPopUp("שדה זה הוא", "שדה חובה")
 
         //append the popup to the input wrapper so it can be placed relative to the inputWrapper(thus the input)
         inputWrapper.appendChild(popUpWrapper)
@@ -3892,39 +3891,22 @@ function handleEmptyInput(inputEl) {
                 // e.preventDefault()
             }, true
         )
-    
+
+        return false
 
     }
 
     else {
-        console.log(" does not work...")
+        console.log("input doesnt have wrapper parent - so it is not required!!!")
+        return true
     }
 
 }
 
-// document.addEventListener("input", (e) => {
-//     console.log("e.target" ,e.target)
-//     e.target.addEventListener("input", () => {
-//         console.log("same thing from inside")
-//     })
-// })
-
-// שליחת הטופס במייל
-function submitEventHandler(e) {
-
-
-
-    alert("here")
-
-    e.preventDefault()
-
-    alert("here")
+//Checks if any input that is required(parent has certain parent class - wrapper)
+function handleEmptyInputs() {
 
     const form = document.getElementById('feedback-form');
-    // if (!form.checkValidity()) {
-    //     form.reportValidity();
-    //     return;
-    // }
 
 
     for (const el of form.elements) {
@@ -3937,19 +3919,20 @@ function submitEventHandler(e) {
                 && document.querySelectorAll(`input[name=${el.name}]:checked`).length == 0
             )) {
 
-            handleEmptyInput(el)
+            if (!handleEmptyInput(el)) {
+                return false
+            }
 
         }
 
-        else {
-            console.log("vallejo", el.type, el.value)
-        }
     }
 
-    return
 
+    return true
 
-    alert("here again")
+}
+
+function createReadOnlyFormForDownload() {
 
     const formData = new FormData(form);
     script_str = ""
@@ -4008,19 +3991,37 @@ function submitEventHandler(e) {
     a.download = 'havad' + formData.get('personalNumber') + '.html';
     a.click();
     URL.revokeObjectURL(a.href);
-
 }
 
-// document.addEventListener("DOMContentLoaded", () => {
 
-//     const form = document.getElementById("feedback-form");
-//     if (form) {
-//       form.addEventListener("submit", submitEventHandler);
-// } else {
-//   console.error("No element with ID 'feedback-form' found.");
-// }
-//   });
+// שליחת הטופס במייל
+function submitEventHandler(e) {
 
+    e.preventDefault() //Ignore submit default
+
+    // if (!handleEmptyInputs()) { //If empty input - return...
+    //     return false
+    // }
+
+    const formData = new FormData(form);
+
+    if( formData.get('commanderPhone')  == formData.get('commander2Phone')  ) {
+        const popUpWrapper = genPopUp("מהמפקד העקיף", "להיות איש קשר שונה", "על המפקד הישיר");
+        document.getElementById("commander2Phone-wrapper").appendChild(popUpWrapper)
+
+        const eListener = () => {
+            popUpWrapper.remove()
+        }
+
+        document.getElementById("commander2Phone-wrapper").addEventListener("click", eListener)
+        document.getElementById("commander2Phone").addEventListener("input", eListener)
+        document.getElementById("commander2Phone").addEventListener("change", eListener)
+        form.addEventListener("submit", eListener)
+        
+    }
+
+    createReadOnlyFormForDownload() //Create the form for download
+}
 
 
 const form = document.getElementById("feedback-form");
