@@ -609,7 +609,7 @@
 
 <body class="default-backgrounds">
 
-  <form novalidate id="feedback-form">
+  <form id="feedback-form">
 
     <fieldset>
 
@@ -669,7 +669,7 @@
             <div class="class-10">
               <span>__________________</span>
               <div id="firstName-wrapper" class="class-11">
-                <input required type="text" name="firstName" class="wrapped-input">
+                <input type="text" name="firstName" class="wrapped-input">
               </div>
               &nbsp;
             </div>
@@ -680,7 +680,7 @@
             <div class="class-10">
               <span>_____________</span>
               <div id="personalNumber-wrapper" class="class-6 class-11">
-                <input required type="text" name="personalNumber" pattern="\d{7}" class="wrapped-input">
+                <input type="text" name="personalNumber" pattern="\d{7}" class="wrapped-input">
               </div>
             </div>
           </label>
@@ -698,7 +698,7 @@
             <div class="class-10">
               <span>___</span>
               <div id="monthsUnder-wrapper" class="class-6 class-11">
-                <input required type="text" pattern="\d{1,2}" name="monthsUnder" class="wrapped-input">
+                <input type="text" pattern="\d{1,2}" name="monthsUnder" class="wrapped-input">
               </div>
             </div>
             <span>  
@@ -711,7 +711,7 @@
             <span class="class-3">
               החו"ד נכתב יחד עם המפקד הקודם:  
             </span>
-            <input required type="checkbox" name="writtenUnderLast" class="class-15" value="נכתב על ידי קודם">
+            <input type="checkbox" name="writtenUnderLast" class="class-15" value="נכתב על ידי קודם">
             <span>  
               (סמן אם כן) </span>
           </label>
@@ -725,22 +725,22 @@
           <span class="class-3">מידת היכרות עם החייל/ת:</span>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity" value="טובה מאוד">
+            <input type="checkbox" name="familiarity" value="טובה מאוד">
             טובה מאוד
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity" value="די טובה">
+            <input type="checkbox" name="familiarity" value="די טובה">
             די טובה
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity" value="בינונית">
+            <input type="checkbox" name="familiarity" value="בינונית">
             בינונית
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity" value="קלושה">
+            <input type="checkbox" name="familiarity" value="קלושה">
             קלושה
           </label>
         </div>
@@ -751,7 +751,7 @@
           <div class="class-10">
             <span>___________________</span>
             <div id="role-wrapper" class="class-11">
-              <input required type="text" name="role" class="wrapped-input">
+              <input type="text" name="role" class="wrapped-input">
             </div>
           </div>
         </label>
@@ -1144,12 +1144,12 @@
 
         <span style="font-weight: bold;">3. מה מידת המוטיבציה של החייל/ת לצאת לקצונה?</span>
         <div class="class-32" id="motivation-wrapper" style="position:relative">
-          <label class="class-17"><input required type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה
+          <label class="class-17"><input type="checkbox" name="motivation" value="גבוהה מאוד"> גבוהה
             מאוד</label>
-          <label class="class-17"><input required type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
-          <label class="class-17"><input required type="checkbox" name="motivation" value="בינונית"> בינונית</label>
-          <label class="class-17"><input required type="checkbox" name="motivation" value="נמוכה"> נמוכה</label>
-          <label class="class-17"><input required type="checkbox" name="motivation" value="איני רוצה לצאת"> איני רוצה
+          <label class="class-17"><input type="checkbox" name="motivation" value="גבוהה"> גבוהה</label>
+          <label class="class-17"><input type="checkbox" name="motivation" value="בינונית"> בינונית</label>
+          <label class="class-17"><input type="checkbox" name="motivation" value="נמוכה"> נמוכה</label>
+          <label class="class-17"><input type="checkbox" name="motivation" value="איני רוצה לצאת"> איני רוצה
             לצאת
             לקצונה</label>
         </div>
@@ -1162,19 +1162,18 @@
 
         <span style="font-weight: bold;">5. איזו מידה מתאים/ה החייל/ת לקצונה ביחס לחיילים אחרים ?</span>
         <div id="suitabilityCompared-wrapper" class="class-33" style="position:relative">
-          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared"
               value="יותר מרוב החיילים בתפקידים דומים"> יותר מרוב
             החיילים בתפקידים דומים</label>
-          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared"
               value="כמו רוב החיילים בתפקידים דומים"> כמו רוב
             החיילים
             בתפקידים דומים</label>
 
-          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared"
               value="פחות מרוב החיילים בתפקידים דומים"> פחות מרוב
             החיילים בתפקידים דומים</label>
-          <label class="class-17"><input required type="checkbox" name="suitabilityCompared"
-              value="אינו מתאים/ה כלל לקצונה">אינו
+          <label class="class-17"><input type="checkbox" name="suitabilityCompared" value="אינו מתאים/ה כלל לקצונה">אינו
             מתאים/ה כלל
             לקצונה</label>
         </div>
@@ -1183,16 +1182,16 @@
           6. באיזו מידה תהיה/י מוכן/ה לקבל את החייל/ת תחת פיקודך כקצין/ה?
         </span>
         <div id="willingnessCommand-wrapper" class="class-32" style="position:relative">
-          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה רבה מאוד">
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה רבה מאוד">
             במידה רבה
             מאוד</label>
-          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה רבה"> במידה
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה רבה"> במידה
             רבה</label>
-          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה בינונית"> במידה
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה בינונית"> במידה
             בינונית</label>
-          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="במידה מועטה"> במידה
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="במידה מועטה"> במידה
             מועטה</label>
-          <label class="class-17"><input required type="checkbox" name="willingnessCommand" value="לא מעוניין כלל"> איני
+          <label class="class-17"><input type="checkbox" name="willingnessCommand" value="לא מעוניין כלל"> איני
             מעוניין/ת כלל</label>
         </div>
 
@@ -1206,7 +1205,7 @@
                 <div>__________</div>
 
                 <div id="kidName-wrapper" class="class-11">
-                  <input required type="text" name="kidName" class="wrapped-input">
+                  <input type="text" name="kidName" class="wrapped-input">
                 </div>
               </div>
             </label>
@@ -1216,8 +1215,8 @@
               <div class="class-4">
                 <div>_____________</div>
 
-                <div id="numba-wrapper" class="class-6 class-11">
-                  <input required pattern="\d{10}" name="numba" class="wrapped-input">
+                <div id="commanderPhone-wrapper" class="class-6 class-11">
+                  <input pattern="\d{10}" name="commanderPhone" class="wrapped-input">
                 </div>
               </div>
 
@@ -1251,7 +1250,7 @@
               <div>____________________</div>
 
               <div id="feedbackName-wrapper" class="class-11">
-                <input required type="text" name="feedbackName" class="wrapped-input">
+                <input type="text" name="feedbackName" class="wrapped-input">
               </div>
             </div>
 
@@ -1285,8 +1284,9 @@
 
               </div>
 
-
-              <input required type="hidden" name="signature" />
+              <div id="signature-wrapper" style="position: relative;">
+                <input type="hidden" name="signature" />
+              </div>
 
             </label>
 
@@ -1310,7 +1310,7 @@
           <div class="class-10">
             <span>___</span>
             <div id="monthsUnder2-wrapper" class="class-6 class-11">
-              <input required type="text" pattern="\d{1,2}" name="monthsUnder2" class="wrapped-input">
+              <input type="text" pattern="\d{1,2}" name="monthsUnder2" class="wrapped-input">
             </div>
           </div>
 
@@ -1321,27 +1321,27 @@
           <span class="class-3">מידת ההיכרות:</span>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity2" value="טובה מאוד">
+            <input type="checkbox" name="familiarity2" value="טובה מאוד">
             טובה מאוד
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity2" value="די טובה">
+            <input type="checkbox" name="familiarity2" value="די טובה">
             די טובה
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity2" value="בינונית">
+            <input type="checkbox" name="familiarity2" value="בינונית">
             בינונית
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity2" value="קלושה">
+            <input type="checkbox" name="familiarity2" value="קלושה">
             קלושה
           </label>
 
           <label class="class-17">
-            <input required type="checkbox" name="familiarity2" value="איני יודע להעריך">
+            <input type="checkbox" name="familiarity2" value="איני יודע להעריך">
             איני יודע להעריך
           </label>
 
@@ -1365,7 +1365,7 @@
               <div class="class-10">
                 <span>_________________________________________________________________</span>
                 <div id="superiorCommanderStrength-wrapper" class="class-11">
-                  <input required type="text" name="superiorCommanderStrength" class="wrapped-input">
+                  <input type="text" name="superiorCommanderStrength" class="wrapped-input">
                 </div>
               </div>
             </label>
@@ -1375,7 +1375,7 @@
               <div class="class-10">
                 <span>_______________________________________________________________</span>
                 <div id="superiorCommanderWeakness-wrapper" class="class-11">
-                  <input required type="text" name="superiorCommanderWeakness" class="wrapped-input">
+                  <input type="text" name="superiorCommanderWeakness" class="wrapped-input">
                 </div>
               </div>
             </label>
@@ -1392,13 +1392,13 @@
 
             <b>באיזו מידה תהיה/י מוכן/ה לקבל את המועמד/ת כקצין/ה תחת פיקודיך? (ללא קשר לאילוצי כ"א)</b>
             <div id="willingnessCommand2-wrapper" style="position:relative">
-              <label><input required type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה מאוד"> במידה רבה
                 מאוד</label>
-              <label><input required type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
-              <label><input required type="checkbox" name="willingnessCommand2" value="במידה בינונית"> במידה
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה רבה"> במידה רבה</label>
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה בינונית"> במידה
                 בינונית</label>
-              <label><input required type="checkbox" name="willingnessCommand2" value="במידה מועטה"> במידה מועטה</label>
-              <label><input required type="checkbox" id="siuu" name="willingnessCommand2" value="איני מעוניין/ת כלל">
+              <label><input type="checkbox" name="willingnessCommand2" value="במידה מועטה"> במידה מועטה</label>
+              <label><input type="checkbox" id="siuu" name="willingnessCommand2" value="איני מעוניין/ת כלל">
                 איני מעוניין/ת כלל
               </label>
 
@@ -1427,7 +1427,7 @@
                 <div>__________</div>
 
                 <div id="commander2Name-wrapper" class="class-11">
-                  <input required type="text" name="commander2Name" class="wrapped-input">
+                  <input type="text" name="commander2Name" class="wrapped-input">
                 </div>
               </div>
             </label>
@@ -1438,7 +1438,7 @@
                 <div>_____________</div>
 
                 <div id="commander2Phone-wrapper" class="class-6 class-11">
-                  <input required type="text" name="commander2Phone" pattern="\d{10}" class="wrapped-input">
+                  <input type="text" name="commander2Phone" pattern="\d{10}" class="wrapped-input">
                 </div>
               </div>
 
@@ -1562,7 +1562,7 @@
 
 
           select.addEventListener("input", () => {
-            console.log("event listener working on", select )
+            console.log("event listener working on", select)
           })
 
           select.dispatchEvent(new Event('input', { bubbles: true }));
@@ -1834,7 +1834,7 @@
 
 
 
-//Same with other style
+      //Same with other style
 
       const baseSelector2 = '.mytextareaclass2';
       const themedSelector2 = '.default-backgrounds .mytextareaclass2';
