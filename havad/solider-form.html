@@ -635,7 +635,7 @@
               <div>__________</div>
 
               <div id="samkhut-wrapper" class="class-6 class-11">
-                <input type="number" name="samkhut" class="wrapped-input">
+                <input type="number" name="samkhut" class="wrapped-input" dir="ltr">
               </div>
             </div>
 
@@ -1216,7 +1216,7 @@
                 <div>_____________</div>
 
                 <div id="commanderPhone-wrapper" class="class-6 class-11">
-                  <input pattern="\d{10}" name="commanderPhone" class="wrapped-input">
+                  <input pattern="\d{10}" name="commanderPhone" class="wrapped-input" dir="ltr">
                 </div>
               </div>
 
@@ -1438,7 +1438,7 @@
                 <div>_____________</div>
 
                 <div id="commander2Phone-wrapper" class="class-6 class-11">
-                  <input type="text" name="commander2Phone" pattern="\d{10}" class="wrapped-input">
+                  <input type="text" name="commander2Phone" pattern="\d{10}" class="wrapped-input" dir="ltr">
                 </div>
               </div>
 
@@ -1783,6 +1783,176 @@
       });
     }
 
+    //Generate a popu element! used for form validation
+    function genPopUp(...textRows) {
+      const svgNS = "http://www.w3.org/2000/svg";
+
+      viewBox = [0, 0, 170, 105]
+      // Create SVG element
+      const newEl = document.createElementNS(svgNS, "svg");
+      newEl.setAttribute("viewBox", viewBox.join(" ")); // 300x180 viewBox
+      newEl.setAttribute("xmlns", svgNS);
+
+      newEl.style.width = "100%"
+      newEl.style.height = "100%"
+
+      // Create the path element
+      const path = document.createElementNS(svgNS, "path");
+      path.setAttribute("d", `
+            M20,100
+            h140
+            a10,10 0 0 0 10,-10
+            v-50
+            a10,10 0 0 0 -10,-10
+            h-40
+            l20,-20
+            -30,20
+            h-90
+            a10,10 0 0 0 -10,10
+            v50
+            a10,10 0 0 0 10,10
+            z`);
+
+      path.setAttribute("fill", "#ffffff");
+      path.setAttribute("stroke", "#000000");
+      path.setAttribute("stroke-width", "2");
+
+      // newEl.style.height
+
+      // Create the <text> element
+      const text = document.createElementNS(svgNS, "text");
+      const fontSize = 5
+      text.setAttribute("font-size", fontSize);
+      text.setAttribute("x", "85");
+      text.setAttribute("y", viewBox[3] / 2 - fontSize / 2 - textRows.length * fontSize * 1.2);
+
+      text.setAttribute("fill", "red");
+      text.setAttribute("text-anchor", "middle");
+      text.setAttribute("dominant-baseline", "middle");
+
+
+      //dy is the differnece in ys between tspan inside an svg text. --> 1.2 * font size
+      let dy = 1.2
+      for (const textRow of textRows) {
+        const tspan = document.createElementNS(svgNS, "tspan");
+        tspan.setAttribute("x", "85");
+        tspan.setAttribute("dy", String(dy) + "em");
+        tspan.textContent = textRow; // add text content
+        text.appendChild(tspan);
+
+      }
+
+
+      // Append <tspan> elements to <text>
+
+
+      // // Set the text content
+
+      // Append path to SVG
+      newEl.appendChild(path);
+
+      // Append text to SVG
+      newEl.appendChild(text);
+
+      newElWrapper = document.createElement("div")
+      newElWrapper.style.position = "absolute";
+      newElWrapper.style.top = "0";
+      newElWrapper.style.right = "40%"; // Position it at the bottom-right corner
+      newElWrapper.style.width = "240px"; // Width of the SVG element
+      newElWrapper.style.height = "150px"; // Height of the SVG element
+      // newElWrapper.style.backgroundColor = "lightblue"; // Just to see the background
+      newElWrapper.style.zIndex = "1"
+
+      newElWrapper.appendChild(newEl)
+
+      // newElWrapperCopy = newElWrapper.cloneNode(true)
+
+      return newElWrapper
+
+    }
+
+    //Handle an empty input element. get the input wrapper.
+    //  add the popup to it. add event listeners to close it
+    //If it is required, return true
+    function handleEmptyInput(inputEl) {
+
+      const inputWrapper = document.getElementById(inputEl.name + "-wrapper")
+      console.log("inputEl", inputEl, "inputWrapper", inputWrapper)
+
+      if (inputWrapper) {
+
+        //Generate popup
+        const popUpWrapper = genPopUp("שדה זה הוא", "שדה חובה")
+
+        //append the popup to the input wrapper so it can be placed relative to the inputWrapper(thus the input)
+        inputWrapper.appendChild(popUpWrapper)
+
+        const eventListener = () => {
+          popUpWrapper.remove() //If exists(safe function), remove
+        }
+
+
+        // All inputs with shared name as our empty input - realistically only that input unless
+        // other checkboxes in case we add the event listener to all checkboxes 
+        document.querySelectorAll(`input[name="${inputEl.name}"], select[name="${inputEl.name}"], textarea[name="${inputEl.name}"]`)
+          .forEach(el => {
+            el.addEventListener('input', eventListener);
+            el.addEventListener('change', eventListener);
+          });
+
+        inputWrapper.addEventListener("click", eventListener)
+        //the input wrapper which includes both popup and the input(/s) 
+        // itself(themselves in case of checkbox) is here.
+
+
+        document.getElementById("feedback-form").addEventListener(
+          "submit", (e) => {
+            popUpWrapper.remove() // Remove popup after submit, new ones will be created
+            // e.stopPropagation()
+            // e.preventDefault()
+          }, true
+        )
+
+        return false
+
+      }
+
+      else {
+        console.log("input doesnt have wrapper parent - so it is not required!!!")
+        return true
+      }
+
+    }
+
+    //Checks if any input that is required(parent has certain parent class - wrapper)
+    function handleEmptyInputs() {
+
+      const form = document.getElementById('feedback-form');
+
+
+      for (const el of form.elements) {
+
+        console.log("element: ", el.name, el.value)
+
+        if (
+          el.value == "" ||
+          (el.type == "checkbox"
+            && document.querySelectorAll(`input[name=${el.name}]:checked`).length == 0
+          )) {
+
+          if (!handleEmptyInput(el)) {
+            return false
+          }
+
+        }
+
+      }
+
+
+      return true
+
+    }
+
     //add styles that are repetitive using find and replace..
     function addStyles() {
       const baseSelector = '.mytextareaclass';
@@ -1868,9 +2038,6 @@
 `;
       document.head.appendChild(style2);
     }
-
-
-
 
     runStuff()
 
@@ -2517,7 +2684,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "div>__________<" + "/div> \n"
  + " \n"
  + "              <" + "div id=\"samkhut-wrapper\" class=\"class-6 class-11\"> \n"
- + "                <" + "input type=\"number\" name=\"samkhut\" class=\"wrapped-input\"> \n"
+ + "                <" + "input type=\"number\" name=\"samkhut\" class=\"wrapped-input\" dir=\"ltr\"> \n"
  + "              <" + "/div> \n"
  + "            <" + "/div> \n"
  + " \n"
@@ -3098,7 +3265,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "                <" + "div>_____________<" + "/div> \n"
  + " \n"
  + "                <" + "div id=\"commanderPhone-wrapper\" class=\"class-6 class-11\"> \n"
- + "                  <" + "input pattern=\"\d{10}\" name=\"commanderPhone\" class=\"wrapped-input\"> \n"
+ + "                  <" + "input pattern=\"\d{10}\" name=\"commanderPhone\" class=\"wrapped-input\" dir=\"ltr\"> \n"
  + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + " \n"
@@ -3320,7 +3487,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "                <" + "div>_____________<" + "/div> \n"
  + " \n"
  + "                <" + "div id=\"commander2Phone-wrapper\" class=\"class-6 class-11\"> \n"
- + "                  <" + "input type=\"text\" name=\"commander2Phone\" pattern=\"\d{10}\" class=\"wrapped-input\"> \n"
+ + "                  <" + "input type=\"text\" name=\"commander2Phone\" pattern=\"\d{10}\" class=\"wrapped-input\" dir=\"ltr\"> \n"
  + "                <" + "/div> \n"
  + "              <" + "/div> \n"
  + " \n"
@@ -3665,6 +3832,176 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      }); \n"
  + "    } \n"
  + " \n"
+ + "    //Generate a popu element! used for form validation \n"
+ + "    function genPopUp(...textRows) { \n"
+ + "      const svgNS = \"http://www.w3.org/2000/svg\"; \n"
+ + " \n"
+ + "      viewBox = [0, 0, 170, 105] \n"
+ + "      // Create SVG element \n"
+ + "      const newEl = document.createElementNS(svgNS, \"svg\"); \n"
+ + "      newEl.setAttribute(\"viewBox\", viewBox.join(\" \")); // 300x180 viewBox \n"
+ + "      newEl.setAttribute(\"xmlns\", svgNS); \n"
+ + " \n"
+ + "      newEl.style.width = \"100%\" \n"
+ + "      newEl.style.height = \"100%\" \n"
+ + " \n"
+ + "      // Create the path element \n"
+ + "      const path = document.createElementNS(svgNS, \"path\"); \n"
+ + "      path.setAttribute(\"d\", ` \n"
+ + "            M20,100 \n"
+ + "            h140 \n"
+ + "            a10,10 0 0 0 10,-10 \n"
+ + "            v-50 \n"
+ + "            a10,10 0 0 0 -10,-10 \n"
+ + "            h-40 \n"
+ + "            l20,-20 \n"
+ + "            -30,20 \n"
+ + "            h-90 \n"
+ + "            a10,10 0 0 0 -10,10 \n"
+ + "            v50 \n"
+ + "            a10,10 0 0 0 10,10 \n"
+ + "            z`); \n"
+ + " \n"
+ + "      path.setAttribute(\"fill\", \"#ffffff\"); \n"
+ + "      path.setAttribute(\"stroke\", \"#000000\"); \n"
+ + "      path.setAttribute(\"stroke-width\", \"2\"); \n"
+ + " \n"
+ + "      // newEl.style.height \n"
+ + " \n"
+ + "      // Create the <" + "text> element \n"
+ + "      const text = document.createElementNS(svgNS, \"text\"); \n"
+ + "      const fontSize = 5 \n"
+ + "      text.setAttribute(\"font-size\", fontSize); \n"
+ + "      text.setAttribute(\"x\", \"85\"); \n"
+ + "      text.setAttribute(\"y\", viewBox[3] / 2 - fontSize / 2 - textRows.length * fontSize * 1.2); \n"
+ + " \n"
+ + "      text.setAttribute(\"fill\", \"red\"); \n"
+ + "      text.setAttribute(\"text-anchor\", \"middle\"); \n"
+ + "      text.setAttribute(\"dominant-baseline\", \"middle\"); \n"
+ + " \n"
+ + " \n"
+ + "      //dy is the differnece in ys between tspan inside an svg text. --> 1.2 * font size \n"
+ + "      let dy = 1.2 \n"
+ + "      for (const textRow of textRows) { \n"
+ + "        const tspan = document.createElementNS(svgNS, \"tspan\"); \n"
+ + "        tspan.setAttribute(\"x\", \"85\"); \n"
+ + "        tspan.setAttribute(\"dy\", String(dy) + \"em\"); \n"
+ + "        tspan.textContent = textRow; // add text content \n"
+ + "        text.appendChild(tspan); \n"
+ + " \n"
+ + "      } \n"
+ + " \n"
+ + " \n"
+ + "      // Append <" + "tspan> elements to <" + "text> \n"
+ + " \n"
+ + " \n"
+ + "      // // Set the text content \n"
+ + " \n"
+ + "      // Append path to SVG \n"
+ + "      newEl.appendChild(path); \n"
+ + " \n"
+ + "      // Append text to SVG \n"
+ + "      newEl.appendChild(text); \n"
+ + " \n"
+ + "      newElWrapper = document.createElement(\"div\") \n"
+ + "      newElWrapper.style.position = \"absolute\"; \n"
+ + "      newElWrapper.style.top = \"0\"; \n"
+ + "      newElWrapper.style.right = \"40%\"; // Position it at the bottom-right corner \n"
+ + "      newElWrapper.style.width = \"240px\"; // Width of the SVG element \n"
+ + "      newElWrapper.style.height = \"150px\"; // Height of the SVG element \n"
+ + "      // newElWrapper.style.backgroundColor = \"lightblue\"; // Just to see the background \n"
+ + "      newElWrapper.style.zIndex = \"1\" \n"
+ + " \n"
+ + "      newElWrapper.appendChild(newEl) \n"
+ + " \n"
+ + "      // newElWrapperCopy = newElWrapper.cloneNode(true) \n"
+ + " \n"
+ + "      return newElWrapper \n"
+ + " \n"
+ + "    } \n"
+ + " \n"
+ + "    //Handle an empty input element. get the input wrapper. \n"
+ + "    //  add the popup to it. add event listeners to close it \n"
+ + "    //If it is required, return true \n"
+ + "    function handleEmptyInput(inputEl) { \n"
+ + " \n"
+ + "      const inputWrapper = document.getElementById(inputEl.name + \"-wrapper\") \n"
+ + "      console.log(\"inputEl\", inputEl, \"inputWrapper\", inputWrapper) \n"
+ + " \n"
+ + "      if (inputWrapper) { \n"
+ + " \n"
+ + "        //Generate popup \n"
+ + "        const popUpWrapper = genPopUp(\"שדה זה הוא\", \"שדה חובה\") \n"
+ + " \n"
+ + "        //append the popup to the input wrapper so it can be placed relative to the inputWrapper(thus the input) \n"
+ + "        inputWrapper.appendChild(popUpWrapper) \n"
+ + " \n"
+ + "        const eventListener = () => { \n"
+ + "          popUpWrapper.remove() //If exists(safe function), remove \n"
+ + "        } \n"
+ + " \n"
+ + " \n"
+ + "        // All inputs with shared name as our empty input - realistically only that input unless \n"
+ + "        // other checkboxes in case we add the event listener to all checkboxes  \n"
+ + "        document.querySelectorAll(`input[name=\"${inputEl.name}\"], select[name=\"${inputEl.name}\"], textarea[name=\"${inputEl.name}\"]`) \n"
+ + "          .forEach(el => { \n"
+ + "            el.addEventListener('input', eventListener); \n"
+ + "            el.addEventListener('change', eventListener); \n"
+ + "          }); \n"
+ + " \n"
+ + "        inputWrapper.addEventListener(\"click\", eventListener) \n"
+ + "        //the input wrapper which includes both popup and the input(/s)  \n"
+ + "        // itself(themselves in case of checkbox) is here. \n"
+ + " \n"
+ + " \n"
+ + "        document.getElementById(\"feedback-form\").addEventListener( \n"
+ + "          \"submit\", (e) => { \n"
+ + "            popUpWrapper.remove() // Remove popup after submit, new ones will be created \n"
+ + "            // e.stopPropagation() \n"
+ + "            // e.preventDefault() \n"
+ + "          }, true \n"
+ + "        ) \n"
+ + " \n"
+ + "        return false \n"
+ + " \n"
+ + "      } \n"
+ + " \n"
+ + "      else { \n"
+ + "        console.log(\"input doesnt have wrapper parent - so it is not required!!!\") \n"
+ + "        return true \n"
+ + "      } \n"
+ + " \n"
+ + "    } \n"
+ + " \n"
+ + "    //Checks if any input that is required(parent has certain parent class - wrapper) \n"
+ + "    function handleEmptyInputs() { \n"
+ + " \n"
+ + "      const form = document.getElementById('feedback-form'); \n"
+ + " \n"
+ + " \n"
+ + "      for (const el of form.elements) { \n"
+ + " \n"
+ + "        console.log(\"element: \", el.name, el.value) \n"
+ + " \n"
+ + "        if ( \n"
+ + "          el.value == \"\" || \n"
+ + "          (el.type == \"checkbox\" \n"
+ + "            && document.querySelectorAll(`input[name=${el.name}]:checked`).length == 0 \n"
+ + "          )) { \n"
+ + " \n"
+ + "          if (!handleEmptyInput(el)) { \n"
+ + "            return false \n"
+ + "          } \n"
+ + " \n"
+ + "        } \n"
+ + " \n"
+ + "      } \n"
+ + " \n"
+ + " \n"
+ + "      return true \n"
+ + " \n"
+ + "    } \n"
+ + " \n"
  + "    //add styles that are repetitive using find and replace.. \n"
  + "    function addStyles() { \n"
  + "      const baseSelector = '.mytextareaclass'; \n"
@@ -3751,9 +4088,6 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      document.head.appendChild(style2); \n"
  + "    } \n"
  + " \n"
- + " \n"
- + " \n"
- + " \n"
  + "    runStuff() \n"
  + " \n"
  + " \n"
@@ -3764,173 +4098,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + " \n"
  + "<" + "/html> \n"
 ;
-//Generate a popu element! used for form validation
-function genPopUp(...textRows) {
-    const svgNS = "http://www.w3.org/2000/svg";
 
-    viewBox = [0, 0, 170, 105]
-    // Create SVG element
-    const newEl = document.createElementNS(svgNS, "svg");
-    newEl.setAttribute("viewBox", viewBox.join(" ")); // 300x180 viewBox
-    newEl.setAttribute("xmlns", svgNS);
-
-    newEl.style.width = "100%"
-    newEl.style.height = "100%"
-
-    // Create the path element
-    const path = document.createElementNS(svgNS, "path");
-    path.setAttribute("d", `
-            M20,100
-            h140
-            a10,10 0 0 0 10,-10
-            v-50
-            a10,10 0 0 0 -10,-10
-            h-40
-            l20,-20
-            -30,20
-            h-90
-            a10,10 0 0 0 -10,10
-            v50
-            a10,10 0 0 0 10,10
-            z`);
-
-    path.setAttribute("fill", "#ffffff");
-    path.setAttribute("stroke", "#000000");
-    path.setAttribute("stroke-width", "2");
-
-
-    // Create the <text> element
-    const text = document.createElementNS(svgNS, "text");
-    text.setAttribute("x", "85");
-    text.setAttribute("y", "52.5");
-    text.setAttribute("font-size", "5");
-    text.setAttribute("fill", "red");
-    text.setAttribute("text-anchor", "middle");
-    text.setAttribute("dominant-baseline", "middle");
-
-
-    //dy is the differnece in ys between tspan inside an svg text. increase by 1.2em each row
-    let dy = 0
-    for (const textRow of textRows) {
-        const tspan = document.createElementNS(svgNS, "tspan");
-        tspan.setAttribute("x", "85");
-        tspan.setAttribute("dy", String(dy) + "em");
-        tspan.textContent = textRow; // add text content
-        text.appendChild(tspan);
-
-        dy+=1.2
-    }
-
-
-    // Append <tspan> elements to <text>
-
-
-    // // Set the text content
-
-    // Append path to SVG
-    newEl.appendChild(path);
-
-    // Append text to SVG
-    newEl.appendChild(text);
-
-    newElWrapper = document.createElement("div")
-    newElWrapper.style.position = "absolute";
-    newElWrapper.style.top = "0";
-    newElWrapper.style.right = "40%"; // Position it at the bottom-right corner
-    newElWrapper.style.width = "240px"; // Width of the SVG element
-    newElWrapper.style.height = "150px"; // Height of the SVG element
-    // newElWrapper.style.backgroundColor = "lightblue"; // Just to see the background
-    newElWrapper.style.zIndex = "1"
-
-    newElWrapper.appendChild(newEl)
-
-    // newElWrapperCopy = newElWrapper.cloneNode(true)
-
-    return newElWrapper
-
-}
-
-//Handle an empty input element. get the input wrapper.
-//  add the popup to it. add event listeners to close it
-//If it is required, return true
-function handleEmptyInput(inputEl) {
-
-    const inputWrapper = document.getElementById(inputEl.name + "-wrapper")
-    console.log("inputEl", inputEl, "inputWrapper", inputWrapper)
-
-    if (inputWrapper) {
-
-        //Generate popup
-        const popUpWrapper = genPopUp("שדה זה הוא", "שדה חובה")
-
-        //append the popup to the input wrapper so it can be placed relative to the inputWrapper(thus the input)
-        inputWrapper.appendChild(popUpWrapper)
-
-        const eventListener = () => {
-            popUpWrapper.remove() //If exists(safe function), remove
-        }
-
-
-        // All inputs with shared name as our empty input - realistically only that input unless
-        // other checkboxes in case we add the event listener to all checkboxes 
-        document.querySelectorAll(`input[name="${inputEl.name}"], select[name="${inputEl.name}"], textarea[name="${inputEl.name}"]`)
-            .forEach(el => {
-                el.addEventListener('input', eventListener);
-                el.addEventListener('change', eventListener);
-            });
-
-        inputWrapper.addEventListener("click", eventListener)
-        //the input wrapper which includes both popup and the input(/s) 
-        // itself(themselves in case of checkbox) is here.
-
-
-        document.getElementById("feedback-form").addEventListener(
-            "submit", (e) => {
-                popUpWrapper.remove() // Remove popup after submit, new ones will be created
-                // e.stopPropagation()
-                // e.preventDefault()
-            }, true
-        )
-
-        return false
-
-    }
-
-    else {
-        console.log("input doesnt have wrapper parent - so it is not required!!!")
-        return true
-    }
-
-}
-
-//Checks if any input that is required(parent has certain parent class - wrapper)
-function handleEmptyInputs() {
-
-    const form = document.getElementById('feedback-form');
-
-
-    for (const el of form.elements) {
-
-        console.log("element: ", el.name, el.value)
-
-        if (
-            el.value == "" ||
-            (el.type == "checkbox"
-                && document.querySelectorAll(`input[name=${el.name}]:checked`).length == 0
-            )) {
-
-            if (!handleEmptyInput(el)) {
-                return false
-            }
-
-        }
-
-    }
-
-
-    return true
-
-}
 
 function createReadOnlyFormForDownload() {
 
@@ -3993,20 +4161,12 @@ function createReadOnlyFormForDownload() {
     URL.revokeObjectURL(a.href);
 }
 
-
-// שליחת הטופס במייל
-function submitEventHandler(e) {
-
-    e.preventDefault() //Ignore submit default
-
-    // if (!handleEmptyInputs()) { //If empty input - return...
-    //     return false
-    // }
+function validateCommanderPhonesNotSame(){
 
     const formData = new FormData(form);
 
     if( formData.get('commanderPhone')  == formData.get('commander2Phone')  ) {
-        const popUpWrapper = genPopUp("מהמפקד העקיף", "להיות איש קשר שונה", "על המפקד הישיר");
+        const popUpWrapper = genPopUp("על המפקד הישיר", "להיות איש קשר שונה", "מהמפקד העקיף");
         document.getElementById("commander2Phone-wrapper").appendChild(popUpWrapper)
 
         const eListener = () => {
@@ -4018,6 +4178,24 @@ function submitEventHandler(e) {
         document.getElementById("commander2Phone").addEventListener("change", eListener)
         form.addEventListener("submit", eListener)
         
+        return false
+    }
+
+    return true
+
+}
+
+
+// שליחת הטופס במייל
+function submitEventHandler(e) {
+
+    e.preventDefault() //Ignore submit default
+
+
+    if(
+         !handleEmptyInputs() ||
+           !validateCommanderPhonesNotSame() ){
+        return false
     }
 
     createReadOnlyFormForDownload() //Create the form for download
