@@ -1,58 +1,90 @@
 import pytest
 from fastapi.testclient import TestClient 
 from rest_test import app, Post, ReturnPost, settings, get_session, Base
-from sqlalchemy import create_engine, text
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, text, inspect
+from sqlalchemy.orm import sessionmaker, Session
 import random
 
-testEngine = create_engine("mysql+pymysql://ruz:" +  settings.mysql_pass + "@localhost:3306/db_test" 
-                    #    , echo=True
-                       )
-
-TestSessionLocal = sessionmaker( testEngine )
 
 
-@pytest.fixture(scope="session")
-def session():
+def create_db():
+    
+    eng = create_engine("mysql+pymysql://ruz:" +  settings.mysql_pass + "@localhost:3306/")
+
+    with eng.connect() as conn:
+        try:
+            conn.execute( text('create database ' + testDBName) )
+        except:
+            print("create database failed")
+            
+            
+            
+            
+          
+testDBName = "db_test"
+
+create_db()
+testEngine = create_engine("mysql+pymysql://ruz:" +  settings.mysql_pass + "@localhost:3306/" + testDBName 
+                    ,  pool_pre_ping=True  # checks if connection is alive before using it 
+                    )
+
+# inspector = inspect(testEngine)  
+
+
+def drop_and_recreate_db():
+    eng = create_engine("mysql+pymysql://ruz:" +  settings.mysql_pass + "@localhost:3306/")
+    with eng.connect() as conn:
+        try:
+            conn.execute( text('drop database ' + testDBName) )
+        except:
+            raise Exception("drop database failed...")
         
-    s = TestSessionLocal()
+        try:
+            conn.execute( text('create database ' + testDBName) )
+        except:
+            raise Exception("create database failed...")
+
+
+@pytest.fixture
+def session():
+    
+    
+    drop_and_recreate_db()
+    Base.metadata.create_all(bind=testEngine)
+    
+    s = Session(bind=testEngine)
 
     try: 
         yield s
     finally:
+        
         s.close()
+        testEngine.dispose()
+        
+        
+        
         
 def override_get_session():
         
-    s = TestSessionLocal()
+    s = Session(bind=testEngine)
 
     try: 
         yield s
     finally:
+        # print("CLOSING THE OVERRIDE GET SESSION...")
         s.close()
+   
 
-
-# Base.metadata.drop_all(testEngine)
-Base.metadata.create_all(testEngine)
 app.dependency_overrides[get_session] = override_get_session
 
+
 @pytest.fixture
-def anotherSession():
-        
-    s = TestSessionLocal()
-
-    try: 
-        yield s
-    finally:
-        s.close()
-
-@pytest.fixture(scope="session")
 def client(session):  
           
     return TestClient(app)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def example_post_id(session):
     id = session.execute(text("insert into posts(title, con) values('my title 2 :)', 'contents') ")).lastrowid
     
@@ -84,13 +116,13 @@ class CreateUser():
         return self.password_from_request
     
 
-@pytest.fixture( scope = "session")
+@pytest.fixture
 def create_users( client ):
     
     return [ CreateUser( client, "example" + str(str(random.randint(100, 10000000)) ) + "@email.com" , "password"),
              CreateUser( client, "example" + str(str(random.randint(100, 10000000)) ) + "@email.com" , "password") ]
 
-@pytest.fixture( scope = "session")
+@pytest.fixture
 def log_in_responses_users( client, create_users ):
         
     res = list(map( lambda create_user :  client.post("/login", data={"username" : create_user.get_email_from_response()
@@ -102,7 +134,7 @@ def log_in_responses_users( client, create_users ):
     return res
 
 
-@pytest.fixture( scope = "session" )
+@pytest.fixture
 def authorized_clients( log_in_responses_users):
             
     def log_in_response_to_authorized_client(log_in_response_user):
@@ -117,7 +149,7 @@ def authorized_clients( log_in_responses_users):
 
 
 
-@pytest.fixture( scope="session")
+@pytest.fixture
 def create_posts(authorized_clients):
     
     
