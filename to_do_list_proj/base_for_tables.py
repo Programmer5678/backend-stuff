@@ -10,3 +10,11 @@ class Items(Base) :
     
     id : Mapped[int] = mapped_column( Integer, primary_key=True, autoincrement=True )
     content : Mapped[str] = mapped_column( String(100), nullable=False )
+    
+    
+class Users(Base):
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    username: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
+    password: Mapped[str] = mapped_column(String(100), nullable=False)

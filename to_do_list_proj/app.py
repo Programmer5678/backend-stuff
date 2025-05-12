@@ -8,26 +8,12 @@ from settings import settings
 
 from engine_and_session import get_session, engine
 from base_for_tables import Base
-
+from basemodels import NewItemRequest, getAllItemsResponse, Creds
 
 
 app = FastAPI()
     
 Base.metadata.create_all(engine)
-
-
-from pydantic import BaseModel
-from typing import List, Dict, Any
-
-class Item(BaseModel):
-    content: str
-
-class NewItemRequest ( Item ) : 
-    pass   
-    
-class getAllItemsResponse ( BaseModel ) :
-    # items : List[ NewItemRequest ]
-    items: List[Item]
     
 
 @app.post("/old", status_code=status.HTTP_201_CREATED)
@@ -51,7 +37,6 @@ def new_item( item : NewItemRequest , s : Session = Depends(get_session) ):
     print("password: ", settings.mysql_pass)
     
     
-    
     s.execute(text("INSERT INTO testing (content) VALUES (:content)"), {"content": item.content}) #insert the new item
     s.commit()
     
@@ -67,3 +52,27 @@ def get_all_items( s : Session = Depends(get_session) ):
     res = s.execute(text("select content from testing")).mappings().fetchall() #get all items in readable format
     
     return {"items" : res}
+
+
+
+def check_username_not_exist(username : str, s : Session):
+    return s.execute(text("select * from users where username = :username"), {"username" : username } ).fetchone()
+
+@app.post("/signup", status_code=status.HTTP_201_CREATED )
+def post_sign_up( creds : Creds,  s : Session = Depends(get_session)  ):
+    
+    
+    
+    if check_username_not_exist(creds.username , s):
+        raise HTTPException( status_code=status.HTTP_409_CONFLICT, detail="username already exists" )
+    
+    s.execute( text("insert into users(username, password) values(:username , :password) ") , creds.__dict__  )
+    s.commit()
+    
+    return { "username" : creds.username }
+
+
+
+
+
+    
