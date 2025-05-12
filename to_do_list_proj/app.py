@@ -17,13 +17,17 @@ Base.metadata.create_all(engine)
 
 
 from pydantic import BaseModel
-from typing import List, Any
+from typing import List, Dict, Any
 
-class NewItemRequest ( BaseModel ) : 
-    content : str    
+class Item(BaseModel):
+    content: str
+
+class NewItemRequest ( Item ) : 
+    pass   
     
 class getAllItemsResponse ( BaseModel ) :
-    items : Any
+    # items : List[ NewItemRequest ]
+    items: List[Item]
     
 
 @app.post("/old", status_code=status.HTTP_201_CREATED)
@@ -46,15 +50,20 @@ def new_item( item : NewItemRequest , s : Session = Depends(get_session) ):
         
     print("password: ", settings.mysql_pass)
     
+    
+    
     s.execute(text("INSERT INTO testing (content) VALUES (:content)"), {"content": item.content}) #insert the new item
     s.commit()
     
     return {"message" : "created!"}
 
-
-@app.get("/", response_model=getAllItemsResponse )
-def get_all_items( s : Session = Depends(get_session) ):
     
+    
+@app.get("/", 
+         response_model=getAllItemsResponse 
+         )
+def get_all_items( s : Session = Depends(get_session) ):
+        
     res = s.execute(text("select content from testing")).mappings().fetchall() #get all items in readable format
     
     return {"items" : res}
