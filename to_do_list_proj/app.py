@@ -8,18 +8,19 @@ from settings import settings
 
 from engine_and_session import get_session, engine
 from base_for_tables import Base
-from basemodels import NewItemRequest, getAllItemsResponse, Creds, LoginInput
+from basemodels import NewItemRequest, getAllItemsResponse, Creds, LoginInput, LoginReturn, SignUpReturn
 from validate_oauth_creds import validate_login_input
 from handle_fastapi_auth import decode_jwt_token, ecncrypt_jwt_token, pwd_context, oauth2_scheme
 
+from application_instance import app
 
-
-
-app = FastAPI()
-    
 # Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
     
+
+@app.get("/")
+def f():
+    return {"message": "hi"}
 
 @app.post("/old", status_code=status.HTTP_201_CREATED)
 def old_new_item( payload : dict = Body(...), s : Session = Depends(get_session) ):
@@ -34,9 +35,18 @@ def old_new_item( payload : dict = Body(...), s : Session = Depends(get_session)
     
     return {"message" : "created!"}
 
+@app.get("/main", 
+         response_model=getAllItemsResponse 
+         )
+def get_all_items( s : Session = Depends(get_session), jwt_token : str = Depends(oauth2_scheme) ):
+    
+    decoded = decode_jwt_token(jwt_token, settings.jwt_secret, "HS256")
+        
+    res = s.execute(text("select content from items where user_id = :id"), decoded ).mappings().fetchall() #get all items in readable format
+    
+    return {"items" : res}
 
-
-@app.post("/", status_code=status.HTTP_201_CREATED)
+@app.post("/main", status_code=status.HTTP_201_CREATED)
 def new_item( item : NewItemRequest , s : Session = Depends(get_session), jwt_token : str = Depends(oauth2_scheme)  ):
         
     # print("password: ", settings.mysql_pass)
@@ -49,25 +59,10 @@ def new_item( item : NewItemRequest , s : Session = Depends(get_session), jwt_to
     
     return {"message" : "created!"}
 
-    
-    
-@app.get("/", 
-         response_model=getAllItemsResponse 
-         )
-def get_all_items( s : Session = Depends(get_session), jwt_token : str = Depends(oauth2_scheme) ):
-    
-    decoded = decode_jwt_token(jwt_token, settings.jwt_secret, "HS256")
-        
-    res = s.execute(text("select content from items where user_id = :id"), decoded ).mappings().fetchall() #get all items in readable format
-    
-    return {"items" : res}
-
-
-
 def check_username_not_exist(username : str, s : Session):
     return s.execute(text("select * from users where username = :username"), {"username" : username } ).fetchone()
 
-@app.post("/signup", status_code=status.HTTP_201_CREATED )
+@app.post("/signup", status_code=status.HTTP_201_CREATED, response_model=SignUpReturn )
 def post_sign_up( creds : Creds,  s : Session = Depends(get_session)  ):
     
     
@@ -80,10 +75,7 @@ def post_sign_up( creds : Creds,  s : Session = Depends(get_session)  ):
     return { "username" : creds.username }
 
 
-
-    
-
-@app.post("/login")
+@app.post("/login", response_model=LoginReturn)
 def login(creds : LoginInput = Depends(validate_login_input),  s : Session = Depends(get_session) ):
     
     res = s.execute(text("select * from users where username = :username"), creds.__dict__ ).mappings().fetchone()
@@ -112,14 +104,8 @@ def ppp( jwt_token : str = Depends(oauth2_scheme) ) :
     decode_jwt_token(jwt_token, settings.jwt_secret, "HS256" )
     
     return {"data" : "protected"}
-
-
-
-
-
+    
     
 
 
 
-
-    
