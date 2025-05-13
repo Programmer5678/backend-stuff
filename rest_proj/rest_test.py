@@ -312,6 +312,9 @@ def get_user(id : int, s : Session = Depends(get_session) ):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail=f"no user with id = {id}" )
     
     return res
+
+
+
     
 @router.post("/login" , status_code=status.HTTP_201_CREATED, response_model=LoginOut)
 def login( user : OAuth2PasswordRequestForm = Depends() 

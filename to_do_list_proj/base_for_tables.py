@@ -1,5 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, ForeignKey
 
 class Base(DeclarativeBase) :
     pass
@@ -10,6 +10,7 @@ class Items(Base) :
     
     id : Mapped[int] = mapped_column( Integer, primary_key=True, autoincrement=True )
     content : Mapped[str] = mapped_column( String(100), nullable=False )
+    user_id: Mapped[int] = mapped_column(Integer , ForeignKey("users.id"), nullable=False)
     
     
 class Users(Base):
