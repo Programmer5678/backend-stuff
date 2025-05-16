@@ -1,2 +1,2 @@
-username_for_login_test = "testuser"
+username_for_login_test = "testUser"
 password_for_login_test = "testpassword"

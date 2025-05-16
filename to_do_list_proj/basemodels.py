@@ -2,6 +2,8 @@
 from pydantic import BaseModel, Field
 from typing import List, Dict, Any, Literal
 
+CREDS_MIN_LENGTH = 4
+
 class Item(BaseModel):
     content: str
 
@@ -13,14 +15,13 @@ class GetAllItemsResponse ( BaseModel ) :
     items: List[Item]
     
     
-    
 class Creds ( BaseModel ) :
-    username : str = Field(..., min_length = 4)
-    password : str = Field(..., min_length = 4)
+    username : str = Field(..., min_length = CREDS_MIN_LENGTH)
+    password : str = Field(..., min_length = CREDS_MIN_LENGTH)
     
 class LoginInput( BaseModel ) :
-    username : str = Field(..., min_length = 1)
-    password : str = Field(..., min_length = 1)
+    username : str = Field(..., min_length = CREDS_MIN_LENGTH)
+    password : str = Field(..., min_length = CREDS_MIN_LENGTH)
     
     
 class LoginReturn( BaseModel ):

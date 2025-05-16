@@ -18,6 +18,37 @@ def test_login_one(login_response):
     assert LoginReturn(**login_response.json())
     
     
+    
+#pass in wrong credentials
+@pytest.mark.parametrize( "username , password", [ (random_string(), random_string()),
+                                                  ("usernaminami", "password"),
+                                                  (username_for_login_test , random_string()),
+                                                  (random_string(), password_for_login_test ),
+                                                  (username_for_login_test.upper(), password_for_login_test),
+                                                  (username_for_login_test, password_for_login_test.upper())] ,
+                         ids=["case1", "case2", "case3", "case4", "case5", "case6"])
+def test_wrong_creds_login(created_user_id, client, username, password):
+    
+    response = client.post("/login", data={"username" : username, 
+                                           "password" : password } )
+    
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    
+    
+    
+#pass in unproccessable creds - they dont fit the format. too short etc.
+@pytest.mark.parametrize( "username , password", [ (random_string(), "siu"),
+                                                  ("", ""),
+                                                  ("uname" , "")] )
+def test_unporccessable_login(created_user_id, client, username, password):
+    
+    response = client.post("/login", data={"username" : username, 
+                                           "password" : password } )
+    
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    
+    
+    
 # test get all items by making sure each repsonse item is the same as appears on the db and
 # response format is as expected 
 def test_get_all_items(session, auth_client, created_user_id, created_items_ids):
@@ -28,7 +59,17 @@ def test_get_all_items(session, auth_client, created_user_id, created_items_ids)
     
     response = auth_client.get("/main")
     
-    for itemFromResponse in response.json()['items']: #loop through the items in the resposne
+    db_items = session.execute(
+    text("SELECT content FROM items WHERE user_id = :user_id"), 
+    {"user_id": created_user_id}
+).mappings().fetchall()
+
+    response_items = response.json()["items"]
+
+    assert len(db_items) == len(response_items)
+
+    for itemFromDB, itemFromResponse in zip(db_items, response_items):#loop through the items in the resposne
+
         itemFromDB = itemsFromDB.fetchone() #last item from database
         assert itemFromResponse['content'] == itemFromDB['content'] # assert a match between the 2
     
@@ -49,10 +90,14 @@ def test_post_new_item(session, auth_client, created_user_id, created_items_ids 
     assert response.status_code == status.HTTP_201_CREATED
     assert NewItemReturn( **response.json() )
     
-# test signing up with suername and password
-def test_signup(client, session):
-    username = "username hi"
-    password = "mypassy"
+    
+    
+# test signing up with username and password
+@pytest.mark.parametrize("username, password", [("username hi", "mypassy"),
+                                                ("username jew", password_for_login_test)])
+def test_signup(client, session, username, password):
+    # username = "username hi"
+    # password = "mypassy"
     response = client.post("/signup" , json={"username" : username, "password" : password}) 
     
     query_res = session.execute(text("select password from users where username = :username"),
@@ -61,8 +106,30 @@ def test_signup(client, session):
     assert len(query_res) == 1 #only one user with a given username!
     assert pwd_context.verify(password,  query_res[0]['password']) 
     # verify the password from users table of newly created user is correct
+    
     assert SignUpReturn(**response.json()) #validate format
     assert response.status_code == status.HTTP_201_CREATED     
+    
+    
+#username and passwords that are too short - those dont match format
+@pytest.mark.parametrize("username, password", [("", ""),
+                                                ("username jew", ""),
+                                                ("e", "e")])
+def test_invalid_signup(client, session, username, password):
+        
+    response = client.post("/signup" , json={"username" : username, "password" : password}) 
+    
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    
+    
+#should get 409 conflict when i pass in username thats already in the db
+def test_signup_username_already_exists(client, created_user_id):
+    response = client.post("signup", json={"username" : username_for_login_test , "password" : random_string() } )
+    
+    assert response.status_code == status.HTTP_409_CONFLICT
+
+    
+
     
     
     

@@ -56,12 +56,15 @@ def created_items_ids(session, created_user_id):
     
     return res
     
-    
+#the response after trying to login by posting to /login with the username and password 
+# added to db in created_user_id fixture 
 @pytest.fixture
 def login_response(created_user_id, client):
     return client.post("/login", data={"username" : username_for_login_test, 
                                            "password" : password_for_login_test } )
     
+#authorized client - logged in using the jwt token supplied by the login_response
+# - reponse to post login request
 @pytest.fixture
 def auth_client( login_response ):
     access_token = login_response.json()['access_token']

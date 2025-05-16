@@ -13,7 +13,7 @@ from handle_fastapi_auth import decode_jwt_token, ecncrypt_jwt_token, pwd_contex
 router_auth = APIRouter(  tags=["change tag in APIRouter to categorize docs"])
 
 def check_username_not_exist(username : str, s : Session):
-    return s.execute(text("select * from users where username = :username"), {"username" : username } ).fetchone()
+    return s.execute(text("select * from users where binary username = :username"), {"username" : username } ).fetchone()
 
 @router_auth.post("/signup", status_code=status.HTTP_201_CREATED, response_model=SignUpReturn )
 def post_sign_up( creds : Creds,  s : Session = Depends(get_session)  ):
@@ -31,7 +31,8 @@ def post_sign_up( creds : Creds,  s : Session = Depends(get_session)  ):
 @router_auth.post("/login", response_model=LoginReturn)
 def login(creds : LoginInput = Depends(validate_login_input),  s : Session = Depends(get_session) ):
     
-    res = s.execute(text("select * from users where username = :username"), creds.__dict__ ).mappings().fetchone()
+    print(f"select * from users where binary username = {creds.__dict__['username']}")
+    res = s.execute(text("select * from users where binary username = :username"), creds.__dict__ ).mappings().fetchone()
     
     
     if res and pwd_context.verify( creds.password , res['password'] ) :
