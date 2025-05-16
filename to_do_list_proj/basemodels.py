@@ -8,7 +8,7 @@ class Item(BaseModel):
 class NewItemRequest ( Item ) : 
     pass   
     
-class getAllItemsResponse ( BaseModel ) :
+class GetAllItemsResponse ( BaseModel ) :
     # items : List[ NewItemRequest ]
     items: List[Item]
     
@@ -30,4 +30,5 @@ class LoginReturn( BaseModel ):
 class SignUpReturn( BaseModel ):
     username : str
     
-# {"access_token" : token , "token_type" : "bearer" }
+class NewItemReturn(BaseModel):
+    message : Literal["created!"]

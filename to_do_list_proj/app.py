@@ -8,7 +8,7 @@ from settings import settings
 
 from engine_and_session import get_session, engine
 from base_for_tables import Base
-from basemodels import NewItemRequest, getAllItemsResponse
+from basemodels import NewItemRequest, GetAllItemsResponse, NewItemReturn
 from handle_fastapi_auth import decode_jwt_token, oauth2_scheme
 from application_instance import app
 
@@ -34,7 +34,7 @@ def old_new_item( payload : dict = Body(...), s : Session = Depends(get_session)
     return {"message" : "created!"}
 
 @app.get("/main", 
-         response_model=getAllItemsResponse 
+         response_model=GetAllItemsResponse 
          )
 def get_all_items( s : Session = Depends(get_session), jwt_token : str = Depends(oauth2_scheme) ):
     
@@ -44,7 +44,7 @@ def get_all_items( s : Session = Depends(get_session), jwt_token : str = Depends
     
     return {"items" : res}
 
-@app.post("/main", status_code=status.HTTP_201_CREATED)
+@app.post("/main", status_code=status.HTTP_201_CREATED, response_model=NewItemReturn)
 def new_item( item : NewItemRequest , s : Session = Depends(get_session), jwt_token : str = Depends(oauth2_scheme)  ):
         
     # print("password: ", settings.mysql_pass)
