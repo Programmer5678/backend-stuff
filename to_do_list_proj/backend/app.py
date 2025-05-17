@@ -15,6 +15,9 @@ from application_instance import app
 # Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
 
+from fastapi.staticfiles import StaticFiles
+app.mount("/joey", StaticFiles(directory="../frontend", html=True), name="Frontend" )
+
 
 @app.get("/")
 def g():
