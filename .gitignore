@@ -1,1 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Cache in subfolders
+**/__pycache__/
+**/*.py[cod]
+
+# Virtual environments
+venv/
+env/
+tdl_venv/
+**/venv/
+**/env/
+**/tdl_venv/
+
+# Environment variables
 .env
+**/.env
+
+# VS Code / IDEs
+.vscode/
+.idea/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Test/output/log files
+*.log
+*.sqlite3
+

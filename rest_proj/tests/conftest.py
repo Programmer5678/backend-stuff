@@ -71,7 +71,6 @@ def override_get_session():
     try: 
         yield s
     finally:
-        # print("CLOSING THE OVERRIDE GET SESSION...")
         s.close()
    
 

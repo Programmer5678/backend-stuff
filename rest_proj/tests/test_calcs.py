@@ -10,8 +10,6 @@ import re
 
 from tests.conftest import testEngine
 
-
-
 from rest_test import Base
 
 
@@ -20,7 +18,7 @@ from rest_test import Base
     
 def test_get_all_posts(client, example_post_id ) :
 
-    
+
     # print( client.get('/posts').json().get('data')  )
 
     assert list(filter(
