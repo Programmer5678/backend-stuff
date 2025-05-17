@@ -8,5 +8,5 @@ from base_for_tables import Base
 Base.metadata.create_all(engine)
 
 # Mount frontend files
-app.mount("/joey", StaticFiles(directory="../frontend", html=True), name="Frontend")
+app.mount("/", StaticFiles(directory="../frontend", html=True), name="Frontend")
 

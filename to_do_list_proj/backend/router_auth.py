@@ -52,7 +52,7 @@ def login(creds : LoginInput = Depends(validate_login_input),  s : Session = Dep
        
 
 
-@router_auth.get("/api/protected_test")
+@router_auth.get("/protected_test")
 def ppp( jwt_token : str = Depends(oauth2_scheme) ) :
     
     decode_jwt_token(jwt_token, settings.jwt_secret, "HS256" )
