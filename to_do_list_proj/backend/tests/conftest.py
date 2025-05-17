@@ -60,7 +60,7 @@ def created_items_ids(session, created_user_id):
 # added to db in created_user_id fixture 
 @pytest.fixture
 def login_response(created_user_id, client):
-    return client.post("/login", data={"username" : username_for_login_test, 
+    return client.post("/api/login", data={"username" : username_for_login_test, 
                                            "password" : password_for_login_test } )
     
 #authorized client - logged in using the jwt token supplied by the login_response

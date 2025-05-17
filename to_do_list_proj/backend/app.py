@@ -19,11 +19,11 @@ from fastapi.staticfiles import StaticFiles
 app.mount("/joey", StaticFiles(directory="../frontend", html=True), name="Frontend" )
 
 
-@app.get("/")
+@app.get("/api")
 def g():
     return {"message": "blah"}  
 
-@app.post("/old", status_code=status.HTTP_201_CREATED)
+@app.post("/api/old", status_code=status.HTTP_201_CREATED)
 def old_new_item( payload : dict = Body(...), s : Session = Depends(get_session) ):
         
     if( "content" not in payload.keys() ): #if content not in payload, unproccessable
@@ -36,7 +36,7 @@ def old_new_item( payload : dict = Body(...), s : Session = Depends(get_session)
     
     return {"message" : "created!"}
 
-@app.get("/main", 
+@app.get("/api/main", 
          response_model=GetAllItemsResponse 
          )
 def get_all_items( s : Session = Depends(get_session), jwt_token : str = Depends(oauth2_scheme) ):
@@ -47,7 +47,7 @@ def get_all_items( s : Session = Depends(get_session), jwt_token : str = Depends
     
     return {"items" : res}
 
-@app.post("/main", status_code=status.HTTP_201_CREATED, response_model=NewItemReturn)
+@app.post("/api/main", status_code=status.HTTP_201_CREATED, response_model=NewItemReturn)
 def new_item( item : NewItemRequest , s : Session = Depends(get_session), jwt_token : str = Depends(oauth2_scheme)  ):
         
     # print("password: ", settings.mysql_pass)

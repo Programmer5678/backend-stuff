@@ -7,7 +7,7 @@ from random_string import random_string
 from handle_fastapi_auth import pwd_context
 
 def test_get_root(client):
-    assert client.get("/").json()['message'] == 'blah'
+    assert client.get("/api").json()['message'] == 'blah'
     
 # this tests if the login even works, we should get a jwt_token. doesnt check if the jwt_token actually works
 def test_login_one(login_response):
@@ -29,7 +29,7 @@ def test_login_one(login_response):
                          ids=["case1", "case2", "case3", "case4", "case5", "case6"])
 def test_wrong_creds_login(created_user_id, client, username, password):
     
-    response = client.post("/login", data={"username" : username, 
+    response = client.post("/api/login", data={"username" : username, 
                                            "password" : password } )
     
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
@@ -42,7 +42,7 @@ def test_wrong_creds_login(created_user_id, client, username, password):
                                                   ("uname" , "")] )
 def test_unporccessable_login(created_user_id, client, username, password):
     
-    response = client.post("/login", data={"username" : username, 
+    response = client.post("/api/login", data={"username" : username, 
                                            "password" : password } )
     
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
@@ -57,7 +57,7 @@ def test_get_all_items(session, auth_client, created_user_id, created_items_ids)
         text("select content from items where user_id = :user_id"), 
         {"user_id" : created_user_id }).mappings() # the items belongig to user according do database query
     
-    response = auth_client.get("/main")
+    response = auth_client.get("/api/main")
     
     db_items = session.execute(
     text("SELECT content FROM items WHERE user_id = :user_id"), 
@@ -82,7 +82,7 @@ def test_post_new_item(session, auth_client, created_user_id, created_items_ids 
     
     content = random_string()
     
-    response = auth_client.post("/main", json={"content" : content})
+    response = auth_client.post("/api/main", json={"content" : content})
 
     assert len(session.execute(text("select * from items where user_id = :user_id and content = :content")
     , {"user_id" : created_user_id, "content" : content }).fetchall()) == 1
@@ -98,7 +98,7 @@ def test_post_new_item(session, auth_client, created_user_id, created_items_ids 
 def test_signup(client, session, username, password):
     # username = "username hi"
     # password = "mypassy"
-    response = client.post("/signup" , json={"username" : username, "password" : password}) 
+    response = client.post("/api/signup" , json={"username" : username, "password" : password}) 
     
     query_res = session.execute(text("select password from users where username = :username"),
                                 {"username" : username}).mappings().fetchall()
@@ -117,14 +117,14 @@ def test_signup(client, session, username, password):
                                                 ("e", "e")])
 def test_invalid_signup(client, session, username, password):
         
-    response = client.post("/signup" , json={"username" : username, "password" : password}) 
+    response = client.post("/api/signup" , json={"username" : username, "password" : password}) 
     
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
     
     
 #should get 409 conflict when i pass in username thats already in the db
 def test_signup_username_already_exists(client, created_user_id):
-    response = client.post("signup", json={"username" : username_for_login_test , "password" : random_string() } )
+    response = client.post("/api/signup", json={"username" : username_for_login_test , "password" : random_string() } )
     
     assert response.status_code == status.HTTP_409_CONFLICT
 

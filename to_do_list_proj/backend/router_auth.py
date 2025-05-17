@@ -15,7 +15,7 @@ router_auth = APIRouter(  tags=["change tag in APIRouter to categorize docs"])
 def check_username_not_exist(username : str, s : Session):
     return s.execute(text("select * from users where binary username = :username"), {"username" : username } ).fetchone()
 
-@router_auth.post("/signup", status_code=status.HTTP_201_CREATED, response_model=SignUpReturn )
+@router_auth.post("/api/signup", status_code=status.HTTP_201_CREATED, response_model=SignUpReturn )
 def post_sign_up( creds : Creds,  s : Session = Depends(get_session)  ):
     
     
@@ -28,7 +28,7 @@ def post_sign_up( creds : Creds,  s : Session = Depends(get_session)  ):
     return { "username" : creds.username }
 
 
-@router_auth.post("/login", response_model=LoginReturn)
+@router_auth.post("/api/login", response_model=LoginReturn)
 def login(creds : LoginInput = Depends(validate_login_input),  s : Session = Depends(get_session) ):
     
     print(f"select * from users where binary username = {creds.__dict__['username']}")
@@ -52,7 +52,7 @@ def login(creds : LoginInput = Depends(validate_login_input),  s : Session = Dep
        
 
 
-@router_auth.get("/protected_test")
+@router_auth.get("/api/protected_test")
 def ppp( jwt_token : str = Depends(oauth2_scheme) ) :
     
     decode_jwt_token(jwt_token, settings.jwt_secret, "HS256" )
