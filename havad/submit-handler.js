@@ -67,7 +67,8 @@ function validateCommanderPhonesNotSame(){
     const formData = new FormData(form);
 
     if( formData.get('commanderPhone')  == formData.get('commander2Phone')  ) {
-        const popUpWrapper = genPopUp("על המפקד הישיר", "להיות איש קשר שונה", "מהמפקד העקיף");
+        // const popUpWrapper = genPopUp("על המפקד הישיר", "להיות איש קשר שונה", "מהמפקד העקיף");
+        const popUpWrapper = genPopUp("\u05E2\u05DC \u05D4\u05DE\u05E4\u05E7\u05D3 \u05D4\u05D9\u05E9\u05D9\u05E8", "\u05DC\u05D4\u05D9\u05D5\u05EA \u05D0\u05D9\u05E9 \u05E7\u05E9\u05E8 \u05E9\u05D5\u05E0\u05D4", "\u05DE\u05D4\u05DE\u05E4\u05E7\u05D3 \u05D4\u05E2\u05E7\u05D9\u05E3");
         document.getElementById("commander2Phone-wrapper").appendChild(popUpWrapper)
 
         const eListener = () => {

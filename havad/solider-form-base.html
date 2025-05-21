@@ -1882,7 +1882,8 @@
       if (inputWrapper) {
 
         //Generate popup
-        const popUpWrapper = genPopUp("שדה זה הוא", "שדה חובה")
+        // const popUpWrapper = genPopUp("שדה זה הוא", "שדה חובה") 
+        const popUpWrapper = genPopUp("\u05E9\u05D3\u05D4 \u05D6\u05D4 \u05D4\u05D5\u05D0", "\u05E9\u05D3\u05D4 \u05D7\u05D5\u05D1\u05D4"); //encoded version
 
         //append the popup to the input wrapper so it can be placed relative to the inputWrapper(thus the input)
         inputWrapper.appendChild(popUpWrapper)
