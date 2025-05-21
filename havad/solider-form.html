@@ -620,7 +620,7 @@
           <label class="class-2">
             <span class="class-3"> תאריך:</span>
             <div class="class-4">
-              <div>__________</div>
+              <div>___________________</div>
 
               <div class="class-5 class-11" id="date-wrapper">
                 <input type="date" name="date" class="wrapped-input">
@@ -1882,7 +1882,8 @@
       if (inputWrapper) {
 
         //Generate popup
-        const popUpWrapper = genPopUp("שדה זה הוא", "שדה חובה")
+        // const popUpWrapper = genPopUp("שדה זה הוא", "שדה חובה") 
+        const popUpWrapper = genPopUp("\u05E9\u05D3\u05D4 \u05D6\u05D4 \u05D4\u05D5\u05D0", "\u05E9\u05D3\u05D4 \u05D7\u05D5\u05D1\u05D4"); //encoded version
 
         //append the popup to the input wrapper so it can be placed relative to the inputWrapper(thus the input)
         inputWrapper.appendChild(popUpWrapper)
@@ -2669,7 +2670,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "          <" + "label class=\"class-2\"> \n"
  + "            <" + "span class=\"class-3\"> תאריך:<" + "/span> \n"
  + "            <" + "div class=\"class-4\"> \n"
- + "              <" + "div>__________<" + "/div> \n"
+ + "              <" + "div>___________________<" + "/div> \n"
  + " \n"
  + "              <" + "div class=\"class-5 class-11\" id=\"date-wrapper\"> \n"
  + "                <" + "input type=\"date\" name=\"date\" class=\"wrapped-input\"> \n"
@@ -3931,7 +3932,8 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      if (inputWrapper) { \n"
  + " \n"
  + "        //Generate popup \n"
- + "        const popUpWrapper = genPopUp(\"שדה זה הוא\", \"שדה חובה\") \n"
+ + "        // const popUpWrapper = genPopUp(\"שדה זה הוא\", \"שדה חובה\")  \n"
+ + "        const popUpWrapper = genPopUp(\"\u05E9\u05D3\u05D4 \u05D6\u05D4 \u05D4\u05D5\u05D0\", \"\u05E9\u05D3\u05D4 \u05D7\u05D5\u05D1\u05D4\"); //encoded version \n"
  + " \n"
  + "        //append the popup to the input wrapper so it can be placed relative to the inputWrapper(thus the input) \n"
  + "        inputWrapper.appendChild(popUpWrapper) \n"
@@ -4166,7 +4168,8 @@ function validateCommanderPhonesNotSame(){
     const formData = new FormData(form);
 
     if( formData.get('commanderPhone')  == formData.get('commander2Phone')  ) {
-        const popUpWrapper = genPopUp("על המפקד הישיר", "להיות איש קשר שונה", "מהמפקד העקיף");
+        // const popUpWrapper = genPopUp("על המפקד הישיר", "להיות איש קשר שונה", "מהמפקד העקיף");
+        const popUpWrapper = genPopUp("\u05E2\u05DC \u05D4\u05DE\u05E4\u05E7\u05D3 \u05D4\u05D9\u05E9\u05D9\u05E8", "\u05DC\u05D4\u05D9\u05D5\u05EA \u05D0\u05D9\u05E9 \u05E7\u05E9\u05E8 \u05E9\u05D5\u05E0\u05D4", "\u05DE\u05D4\u05DE\u05E4\u05E7\u05D3 \u05D4\u05E2\u05E7\u05D9\u05E3");
         document.getElementById("commander2Phone-wrapper").appendChild(popUpWrapper)
 
         const eListener = () => {
