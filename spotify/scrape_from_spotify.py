@@ -13,8 +13,8 @@ def get_session_cookie():
 def scrape_from_spotify():
     
     # playlist_length = 754
-    playlist_length = 50
-    playlist_link = "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M?si=V2SBvVUBQk-uQFK0B4_m-g&nd=1&dlsi=e624af812a3042db"
+    # playlist_length = 50
+    playlist_link = "https://open.spotify.com/playlist/2UZk7JjJnbTut1w8fqs3JL"
     
     res = []
 
@@ -42,11 +42,15 @@ def scrape_from_spotify():
         page = context.new_page()
         
         page.goto(playlist_link) # goto the playlist!
-        page.locator("[data-testid='playlist-page'] >:nth-child(1) >:nth-child(1) >:nth-child(2) >:nth-child(4) ").evaluate("el => el.style.backgroundColor = 'orange' ")
+        
+        # page.wait_for_timeout(10000000)
+        # page.locator("[data-testid='playlist-page'] >:nth-child(1) >:nth-child(1) >:nth-child(2) >:nth-child(4) ").evaluate("el => el.style.backgroundColor = 'orange' ")
+        
 
         playlist_length = page.wait_for_function(
     r"""() => {
-        const q = document.querySelector("[data-testid='playlist-page'] > :nth-child(1) > :nth-child(1) > :nth-child(2) > :nth-child(4)");
+        const q = document.querySelector("[data-testid='playlist-page'] >:nth-child(1) ");
+        
         if (!q) return false;
 
         const descendants = q.querySelectorAll("*");
@@ -59,6 +63,8 @@ def scrape_from_spotify():
 
         return false;
     }""").json_value()
+        
+        print(playlist_length)
                 
         page.wait_for_selector("[data-testid='playlist-tracklist'] [aria-rowindex='2'] [data-encore-id='text']", timeout=10000 ) # wait for the the first text element to load        
         
