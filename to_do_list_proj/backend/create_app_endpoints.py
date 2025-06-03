@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends, Body
+from fastapi import APIRouter, HTTPException, status, Depends, Body, Response
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 from settings import settings
@@ -38,3 +38,9 @@ def new_item(item: NewItemRequest, s: Session = Depends(get_session), jwt_token:
               {"content": item.content, "user_id": user_id})
     s.commit()
     return {"message": "created!"}
+
+
+@router_main.get("/abraham")
+def func():
+    redirectUrl = "/anotherhtml.html"
+    return Response( status_code=status.HTTP_307_TEMPORARY_REDIRECT, headers={"Location" : redirectUrl } )
