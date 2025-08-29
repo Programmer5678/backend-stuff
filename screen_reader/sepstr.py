@@ -1,0 +1,17 @@
+def insert_sep_every_n(s, n=5, sep="█"):
+    return sep.join(s[i:i+n] for i in range(0, len(s), n))
+
+b64 = "cHJvdmlkZXRyb3BpY2Fsc2lsdmVyc3RlbXNzcHJpbmd3YW50cm9ja3l0b25ld29yc2VtZW5tb3ZpZWxhcmdlc3RheXN0YXJ0Y290dG9uc2lkZXNsb3RyaWdodHRydWNrcG9ldG91dGFib3Zlc3BlYWtjaGlja2VuZXh0cmFlYXJiZWhpbmRzaG9wcmVhc29uYWRkaXRpb25wb255YWNyb3NzaG91c2VncmFkdWFsbHl1c2VmdWxpZGVudGl0eWRyZXNzZGlzY292ZXJ5d29ya2VyY29tZm9ydGFibGVhYm91dG91dGxpbmVidXlzb2FwbGVuZ3RocmV2aWV3YmVjYW1lZnVubnlvZmZpY2lhbHN1bm9yaWdpbnN0YXJlZGNhcnBlcmNlbnRzb21lb25lcGxhbnNwbGl0cmluZ3Nob2VmbGF0cG9ja2V0cGVyZmVjdG9wZW5lZHVjYXRpb25wb3dlcmJyZWF0aGV0cmFpbHNoYXBlbW9kZWx2ZWdldGFibGVsb2FkdW5jbGVyZWxhdGVkYnJlYXRoaW5nbWlsbG9mZmljaWFsZHJhd2VhdGVubGl2ZWNvbnNpc3RzdHJlYW1ldmVucG91cm1lZGljaW5lcHJlc2lkZW50ZXF1YXRvcmludHJvZHVjZWR0aGFuc3dlZXRjZW50ZXJtYXNzcGljdHVyZWVuZW15Y29tcG9zZWRyZWNlbnRseXBhcnRzamFja3N0cmFuZ2VmcmVxdWVudGx5ZXhwbGFuYXRpb25oaW1zZWxmdGhyb3VnaG91dGNvZmZlZWJvbmVzdHJpcGluZGVwZW5kZW50bmVhcmVydHdpY2Vjb250cmFzdGRldGVybWluZWZyZWVkb21oYW5kaW50cm9kdWNlZGV2ZW50dWFsbHlmaW5kc2FsZW1hbnN0cmVhbWRpc2NvdmVyZnJlcXVlbnRseWxvY2F0aW9uZnJpZ2h0ZW5hZGRwYXJ0bHl3aGVuZXZlcmJhdHJlcGxhY2Vub3RuZWlnaGJvcnRob3Vzd2VwdHNlbGVjdGdyYWJiZWRiYWxsY2hhbmdldG9wdG95cGFnZWhlbHBlbGVwaGFudHNob3Ricm9rZWV4YWN0bHlhdXRvbW9iaWxlcmVsYXRlZGRpZXN1Z2FydHdlbnR5d2lsbGluZ3BhaW5vcmlnaW5hbG91ZHNoZWh1cnJpZWR0cmlhbmdsZWxpdmluZ3Rob3Vhbnlib2R5dGhlZXNwb3J0bWVjb21wYW55aGVpZ2h0ZXZpZGVuY2V0b3RhbGtuaWZlc3Vtc29sZGllcnNvZnRseWZpbGx0YWxlc3NvbWVib2R5aQ=="  
+candidates = [ "#", "(", ")"]
+
+
+res = ""
+n = 3
+
+m = 0
+for i in range(0, len(b64), n):
+    res += b64[i:i+n]
+    res += candidates[m % len(candidates) ]
+    m+=1
+    
+print(res)
