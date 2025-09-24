@@ -1,23 +1,23 @@
-SYNC_SYMBOLS = ['&', '$', '!', ',']
+# SYNC_SYMBOLS = ['&', '$', '!', ',']
 #  [ '&', '$', '<', '/']  
 TOTAL_EXPECTED_LEN = 63  # total expected length without syncs
 SYNC_GAP = 3  # number of data symbols between syncs
-ERASURE_CHAR = "*"
+ERASURE_CHAR = "^"
 
 DECODED_CHUNK_SIZE = 48  # 48 data symbols per block
 
 # Standard Base64 alphabet
-B64_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+# B64_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
-# Mapping: char -> number
-B64_TO_NUM = {ch: i for i, ch in enumerate(B64_ALPHABET)}
+# # Mapping: char -> number
+# B64_TO_NUM = {ch: i for i, ch in enumerate(B64_ALPHABET)}
 
-# print(B64_TO_NUM['r'])
+# # print(B64_TO_NUM['r'])
 
-# Mapping: number -> char
-NUM_TO_B64 = {i: ch for i, ch in enumerate(B64_ALPHABET)}
+# # Mapping: number -> char
+# NUM_TO_B64 = {i: ch for i, ch in enumerate(B64_ALPHABET)}
 
-SEP = "#"
+# SEP = "#"
 
 
 # Simple conservative map of common visual lookalikes -> ASCII
@@ -118,3 +118,8 @@ LOOKALIKE_MAP = {
     # "@": "a",  # common substitution
     "%" : "#"
 }
+
+
+SEP = "G"
+SYNC_SYMBOLS = ['E', 'R', 'H', '5'] 
+

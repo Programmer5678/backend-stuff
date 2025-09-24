@@ -5,25 +5,9 @@ import re
 import string
 from reedsolo import RSCodec, ReedSolomonError
 from constants import *
+from alternative_base64 import alt_b64decode, alt_b64encode, alternative_base64_char_to_num, num_to_alternative_base64_char
 
 
-
-# Helper functions
-def base64_char_to_num(ch):
-    
-    # print(B64_TO_NUM)
-    
-    # print( ord( ch ) )
-    
-    """Convert Base64 character to number (0-63)."""
-    return B64_TO_NUM[ch]
-
-def num_to_base64_char(num):
-    """Convert number (0-63) to Base64 character."""
-    if not (0 <= num < 64):
-        raise ValueError("Number must be in 0-63")
-    return NUM_TO_B64[num]
-    
     
     
 def remove_all_whitespace(s: str) -> str:
@@ -76,21 +60,24 @@ def remove_all_whitespace(s: str) -> str:
 
 
 
-def get_rsc():
-    return RSCodec(nsym=TOTAL_EXPECTED_LEN-DECODED_CHUNK_SIZE, c_exp=6)  # 15 parity symbols, GF(2^6)
+def get_rsc(decoded_chunk_size):
+    return RSCodec(nsym=TOTAL_EXPECTED_LEN-decoded_chunk_size, c_exp=6)  # 15 parity symbols, GF(2^6)
 
 def rs_encode_chunk(chunk):
     """
     Encodes a single chunk (up to 48 Base64 characters) using RS encoding and returns the encoded 63-character Base64 string.
     """
-    rsc = get_rsc()  # 15 parity symbols, GF(2^6)
+        
+    rsc = get_rsc( len(chunk) )  # 15 parity symbols, GF(2^6)
 
     # Convert each Base64 char to integer
-    chunk_nums = [ base64_char_to_num(ch) for ch in chunk] # convert to number between 0-63 so can be 
+    chunk_nums = [ alternative_base64_char_to_num(ch) for ch in chunk] # convert to number between 0-63 so can be 
     #coefficient of polyonomial over GF(64)
     encoded_chunk = rsc.encode(chunk_nums) # encode - get 64 values in GF(64). any correct 48 uniquely define it
     # though doesnt allow 64-48 errors - rather (64-48)/2 errors. because these are unknown errors. not ommision - could be misread. so need PGZ algo do find em
-    encoded_chunk_str = "".join( [ num_to_base64_char(ch) for ch in list( encoded_chunk ) ] ) #join the GF(64) vals as base64 chars
+    
+    # print( [ num_to_alternative_base64_char(ch) for ch in list( encoded_chunk ) ]  )
+    encoded_chunk_str = "".join( [ num_to_alternative_base64_char(ch) for ch in list( encoded_chunk ) ] ) #join the GF(64) vals as base64 chars
     
     return encoded_chunk_str
 
@@ -212,21 +199,21 @@ def rs_decode_chunk(e_chunk):
     
     ARBITRARY_NUM = 0  # arbitrary number to use for erasures
     
-    rsc = get_rsc()  # same parameters as encode
+    rsc =  get_rsc( DECODED_CHUNK_SIZE )  # same parameters as encode
     
     erase_pos = [i for i, ch in enumerate(e_chunk) if ch == ERASURE_CHAR]
     
     # Convert each Base64 char back to integer
-    e_chunk_nums = [ base64_char_to_num(ch) if ch != ERASURE_CHAR else ARBITRARY_NUM for ch in e_chunk]
+    e_chunk_nums = [ alternative_base64_char_to_num(ch) if ch != ERASURE_CHAR else ARBITRARY_NUM for ch in e_chunk]
     
     # RS decode expects bytes
     try: 
         decoded_nums = rsc.decode(e_chunk_nums, erase_pos = erase_pos)[0]
     except ReedSolomonError as e: 
-        raise Exception(f"error decoding {e_chunk}") from e
+        raise Exception(f"error in Reed Solomon decoding {e_chunk}") from e
     
     # Convert back to Base64 string
-    decoded_chunk_str = "".join( [ num_to_base64_char(n) for n in decoded_nums ] )
+    decoded_chunk_str = "".join( [ num_to_alternative_base64_char(n) for n in decoded_nums ] )
     
     return decoded_chunk_str
 
@@ -391,14 +378,18 @@ def battery_of_tests():
         
 #         decoded_b64.append( decode_chunk_str )
         
+        
+        
+        
+        
+        
+        
 
 #     # Return as a single string
 #     return "".join(decoded_b64)
-
-
 # cant handle deletions.inserts. might have to look towards sync strings, guessing delete position for small number of deletes/inserts - perhaps  2
 # https://www.cs.cmu.edu/~venkatg/teaching/au18-coding-theory/lec-scribes/insdel-coding.pdf
-def decode_str(encoded_str, encoded_file_name):
+def decode_str(encoded_str : str, encoded_file_name) -> str:
     """
     Reads an RS-encoded file (Base64 symbols separated by SEP), decodes it,
     and returns the original Base64 string.
@@ -432,20 +423,15 @@ def decode_str(encoded_str, encoded_file_name):
         
         decoded_b64.append( decode_chunk_str )
         
-
     # Return as a single string
     return "".join(decoded_b64)
 
-def decode_file(encoded_file):
-    """
-    Reads an RS-encoded file (Base64 symbols separated by SEP), decodes it,
-    and returns the original Base64 string.
-    """
-    # Read file
-    with open(encoded_file, "r") as f:
-        data = f.read()
-    
-    return decode_str(data, encoded_file)
+
+
+
+
+
+
 
 
 
@@ -476,72 +462,95 @@ def handle_split_chunk(content_cur, file_list, index, input_dir):
         
     return ""
 
-def decode_dir(input_dir):
-    
-    
-    
+
+
+
+def decode_file(input_file: str, output_file: str):
+    """
+    Read a single file, decode it, and write to output file.
+    """
+    with open(input_file, "r", encoding="utf-8") as f:
+        data = f.read()
+
+    decoded = alt_b64decode( decode_str(data, input_file).encode("ascii") )
+
+    with open(output_file, "wb") as f:
+        f.write( decoded )
+
+
+def decode_dir_content(input_dir: str) -> bytes:
+    """
+    Decode all files in a directory (assumes RS/Base64 + SEP encoding) and
+    return the decoded bytes.
+    """
     res_b64 = ""
-    file_list = os.listdir(input_dir)
-    file_list.sort()  # sort to ensure order is correct if files are named in a sequence manner
-    
-    for (index, fname) in enumerate(file_list):
-        
+    file_list = sorted(os.listdir(input_dir))  # sort to ensure order
+
+    for index, fname in enumerate(file_list):
         print(f"Start decoding file {index+1}/{len(file_list)}: {fname}")
-        
         fpath_cur = os.path.join(input_dir, fname)
-            
+
         with open(fpath_cur, "r", encoding="utf-8") as f:
             content_cur = remove_all_whitespace(f.read())
-            
-        main_part = content_cur.rsplit(SEP, 1)[0].split(SEP, 1)[1]  
-        # split once from the right and left  # we ignore the possibly incomplete chunk at the end or start of the file - handled above or below
-        
-        decoded = decode_str(main_part, fname)        
+
+        # Remove the first and last SEP wrappers
+        main_part = content_cur.rsplit(SEP, 1)[0].split(SEP, 1)[1]
+
+        # Decode the main part
+        decoded = decode_str(main_part, fname)
         res_b64 += decoded
-        
+
         print(f"Finished decoding file {index+1}/{len(file_list)}: {fname}")
-        
+
         # Handle chunk split between current and next file
         res_b64 += handle_split_chunk(content_cur, file_list, index, input_dir)
-        
-    return res_b64
+
+    # Finally decode Base64 to bytes
+    return alt_b64decode(res_b64.encode("ascii") )
+
+
+def decode_dir(input_dir: str, output_file: str):
+    """
+    Decode all files in a directory and write the fully decoded bytes to output file.
+    """
+    decoded_bytes = decode_dir_content(input_dir)
+
+    with open(output_file, "wb") as f:
+        f.write(decoded_bytes)
 
 
 
-def encode_file(input_file, output_file, needb64):
-    # Read input file as bytes
+def encode_data_to_str(data: bytes) -> str:
+    """
+    Encode raw bytes to the final encoded string with chunking and separators.
+    """
+    b64_data = alt_b64encode(data).decode("ascii")
+
+    encoded_chunks = []
+    for i in range(0, len(b64_data), DECODED_CHUNK_SIZE):
+        chunk = b64_data[i:i+DECODED_CHUNK_SIZE]
+        encoded_chunk_str = encode_chunk(chunk)
+        encoded_chunks.append(encoded_chunk_str)
+
+    # Join chunks with SEP - 3 SEP for redundancy, remove whitespaces
+    encoded_str = 3 * SEP + "".join((3 * SEP).join(encoded_chunks).split()) + 3 * SEP
+    return encoded_str
+
+
+def encode_file(input_file: str, output_file: str):
+    """
+    Read input file, encode it using encode_data_to_str, and write to output file.
+    """
     with open(input_file, "rb") as f:
         data = f.read()
 
-    # Convert to Base64 string (as bytes)
-    #actually i dont think we need this...
-    b64_data = (base64.b64encode(data) if needb64 else data).decode('ascii').strip(string.whitespace + "=")    
-    
-    # Why c_exp=6? for the same reason c_exp = 8 is default. 
-    # we transmit our data as 2^6 symbols unlike most data which is in bytes = 2^8. We fail or succeed a char as a whole or not at all. 
-    # so avoid one char fail for example 'c' being spread across 2 chars
-    chunk_size = 48  # 48 data symbols per block
+    encoded_str = encode_data_to_str(data)
 
-    encoded_chunks = []
-    for i in range(0, len(b64_data), chunk_size):
-        
-        chunk = b64_data[i:i+chunk_size] # get chunk
-        encoded_chunk_str = encode_chunk(chunk) # encode chunk
-        
-        encoded_chunks.append(encoded_chunk_str)
-        
-    # Join chunks with SEP - 3 SEP for redundancy
-    encoded_str = (
-        3*SEP
-        + "".join((3 * SEP).join(encoded_chunks).split())  # Remove all whitespaces
-        + 3*SEP
-    )
-        
     with open(output_file, "w") as f:
         f.write(encoded_str)
+
     
     
-    # print( decode_file(output_file) )
         
         
  

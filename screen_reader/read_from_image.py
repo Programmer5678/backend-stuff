@@ -84,7 +84,9 @@ def detect_text(path: str, check_english_chars) -> str:
     # print_low_conf_chars_with_alternatives(client.document_text_detection(image=image).full_text_annotation)    
     
     
-    def replace_low_conf_chars(full_text_annotation, threshold=0.55, replace_char=ERASURE_CHAR, do_print=True):
+    def replace_low_conf_chars(full_text_annotation, 
+                               threshold=0,
+                               replace_char=ERASURE_CHAR, do_print=True):
 
         result = []
 
