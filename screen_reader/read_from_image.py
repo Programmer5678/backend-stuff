@@ -5,6 +5,8 @@ from google.cloud import vision
 import string
 from constants import *
 
+from unidecode import unidecode
+
 def normalize_lookalikes(s: str) -> str:
     """
     Very simple char-by-char normalization: replace any character that appears
@@ -12,7 +14,7 @@ def normalize_lookalikes(s: str) -> str:
     """
     if not s:
         return s
-    return "".join(LOOKALIKE_MAP.get(ch, ch) for ch in s)
+    return "".join(LOOKALIKE_MAP.get(ch, ch) for ch in unidecode(s) )
 
 
 def highlight_non_base64(s: str) -> str:
@@ -22,7 +24,14 @@ def highlight_non_base64(s: str) -> str:
     Returns the modified string and prints the positions and characters.
     """
     
-    allowed_chars = string.ascii_letters + string.digits + "+/#" + string.whitespace
+    allowed_chars = (
+        ALTERNATIVE_BASE64_ALPHABET.decode("utf-8") +
+        "".join(SYNC_SYMBOLS) +
+        SEP 
+        + ERASURE_CHAR
+    )
+    
+    # string.ascii_letters + string.digits + "+/#" + string.whitespace
     
     result = []
     non_base64_chars = []
@@ -37,7 +46,7 @@ def highlight_non_base64(s: str) -> str:
             result.append(f"Char {repr(c)}")
             last = i + 1
             
-            non_base64_chars.append(c)
+            non_base64_chars.append( c )
             
     # Add the rest of the string
     if last < len(s):
@@ -47,6 +56,9 @@ def highlight_non_base64(s: str) -> str:
     success = len(non_base64_chars) == 0
     if not success:
         print("\n\n\n".join(result))
+    
+    
+    print("All wrongs: ",  [ (c, ord(c)) for c in non_base64_chars ] )
     
     return success
 
@@ -85,7 +97,7 @@ def detect_text(path: str, check_english_chars) -> str:
     
     
     def replace_low_conf_chars(full_text_annotation, 
-                               threshold=0,
+                               threshold=0, threshold_special=0.75, 
                                replace_char=ERASURE_CHAR, do_print=True):
 
         result = []
@@ -95,10 +107,12 @@ def detect_text(path: str, check_english_chars) -> str:
                 for paragraph in block.paragraphs:
                     for word in paragraph.words:
                         for symbol in word.symbols:
+                            
                             char_to_add = symbol.text
-                            if symbol.confidence < threshold and not char_to_add in ["#", "%"] :
+                            
+                            if (char_to_add in SYNC_SYMBOLS and symbol.confidence < threshold_special) or symbol.confidence < threshold :
                                 char_to_add = replace_char
-
+                                
                             result.append(char_to_add)
 
         return "".join(result)

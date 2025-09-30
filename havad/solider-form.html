@@ -623,7 +623,7 @@
               <div>___________________</div>
 
               <div class="class-5 class-11" id="date-wrapper">
-                <input type="date" name="date" class="wrapped-input">
+                <input type="text" name="date" class="wrapped-input">
               </div>
             </div>
 
@@ -1820,39 +1820,66 @@
       // newEl.style.height
 
       // Create the <text> element
-      const text = document.createElementNS(svgNS, "text");
-      const fontSize = 5
-      text.setAttribute("font-size", fontSize);
-      text.setAttribute("x", "85");
-      text.setAttribute("y", viewBox[3] / 2 - fontSize / 2 - textRows.length * fontSize * 1.2);
+      // const text = document.createElementNS(svgNS, "text");
+      // const fontSize = 5
+      // text.setAttribute("font-size", fontSize);
+      // text.setAttribute("x", "85");
+      // text.setAttribute("y", viewBox[3] / 2 - fontSize / 2 - textRows.length * fontSize * 1.2);
+      // // so the middle of the viewbox minus all the rows in textRows length 
 
-      text.setAttribute("fill", "red");
-      text.setAttribute("text-anchor", "middle");
-      text.setAttribute("dominant-baseline", "middle");
+      // text.setAttribute("fill", "red");
+      // text.setAttribute("text-anchor", "middle");
+      // text.setAttribute("dominant-baseline", "middle");
 
 
-      //dy is the differnece in ys between tspan inside an svg text. --> 1.2 * font size
-      let dy = 1.2
-      for (const textRow of textRows) {
-        const tspan = document.createElementNS(svgNS, "tspan");
-        tspan.setAttribute("x", "85");
-        tspan.setAttribute("dy", String(dy) + "em");
-        tspan.textContent = textRow; // add text content
-        text.appendChild(tspan);
+      // //dy is the differnece in ys between tspan inside an svg text. --> 1.2 * font size
+      // let dy = 1.2
+      // for (const textRow of textRows) {
+      //   const tspan = document.createElementNS(svgNS, "tspan");
+      //   tspan.setAttribute("x", "85");
+      //   tspan.setAttribute("dy", String(dy) + "em");
+      //   tspan.textContent = textRow; // add text content
+      //   text.appendChild(tspan);
 
+      // }
+
+      // Append path to SVG
+      newEl.appendChild(path);
+
+      for (i = 0; i < textRows.length; i++) {
+
+        textRow = textRows[i]
+        const text = document.createElementNS(svgNS, "text");
+
+        text.setAttribute("x", "85");
+        console.log((0.35 + (0.55 * i / (textRows.length + 1))) * viewBox[3])
+        // Set the y-position of each text row, evenly spaced between 35% and 90% of the viewBox height.
+        // Explanation:
+        // - viewBox[3] is the total height of the viewBox (i.e., the fourth value in '0 0 width height').
+        // - The visible vertical range for text is from 35% (0.35) to 90% (0.9) => total spacing range = 0.55.
+        // - (i + 1) / (textRows.length + 1) gives the normalized position of this row in the range (avoids top/bottom sticking).
+        // - Multiply that ratio by 0.55 to scale it to the spacing range, then add 0.35 to offset from the top.
+        // - Final result is scaled by viewBox[3] to get the actual Y coordinate in SVG units.
+        text.setAttribute(
+          "y",
+          (0.35 + (0.55 * (i + 1) / (textRows.length + 1))) * viewBox[3]
+        );
+        text.setAttribute("fill", "red");
+        text.setAttribute("text-anchor", "middle");
+        text.setAttribute("dominant-baseline", "middle");
+        text.textContent = textRow
+        newEl.appendChild(text);
       }
-
 
       // Append <tspan> elements to <text>
 
 
       // // Set the text content
 
-      // Append path to SVG
-      newEl.appendChild(path);
+
 
       // Append text to SVG
-      newEl.appendChild(text);
+      // newEl.appendChild(text);
 
       newElWrapper = document.createElement("div")
       newElWrapper.style.position = "absolute";
@@ -2673,7 +2700,7 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "              <" + "div>___________________<" + "/div> \n"
  + " \n"
  + "              <" + "div class=\"class-5 class-11\" id=\"date-wrapper\"> \n"
- + "                <" + "input type=\"date\" name=\"date\" class=\"wrapped-input\"> \n"
+ + "                <" + "input type=\"text\" name=\"date\" class=\"wrapped-input\"> \n"
  + "              <" + "/div> \n"
  + "            <" + "/div> \n"
  + " \n"
@@ -3870,39 +3897,66 @@ const htmlStart = "<" + "!DOCTYPE html> \n"
  + "      // newEl.style.height \n"
  + " \n"
  + "      // Create the <" + "text> element \n"
- + "      const text = document.createElementNS(svgNS, \"text\"); \n"
- + "      const fontSize = 5 \n"
- + "      text.setAttribute(\"font-size\", fontSize); \n"
- + "      text.setAttribute(\"x\", \"85\"); \n"
- + "      text.setAttribute(\"y\", viewBox[3] / 2 - fontSize / 2 - textRows.length * fontSize * 1.2); \n"
+ + "      // const text = document.createElementNS(svgNS, \"text\"); \n"
+ + "      // const fontSize = 5 \n"
+ + "      // text.setAttribute(\"font-size\", fontSize); \n"
+ + "      // text.setAttribute(\"x\", \"85\"); \n"
+ + "      // text.setAttribute(\"y\", viewBox[3] / 2 - fontSize / 2 - textRows.length * fontSize * 1.2); \n"
+ + "      // // so the middle of the viewbox minus all the rows in textRows length  \n"
  + " \n"
- + "      text.setAttribute(\"fill\", \"red\"); \n"
- + "      text.setAttribute(\"text-anchor\", \"middle\"); \n"
- + "      text.setAttribute(\"dominant-baseline\", \"middle\"); \n"
+ + "      // text.setAttribute(\"fill\", \"red\"); \n"
+ + "      // text.setAttribute(\"text-anchor\", \"middle\"); \n"
+ + "      // text.setAttribute(\"dominant-baseline\", \"middle\"); \n"
  + " \n"
  + " \n"
- + "      //dy is the differnece in ys between tspan inside an svg text. --> 1.2 * font size \n"
- + "      let dy = 1.2 \n"
- + "      for (const textRow of textRows) { \n"
- + "        const tspan = document.createElementNS(svgNS, \"tspan\"); \n"
- + "        tspan.setAttribute(\"x\", \"85\"); \n"
- + "        tspan.setAttribute(\"dy\", String(dy) + \"em\"); \n"
- + "        tspan.textContent = textRow; // add text content \n"
- + "        text.appendChild(tspan); \n"
+ + "      // //dy is the differnece in ys between tspan inside an svg text. --> 1.2 * font size \n"
+ + "      // let dy = 1.2 \n"
+ + "      // for (const textRow of textRows) { \n"
+ + "      //   const tspan = document.createElementNS(svgNS, \"tspan\"); \n"
+ + "      //   tspan.setAttribute(\"x\", \"85\"); \n"
+ + "      //   tspan.setAttribute(\"dy\", String(dy) + \"em\"); \n"
+ + "      //   tspan.textContent = textRow; // add text content \n"
+ + "      //   text.appendChild(tspan); \n"
  + " \n"
+ + "      // } \n"
+ + " \n"
+ + "      // Append path to SVG \n"
+ + "      newEl.appendChild(path); \n"
+ + " \n"
+ + "      for (i = 0; i <" + " textRows.length; i++) { \n"
+ + " \n"
+ + "        textRow = textRows[i] \n"
+ + "        const text = document.createElementNS(svgNS, \"text\"); \n"
+ + " \n"
+ + "        text.setAttribute(\"x\", \"85\"); \n"
+ + "        console.log((0.35 + (0.55 * i / (textRows.length + 1))) * viewBox[3]) \n"
+ + "        // Set the y-position of each text row, evenly spaced between 35% and 90% of the viewBox height. \n"
+ + "        // Explanation: \n"
+ + "        // - viewBox[3] is the total height of the viewBox (i.e., the fourth value in '0 0 width height'). \n"
+ + "        // - The visible vertical range for text is from 35% (0.35) to 90% (0.9) => total spacing range = 0.55. \n"
+ + "        // - (i + 1) / (textRows.length + 1) gives the normalized position of this row in the range (avoids top/bottom sticking). \n"
+ + "        // - Multiply that ratio by 0.55 to scale it to the spacing range, then add 0.35 to offset from the top. \n"
+ + "        // - Final result is scaled by viewBox[3] to get the actual Y coordinate in SVG units. \n"
+ + "        text.setAttribute( \n"
+ + "          \"y\", \n"
+ + "          (0.35 + (0.55 * (i + 1) / (textRows.length + 1))) * viewBox[3] \n"
+ + "        ); \n"
+ + "        text.setAttribute(\"fill\", \"red\"); \n"
+ + "        text.setAttribute(\"text-anchor\", \"middle\"); \n"
+ + "        text.setAttribute(\"dominant-baseline\", \"middle\"); \n"
+ + "        text.textContent = textRow \n"
+ + "        newEl.appendChild(text); \n"
  + "      } \n"
- + " \n"
  + " \n"
  + "      // Append <" + "tspan> elements to <" + "text> \n"
  + " \n"
  + " \n"
  + "      // // Set the text content \n"
  + " \n"
- + "      // Append path to SVG \n"
- + "      newEl.appendChild(path); \n"
+ + " \n"
  + " \n"
  + "      // Append text to SVG \n"
- + "      newEl.appendChild(text); \n"
+ + "      // newEl.appendChild(text); \n"
  + " \n"
  + "      newElWrapper = document.createElement(\"div\") \n"
  + "      newElWrapper.style.position = \"absolute\"; \n"

@@ -1,7 +1,9 @@
 # Base64 alphabet
 
-ALTERNATIVE_BASE64_ALPHABET = b"D7Bb6t&mra9fe4AjJF8MhndPgTYQN*3u<p%yU/!ikqvIw>KcCL2s,?WoXVZ$\"x;#"
 # B64_ALPHABET = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+
+from constants import ALTERNATIVE_BASE64_ALPHABET
+
 
 def alt_b64encode(data: bytes) -> bytes:
     """Encode bytes to Base64 (returns bytes)."""
@@ -39,12 +41,17 @@ def alt_b64decode(b64_data: bytes) -> bytes:
     return decoded
 
 
+
+
+
 # Helper functions
 def alternative_base64_char_to_num(ch):
     
     """Convert Base64 character to number (0-63)."""
-    
-    return ALTERNATIVE_BASE64_ALPHABET.decode("ascii").index(ch)
+    try:
+        return ALTERNATIVE_BASE64_ALPHABET.decode("ascii").index(ch)
+    except:
+        print(f"could not decode {ch}")
 
 def num_to_alternative_base64_char(num):
     """Convert number (0-63) to Base64 character."""
@@ -52,3 +59,4 @@ def num_to_alternative_base64_char(num):
         raise ValueError("Number must be in 0-63")
     
     return ALTERNATIVE_BASE64_ALPHABET.decode("ascii")[num]
+

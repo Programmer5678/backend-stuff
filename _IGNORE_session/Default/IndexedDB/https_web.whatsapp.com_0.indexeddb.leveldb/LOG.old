@@ -1,0 +1,25 @@
+2025/09/28-23:20:27.129 306e Reusing MANIFEST /home/ruz/backend-stuff/_IGNORE_session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/09/28-23:20:27.130 306e Recovering log #458
+2025/09/28-23:20:27.142 306e Reusing old log /home/ruz/backend-stuff/_IGNORE_session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000458.log 
+2025/09/28-23:20:28.179 306e Level-0 table #469: started
+2025/09/28-23:20:28.214 306e Level-0 table #469: 808151 bytes OK
+2025/09/28-23:20:28.217 306e Delete type=0 #458
+2025/09/28-23:20:28.218 306e Manual compaction at level-0 from '\x00&\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00'\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/09/28-23:20:29.301 306f Compacting 1@1 + 7@2 files
+2025/09/28-23:20:29.450 306f Generated table #470@1: 46273 keys, 2200025 bytes
+2025/09/28-23:20:29.484 306f Generated table #471@1: 58652 keys, 2220591 bytes
+2025/09/28-23:20:29.523 306f Generated table #472@1: 58518 keys, 2228126 bytes
+2025/09/28-23:20:29.542 306f Generated table #473@1: 17579 keys, 2167672 bytes
+2025/09/28-23:20:29.582 306f Generated table #474@1: 23016 keys, 2205207 bytes
+2025/09/28-23:20:29.611 306f Generated table #475@1: 53633 keys, 2210676 bytes
+2025/09/28-23:20:29.616 306f Generated table #476@1: 3083 keys, 72794 bytes
+2025/09/28-23:20:29.616 306f Compacted 1@1 + 7@2 files => 13305091 bytes
+2025/09/28-23:20:29.619 306f compacted to: files[ 0 0 7 0 0 0 0 ]
+2025/09/28-23:20:29.619 306f Delete type=2 #461
+2025/09/28-23:20:29.619 306f Delete type=2 #460
+2025/09/28-23:20:29.619 306f Delete type=2 #466
+2025/09/28-23:20:29.619 306f Delete type=2 #463
+2025/09/28-23:20:29.619 306f Delete type=2 #462
+2025/09/28-23:20:29.619 306f Delete type=2 #465
+2025/09/28-23:20:29.619 306f Delete type=2 #464
+2025/09/28-23:20:29.619 306f Delete type=2 #469

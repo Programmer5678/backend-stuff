@@ -154,32 +154,71 @@ def split_sync_parts(s):
     parts.append(buffer)
     return parts, syncs
 
+# def build_corrected_parts(parts, syncs):
+#     """
+#     Given parts and syncs, build the corrected parts list as in remove_sync_symbols.
+#     """
+        
+#     len_so_far = 0
+#     new_parts = []
+#     for i, chunk in enumerate(parts):
+#         if i == 0:
+#             exp_len = (1 + SYNC_SYMBOLS.index( syncs[0] )) * SYNC_GAP
+#         elif i == len(parts) - 1:
+#             exp_len = TOTAL_EXPECTED_LEN - len_so_far
+#         else:
+#             sync_a = syncs[i - 1]
+#             sync_b = syncs[i]
+#             exp_len = expected_distance(SYNC_SYMBOLS, sync_a, sync_b)
+#         str_to_add = ERASURE_CHAR * exp_len if (len(chunk) != exp_len or (len(chunk) != SYNC_GAP and i != len(parts) - 1)) else chunk
+#         len_so_far += len(str_to_add)
+#         new_parts.append(str_to_add)
+#     return "".join(new_parts)
+
 def build_corrected_parts(parts, syncs):
     """
-    Given parts and syncs, build the corrected parts list as in remove_sync_symbols.
+    Given parts and syncs, build the corrected parts list as in remove_sync_symbols,
+    with debug prints showing replacements with ERASURE_CHAR.
     """
+        
         
     len_so_far = 0
     new_parts = []
     for i, chunk in enumerate(parts):
         if i == 0:
-            exp_len = (1 + SYNC_SYMBOLS.index( syncs[0] )) * SYNC_GAP
+            exp_len = (1 + SYNC_SYMBOLS.index(syncs[0])) * SYNC_GAP
         elif i == len(parts) - 1:
             exp_len = TOTAL_EXPECTED_LEN - len_so_far
         else:
             sync_a = syncs[i - 1]
             sync_b = syncs[i]
             exp_len = expected_distance(SYNC_SYMBOLS, sync_a, sync_b)
-        str_to_add = ERASURE_CHAR * exp_len if (len(chunk) != exp_len or (len(chunk) != SYNC_GAP and i != len(parts) - 1)) else chunk
+        
+        # Decide whether to replace with ERASURE_CHAR
+        if len(chunk) != exp_len or (len(chunk) != SYNC_GAP and i != len(parts) - 1):
+            print(f"[DEBUG] Replacing chunk {i} ('{chunk}') with ERASURE_CHAR * {exp_len}")
+            str_to_add = ERASURE_CHAR * exp_len
+        else:
+            str_to_add = chunk
+            print(f"[DEBUG] Keeping chunk {i} as-is: '{chunk}'")
+        
         len_so_far += len(str_to_add)
         new_parts.append(str_to_add)
-    return "".join(new_parts)
+    
+    result = "".join(new_parts)
+    print(f"[DEBUG] Final corrected string length: {len(result)}")
+    return result
+
 
 def remove_sync_symbols(s):
+    
     """
     Remove sync symbols and validate/repair substrings between them
     based on expected_distance.
     """
+    
+    print(f"\n\n\nAttempting to remove sync symbols from {s}\n")
+    
     parts, syncs = split_sync_parts(s)
     
     if len(syncs) == 0:
@@ -203,11 +242,18 @@ def rs_decode_chunk(e_chunk):
     
     erase_pos = [i for i, ch in enumerate(e_chunk) if ch == ERASURE_CHAR]
     
+    
+    print("e_chunk: ", e_chunk)
+    
+    
+    
+    
     # Convert each Base64 char back to integer
     e_chunk_nums = [ alternative_base64_char_to_num(ch) if ch != ERASURE_CHAR else ARBITRARY_NUM for ch in e_chunk]
     
     # RS decode expects bytes
     try: 
+        # print( e_chunk_nums, erase_pos )
         decoded_nums = rsc.decode(e_chunk_nums, erase_pos = erase_pos)[0]
     except ReedSolomonError as e: 
         raise Exception(f"error in Reed Solomon decoding {e_chunk}") from e
@@ -389,7 +435,7 @@ def battery_of_tests():
 #     return "".join(decoded_b64)
 # cant handle deletions.inserts. might have to look towards sync strings, guessing delete position for small number of deletes/inserts - perhaps  2
 # https://www.cs.cmu.edu/~venkatg/teaching/au18-coding-theory/lec-scribes/insdel-coding.pdf
-def decode_str(encoded_str : str, encoded_file_name) -> str:
+def decode_chunks_from_str(encoded_str : str, encoded_file_name) -> str:
     """
     Reads an RS-encoded file (Base64 symbols separated by SEP), decodes it,
     and returns the original Base64 string.
@@ -454,7 +500,7 @@ def handle_split_chunk(content_cur, file_list, index, input_dir):
             
             print(f"Start decoding chunk split between files {file_list[index]} and {file_list[index+1]}: {in_between_files_chunk}")
             
-            decoded = decode_str(in_between_files_chunk, f"In between {file_list[index]} and next file") # try to decode chunk split between files
+            decoded = decode_chunks_from_str(in_between_files_chunk, f"In between {file_list[index]} and next file") # try to decode chunk split between files
             
             print(f"Finished decoding chunk split between files {file_list[index]} and {file_list[index+1]}: {in_between_files_chunk}")
             
@@ -462,6 +508,20 @@ def handle_split_chunk(content_cur, file_list, index, input_dir):
         
     return ""
 
+
+def decoded_chunks_to_final_res(s : str) -> bytes:
+    
+    """
+    Decode string back to raw bytes.
+    Expects 10 ASCII digits prefix with original length.
+    """
+    as_bytes = alt_b64decode(s.encode("ascii"))
+    
+    # Extract length (first 10 bytes are ASCII digits)
+    len_of_original = int(as_bytes[:NUM_OF_DIGITS_LEN_OF_INPUT].decode("ascii"))
+    
+    # Extract only the original data portion
+    return as_bytes[NUM_OF_DIGITS_LEN_OF_INPUT:NUM_OF_DIGITS_LEN_OF_INPUT + len_of_original]
 
 
 
@@ -471,11 +531,11 @@ def decode_file(input_file: str, output_file: str):
     """
     with open(input_file, "r", encoding="utf-8") as f:
         data = f.read()
-
-    decoded = alt_b64decode( decode_str(data, input_file).encode("ascii") )
+        
+    res = decoded_chunks_to_final_res( decode_chunks_from_str(data, input_file) )
 
     with open(output_file, "wb") as f:
-        f.write( decoded )
+        f.write( res )
 
 
 def decode_dir_content(input_dir: str) -> bytes:
@@ -497,7 +557,7 @@ def decode_dir_content(input_dir: str) -> bytes:
         main_part = content_cur.rsplit(SEP, 1)[0].split(SEP, 1)[1]
 
         # Decode the main part
-        decoded = decode_str(main_part, fname)
+        decoded = decode_chunks_from_str(main_part, fname)
         res_b64 += decoded
 
         print(f"Finished decoding file {index+1}/{len(file_list)}: {fname}")
@@ -506,7 +566,7 @@ def decode_dir_content(input_dir: str) -> bytes:
         res_b64 += handle_split_chunk(content_cur, file_list, index, input_dir)
 
     # Finally decode Base64 to bytes
-    return alt_b64decode(res_b64.encode("ascii") )
+    return decoded_chunks_to_final_res( res_b64 )
 
 
 def decode_dir(input_dir: str, output_file: str):
@@ -520,21 +580,37 @@ def decode_dir(input_dir: str, output_file: str):
 
 
 
-def encode_data_to_str(data: bytes) -> str:
+def encode_chunks_of_str(data: bytes) -> str:
     """
-    Encode raw bytes to the final encoded string with chunking and separators.
+    Core function:
+    Encode raw bytes to Base64, chunk, add separators, and return final string.
     """
+    
+    
     b64_data = alt_b64encode(data).decode("ascii")
-
+    
     encoded_chunks = []
     for i in range(0, len(b64_data), DECODED_CHUNK_SIZE):
         chunk = b64_data[i:i+DECODED_CHUNK_SIZE]
+        
         encoded_chunk_str = encode_chunk(chunk)
         encoded_chunks.append(encoded_chunk_str)
 
     # Join chunks with SEP - 3 SEP for redundancy, remove whitespaces
     encoded_str = 3 * SEP + "".join((3 * SEP).join(encoded_chunks).split()) + 3 * SEP
     return encoded_str
+
+
+def encode_data_to_str(data: bytes) -> str:
+    """
+    Wrapper:
+    Prepend the data length (as fixed-width ASCII digits) and encode with build_encoded_str.
+    """
+    
+    data_with_len_prepended = str(len(data)).encode("ascii").rjust(NUM_OF_DIGITS_LEN_OF_INPUT, b"0") + data
+    return encode_chunks_of_str(data_with_len_prepended)
+
+    
 
 
 def encode_file(input_file: str, output_file: str):
