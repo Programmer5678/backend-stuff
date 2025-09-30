@@ -31,3 +31,19 @@ Thumbs.db
 *.log
 *.sqlite3
 
+
+
+*venv*
+
+*offline_packages*
+
+
+# Ignore image files
+*.jpg
+*.png
+
+# Ignore audio files
+*.mp3
+
+# Ignore anything ending with google-cloud-sdk
+*google-cloud-sdk
