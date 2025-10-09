@@ -14,24 +14,54 @@ Behavior:
  - Files with no QR produce a warning and are skipped.
 """
 import argparse
+import os
 from pathlib import Path
 from pyzbar.pyzbar import decode
 from PIL import Image
 import base45
 import cv2
+from qreader import QReader
+from qrdet.qrdet import QRDetector
+
+
+def validate_weights_folder(weights_folder: str):
+    """
+    Validates that the weights folder contains the required files:
+    - current_release.txt
+    - at least one qrdet*.pt file
+
+    Args:
+        weights_folder (str): Path to the weights folder.
+
+    Raises:
+        FileNotFoundError: If any required file is missing.
+    """
+    # Check for current_release.txt
+    release_file = os.path.join(weights_folder, 'current_release.txt')
+    if not os.path.isfile(release_file):
+        raise FileNotFoundError(f"Missing required file: {release_file}")
+
+    # Check for any qrdet*.pt files
+    pt_files = glob.glob(os.path.join(weights_folder, 'qrdet*.pt'))
+    if not pt_files:
+        raise FileNotFoundError(f"No 'qrdet*.pt' files found in {weights_folder}")
 
 def read_qr_base45_bytes(file_path: Path) -> bytes:
     """
     Decode the first QR in file_path as Base45 and return the original bytes.
     Raises ValueError if no QR code or decoding fails.
     """
-    from qreader import QReader
     
     # Open the image file
     img = cv2.cvtColor(cv2.imread( str(file_path) ), cv2.COLOR_BGR2RGB)
 
     # Initialize QReader and decode the image
-    qreader = QReader()
+    # Path to your local weights
+    weights_folder = os.path.join(os.getcwd(), 'weights_for_qrdet', '.model')
+    validate_weights_folder(weights_folder)
+    
+    qreader = QReader(weights_folder=weights_folder)
+    
     decoded_text = qreader.detect_and_decode(image=img)[0]
 
     if not decoded_text:
