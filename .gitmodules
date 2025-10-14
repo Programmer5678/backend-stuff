@@ -1,3 +1,6 @@
 [submodule "whatsapp-automation"]
 	path = whatsapp-automation
 	url = https://github.com/Programmer5678/whatsapp-automation.git
+[submodule "halbanot"]
+	path = halbanot
+	url = https://github.com/Programmer5678/halbanot.git
