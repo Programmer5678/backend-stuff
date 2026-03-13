@@ -4,3 +4,10 @@
 [submodule "halbanot"]
 	path = halbanot
 	url = https://github.com/Programmer5678/halbanot.git
+
+[submodule "codecrafters-git-c-wrapper/codecrafters-git-c"]
+	path = codecrafters-git-c-wrapper/codecrafters-git-c
+	url = https://github.com/Programmer5678/codecrafters-shell-c.git
+[submodule "codecrafters-shell-python"]
+	path = codecrafters-shell-python
+	url = https://github.com/Programmer5678/codecrafters-shell-python.git

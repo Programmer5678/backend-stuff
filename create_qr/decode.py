@@ -14,6 +14,7 @@ Behavior:
  - Files with no QR produce a warning and are skipped.
 """
 import argparse
+import glob
 import os
 from pathlib import Path
 from pyzbar.pyzbar import decode
@@ -46,93 +47,86 @@ def validate_weights_folder(weights_folder: str):
     if not pt_files:
         raise FileNotFoundError(f"No 'qrdet*.pt' files found in {weights_folder}")
 
-def read_qr_base45_bytes(file_path: Path) -> bytes:
-    """
-    Decode the first QR in file_path as Base45 and return the original bytes.
-    Raises ValueError if no QR code or decoding fails.
-    """
-    
-    # Open the image file
-    img = cv2.cvtColor(cv2.imread( str(file_path) ), cv2.COLOR_BGR2RGB)
 
-    # Initialize QReader and decode the image
-    # Path to your local weights
-    weights_folder = os.path.join(os.getcwd(), 'weights_for_qrdet', '.model')
+
+
+
+def read_qr_text(file_path: Path) -> str:
+    """
+    Decode the first QR code in file_path and return its decoded text.
+    Raises ValueError if no QR code is found.
+    """
+    # Load image
+    img_bgr = cv2.imread(str(file_path))
+    if img_bgr is None:
+        raise ValueError(f"Failed to read image file {file_path}")
+
+    img = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+
+    # Initialize QReader
+    weights_folder = os.path.join(os.getcwd(), "weights_for_qrdet", ".model")
     validate_weights_folder(weights_folder)
-    
+
     qreader = QReader(weights_folder=weights_folder)
-    
+
     decoded_text = qreader.detect_and_decode(image=img)[0]
 
     if not decoded_text:
         raise ValueError(f"No QR code found in {file_path}")
 
+    return decoded_text
+
+
+def decode_base45_text(decoded_text: str) -> bytes:
+    """
+    Decode Base45-encoded text and return original bytes.
+    Raises ValueError if decoding fails.
+    """
     try:
-        # Decode the Base45-encoded text
         return base45.b45decode(decoded_text)
     except Exception as e:
-        raise ValueError(f"Base45 decoding failed for {file_path}: {e}. Decoded_text = {decoded_text}")
+        raise ValueError(
+            f"Base45 decoding failed. Decoded_text={decoded_text!r}"
+        ) from e
+
+
+
 
 # def read_qr_base45_bytes(file_path: Path) -> bytes:
 #     """
 #     Decode the first QR in file_path as Base45 and return the original bytes.
 #     Raises ValueError if no QR code or decoding fails.
 #     """
-#     img = Image.open(file_path)
-#     decoded_objs = decode(img)
-#     if not decoded_objs:
-#         raise ValueError(f"No QR code found in {file_path}")
-#     if len(decoded_objs) > 1:
-#         print(f"Warning: Multiple QR codes found in {file_path}. Using the first one.")
+    
+#     # Open the image file
+#     img = cv2.cvtColor(cv2.imread( str(file_path) ), cv2.COLOR_BGR2RGB)
 
-#     qr_text = decoded_objs[0].data.decode('utf-8')  # QR data is Base45-encoded text
+#     # Initialize QReader and decode the image
+#     # Path to your local weights
+#     weights_folder = os.path.join(os.getcwd(), 'weights_for_qrdet', '.model')
+#     validate_weights_folder(weights_folder)
+    
+#     qreader = QReader(weights_folder=weights_folder)
+    
+#     decoded_text = qreader.detect_and_decode(image=img)[0]
+
+#     if not decoded_text:
+#         raise ValueError(f"No QR code found in {file_path}")
+
 #     try:
-#         return base45.b45decode(qr_text)
+#         # Decode the Base45-encoded text
+#         return base45.b45decode(decoded_text)
 #     except Exception as e:
-#         raise ValueError(f"Base45 decoding failed for {file_path}: {e}")
+#         raise ValueError(f"Base45 decoding failed for {file_path}: {e}. Decoded_text = {decoded_text}")
 
 
-# def read_qr_raw_bytes(file_path: Path) -> bytes:
-#     """
-#     Return raw bytes of the first decoded QR code in file_path.
-#     Raises ValueError if none found.
-#     """
-#     import cv2
-#     import zxingcpp
-
-#     # Load image with OpenCV
-#     img = cv2.imread(str(file_path))
-#     if img is None:
-#         raise FileNotFoundError(f"Image not found: {file_path}")
-
-#     # Decode all barcodes in the image
-#     results = zxingcpp.read_barcodes(img)
-
-#     if not results:
-#         raise ValueError(f"No QR code found in {file_path}")
-
-#     # Pick the first QR code found
-#     first = results[0]
-
-#     # if first.format != "QR_CODE":
-#     #     raise ValueError(f"Barcode found but it's not a QR code: {first.format}")
-
-#     # ZXing-C++ provides raw bytes as a list of integers (0-255)
-#     raw_bytes = bytes(first.bytes)
-#     print(raw_bytes.encode('latin-1'))
-    
-#     raise Exception("Shit")
-    
-#     return raw_bytes
-
-
-
-
-def process_file(input_path: Path, out_f):
+def process_file(input_path: Path, out_f, base45_decode: bool) -> int:
     """Read one image file, decode first QR and write its bytes into open file-like out_f.
        Returns number of bytes written (0 if none)."""
     try:
-        data = read_qr_base45_bytes(input_path)
+        decoded_text = read_qr_text(input_path)
+        data = decode_base45_text(decoded_text) if base45_decode else decoded_text.encode('utf-8')
+        
     except Exception as e:
         print(f"Skipping {input_path.name}: {e}")
         return 0
@@ -145,6 +139,7 @@ def main():
     parser = argparse.ArgumentParser(description="Read QR image(s) and write raw bytes to a single output file.")
     parser.add_argument('-i', '--input', required=True, help="Input file or directory containing image files")
     parser.add_argument('-o', '--output', required=True, help="Output file path (binary, will be overwritten)")
+    parser.add_argument('--base45', action='store_true', help="Decode QR text as Base45 before writing bytes")
     args = parser.parse_args()
 
     input_path = Path(args.input)
@@ -157,14 +152,14 @@ def main():
     with open(output_path, 'wb') as out_f:
         total = 0
         if input_path.is_file():
-            total += process_file(input_path, out_f)
+            total += process_file(input_path, out_f, args.base45)
         else:
             # Directory: iterate regular files only, sorted by name
             entries = [p for p in sorted(input_path.iterdir()) if p.is_file()]
             if not entries:
                 print(f"No files found in directory: {input_path}")
             for p in entries:
-                total += process_file(p, out_f)
+                total += process_file(p, out_f, args.base45)
 
     print(f"Done. Total bytes written: {total}. Output file: {output_path.resolve()}")
 
