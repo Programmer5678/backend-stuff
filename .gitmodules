@@ -11,3 +11,6 @@
 [submodule "codecrafters-shell-python"]
 	path = codecrafters-shell-python
 	url = https://github.com/Programmer5678/codecrafters-shell-python.git
+[submodule "playwright_scrape_yamaha"]
+	path = playwright_scrape_yamaha
+	url = https://github.com/Programmer5678/playwright_scrape_yamaha.git
