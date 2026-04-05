@@ -528,7 +528,7 @@
       font-weight: bold;
       text-align: center;
 
-      padding-top: 55px;
+      padding-top: 35px;
       padding-bottom: 10px;
     }
 
@@ -583,7 +583,7 @@
 
     <fieldset>
 
-      <div class="class-1">
+      <div>
 
         <div class="class-2">
 
@@ -1191,16 +1191,17 @@
 
         </div>
 
-        <p style="display: inline-block;">
+        <p style="display: inline-block; padding-left: 4%; padding-right: 4%; text-align:center; line-height: 1.2;">
           <span style="font-weight: bold; text-decoration: underline;">שים/י לב!</span>
           תוכן הטופס חסוי וישמש את הגורמים המקצועיים בלבד.
           <span style="font-weight: bold; ">
-            חובה להביא את החו"ד לעיונו של המועמד ולבצע שיחות משוב לחוות הדעת שנכתבה!
+            חובה להביא את החו"ד
+            <br>
+            לעיונו של המועמד ולבצע שיחות משוב לחוות הדעת שנכתבה!
           </span>
-          <span style="display: block; text-align: left;">
+          <br>
+          <span>
             חתימת המועמד/הצהרת המפקד/ת שנערכו שיחות
-          </span>
-          <span style="display: block; text-align: center;">
             משוב לחוות דעת.
           </span>
         </p>
@@ -1264,9 +1265,9 @@
 
         <div>
 
-          <h2 id="part-b">חלק ב': חוות דעת מפקדו של המפקד הישיר</h2>
-
           <hr style="border: none; border-top: 3.5px dotted black; height: 0;">
+
+          <h2 id="part-b">חלק ב': חוות דעת מפקדו של המפקד הישיר</h2>
 
         </div>
 
@@ -1919,6 +1920,9 @@
 
     //Checks if any input that is required(parent has certain parent class - wrapper)
     function handleEmptyInputs() {
+
+<!--      alert("shit");-->
+<!--      return true;-->
 
       const form = document.getElementById('feedback-form');
 

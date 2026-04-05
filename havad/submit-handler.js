@@ -57,7 +57,10 @@ function createReadOnlyFormForDownload() {
     const blob = new Blob([htmlFile], { type: 'text/plain' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'havad' + formData.get('personalNumber') + '.html';
+    a.download = 'חווד'
+    + ' '
+    + formData.get('firstName')
+    + ' ' + formData.get('personalNumber') + '.html';
     a.click();
     URL.revokeObjectURL(a.href);
 }
