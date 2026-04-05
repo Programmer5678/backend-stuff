@@ -440,49 +440,10 @@
       /* width: 100%;
       height: 400px ; */
 
-      height: 120px !important;
+      height: 60px !important;
       display: block;
       line-height: 26.5px;
     }
-
-    /* .mytextareaclass {
-
-      background: repeating-linear-gradient(to bottom,
-          transparent 0px,
-          transparent 30px,
-          black 30px,
-          black 31px,
-          transparent 31px,
-          transparent 59px,
-          black 59px,
-          black 60px,
-          transparent 60px,
-          transparent 90px,
-          black 90px,
-          black 91px,
-          transparent 91px,
-          transparent 120px) !important;
-    }
-
-    .default-backgrounds .mytextareaclass {
-
-      background: repeating-linear-gradient(to bottom,
-          grey 0px,
-          grey 30px,
-          black 30px,
-          black 31px,
-          grey 31px,
-          grey 59px,
-          black 59px,
-          black 60px,
-          grey 60px,
-          grey 90px,
-          black 90px,
-          black 91px,
-          grey 91px,
-          grey 120px) !important;
-    } */
-
 
     .mytextareaclass2 {
 
@@ -603,6 +564,11 @@
       width: 100%;
       height: 100%;
     }
+
+    .highlight-kravy {
+      background-color: yellow;
+    }
+
   </style>
 
 </head>
@@ -804,9 +770,15 @@
               <td>
 
                 <div id="firstTableStrengthExample-wrapper" style="position: relative;">
-                  <textarea rows="4" name="firstTableStrengthExample" class="mytextareaclass wrapped-input"
+                  <textarea rows="2" name="firstTableStrengthExample" class="mytextareaclass wrapped-input"
                     placeholder="הסבר או דוגמה"></textarea>
                 </div>
+
+                <div id="firstTableStrengthExample2-wrapper" style="position: relative;">
+                  <textarea rows="2" name="firstTableStrengthExample2" class="mytextareaclass wrapped-input"
+                            placeholder="הסבר או דוגמה"></textarea>
+                </div>
+
               </td>
             </tr>
             <tr class="class-27">
@@ -839,10 +811,15 @@
               <td>
 
                 <!-- 26.5 = 25% of cell height -->
-
                 <div id="firstTableWeaknessExample-wrapper" style="position: relative;">
-                  <textarea rows="4" name="firstTableWeaknessExample" class="mytextareaclass wrapped-input"
+                  <textarea rows="2" name="firstTableWeaknessExample"
+                            class="mytextareaclass wrapped-input"
                     placeholder="הסבר או דוגמה"></textarea>
+                </div>
+
+                <div id="firstTableWeaknessExample2-wrapper" style="position: relative;">
+                  <textarea rows="2" name="firstTableWeaknessExample2" class="mytextareaclass wrapped-input"
+                            placeholder="הסבר או דוגמה"></textarea>
                 </div>
 
               </td>
@@ -861,7 +838,11 @@
           "גבוה מאוד"
           ועד
           <span class="class-22">שלושה מאפיינים</span>
-          בקטגוריה "גבוה"
+          בקטגוריה "גבוה".
+          <br>
+          שים לב המאפיין "אומץ, איתנות וקור רוח" מיועד
+          <span class="highlight-kravy">לקרביים בלבד</span>
+          . לתומכ"ל לסמן "לא ניתן להעריך".
         </p>
         <table class="eval-table" id="eval-table">
           <thead>
@@ -1019,7 +1000,9 @@
             </tr>
 
             <tr>
-              <td class="eval-feature">אומץ, איתנות וקור רוח (לקרביים בלבד-לתומכ"ל לסמן לא ניתן להעריך)
+              <td class="eval-feature">אומץ, איתנות וקור רוח (
+                <span class="highlight-kravy">לקרביים בלבד</span>
+                )
                 <div id="rating_6-wrapper" style="position: relative;">
                   <select name="rating_6" id="hidden-input-6" hidden>
                     <option value=""></option>
