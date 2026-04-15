@@ -1,2 +1,10 @@
 python create_form.py will take form solider-form-base.html and
 implement functionality for download - download form as html file
+
+Any changes - make to solider-form-base.html
+
+usage:
+python create_form.py  --> creates solider-form.html from solider-form-base.html )
+( Parses the html and creates a html to download file which is downloaded on submit )
+
+

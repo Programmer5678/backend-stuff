@@ -1,6 +1,5 @@
 import os
-from generator import html_to_js_string
-
+from html_to_js_string import html_to_js_string
 
 def splitUp():
     
