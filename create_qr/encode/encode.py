@@ -12,7 +12,7 @@ Notes:
  - Each chunk is Base45-encoded separately so it can be decoded independently.
 """
 
-import argparse
+
 from pathlib import Path
 import shutil
 import qrcode
@@ -67,17 +67,11 @@ def create_qr_from_text(text: str, index: int, out_folder: Path, ecc: str, box_s
     img.save(out_path)
     print(f"Saved chunk {index:03d}: {len(text)} chars -> {out_path}")
 
-def main():
-    parser = argparse.ArgumentParser(description="Split file into QR-40 sized Base45 chunks.")
-    parser.add_argument('-i', '--input', required=True, help="Input file path")
-    parser.add_argument('-o', '--output', required=True, help="Output folder for QR images")
-    parser.add_argument('--ecc', choices=['L','M','Q','H'], default='Q', help="QR error correction level (default Q)")
-    parser.add_argument('--box-size', type=int, default=8, help="Pixels per module (default 8)")
-    parser.add_argument('--border', type=int, default=4, help="Quiet zone in modules (default 4)")
-    args = parser.parse_args()
 
-    input_path = Path(args.input)
-    out_folder = Path(args.output)
+def encode(input, output, ecc, box_size, border):
+
+    input_path = Path(input)
+    out_folder = Path(output)
 
     if not input_path.exists():
         raise FileNotFoundError(f"Input not found: {input_path}")
@@ -89,11 +83,11 @@ def main():
 
     # Read input bytes
     data = input_path.read_bytes()
-    capacity_chars = QR40_ALNUM_CAPACITY[args.ecc]
+    capacity_chars = QR40_ALNUM_CAPACITY[ecc]
     chunk_size_bytes = max_bytes_for_base45_capacity(capacity_chars)
 
     print(f"Input size: {len(data)} bytes")
-    print(f"QR-40 alphanumeric capacity (ECC {args.ecc}): {capacity_chars} chars")
+    print(f"QR-40 alphanumeric capacity (ECC {ecc}): {capacity_chars} chars")
     estimated_b45_chars = (chunk_size_bytes * 3) // 2  # 2 bytes -> 3 chars
     print(f"Chunking raw bytes into {chunk_size_bytes}-byte blocks for Base45 (~{estimated_b45_chars} Base45 chars per chunk)...")
 
@@ -102,9 +96,6 @@ def main():
 
     for idx, chunk_bytes_data in enumerate(chunks):
         b45_text = base45.b45encode(chunk_bytes_data)
-        create_qr_from_text(b45_text, idx, out_folder, args.ecc, args.box_size, args.border)
+        create_qr_from_text(b45_text, idx, out_folder, ecc, box_size, border)
 
     print(f"Done. {len(chunks)} QR code(s) written to {out_folder.resolve()}")
-
-if __name__ == "__main__":
-    main()

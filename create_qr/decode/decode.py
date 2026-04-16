@@ -13,7 +13,6 @@ Behavior:
    in that sorted order.
  - Files with no QR produce a warning and are skipped.
 """
-import argparse
 import glob
 import os
 from pathlib import Path
@@ -135,15 +134,11 @@ def process_file(input_path: Path, out_f, base45_decode: bool) -> int:
     print(f"Wrote {len(data)} bytes from {input_path.name}")
     return len(data)
 
-def main():
-    parser = argparse.ArgumentParser(description="Read QR image(s) and write raw bytes to a single output file.")
-    parser.add_argument('-i', '--input', required=True, help="Input file or directory containing image files")
-    parser.add_argument('-o', '--output', required=True, help="Output file path (binary, will be overwritten)")
-    parser.add_argument('--base45', action='store_true', help="Decode QR text as Base45 before writing bytes")
-    args = parser.parse_args()
 
-    input_path = Path(args.input)
-    output_path = Path(args.output)
+def decode(input, output, base45):
+
+    input_path = Path(input)
+    output_path = Path(output)
 
     if not input_path.exists():
         raise FileNotFoundError(f"Input does not exist: {input_path}")
@@ -152,16 +147,13 @@ def main():
     with open(output_path, 'wb') as out_f:
         total = 0
         if input_path.is_file():
-            total += process_file(input_path, out_f, args.base45)
+            total += process_file(input_path, out_f, base45)
         else:
             # Directory: iterate regular files only, sorted by name
             entries = [p for p in sorted(input_path.iterdir()) if p.is_file()]
             if not entries:
                 print(f"No files found in directory: {input_path}")
             for p in entries:
-                total += process_file(p, out_f, args.base45)
+                total += process_file(p, out_f, base45)
 
     print(f"Done. Total bytes written: {total}. Output file: {output_path.resolve()}")
-
-if __name__ == "__main__":
-    main()
