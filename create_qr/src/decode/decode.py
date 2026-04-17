@@ -110,9 +110,11 @@ def decode_file(input_path: Path, out_f, base45_decode: bool) -> int:
 
 
 def encode_input_validation(input, output):
+
+    validate_exists(input)
     validate_abs_path(input)
     validate_is_dir(input)
-    validate_exists(input)
+
     validate_abs_path(output)
     validate_parent_dir(output)
 

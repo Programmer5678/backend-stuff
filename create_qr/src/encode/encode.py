@@ -112,9 +112,11 @@ def create_dir(out_folder):
     out_folder.mkdir(parents=True, exist_ok=True)
 
 def encode_input_validation(input, output):
+
+    validate_exists(input)
     validate_abs_path(input)
     validate_is_file(input)
-    validate_exists(input)
+
     validate_abs_path(output)
     validate_parent_dir(output)
 
@@ -132,6 +134,7 @@ def encode(input, output, ecc='Q', box_size=8, border=4):
     for idx, chunk_bytes_data in enumerate(chunks):
         b45_text = base45.b45encode(chunk_bytes_data)
         create_qr_from_text(b45_text, idx, out_folder, ecc, box_size, border)
+
 
     print(f"Done. {len(chunks)} QR code(s) written to {out_folder.resolve()}")
 

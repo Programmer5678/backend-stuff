@@ -6,5 +6,5 @@ class PathsRequestModel(BaseModel):
     input_path: str
     output_path: str
 
-# class CreatedResponseModel(BaseModel):
-#     created: str
+class CreatedResponseModel(BaseModel):
+    created: str
