@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="ai-styles.css">
+</head>
+<body>
+    <form id="qr-form">
+        <label>
+            Input file(full path)
+            <input name="input_path" placeholder="Example: /home/dir1/dir2/file.txt" />
+        </label>
+
+        <label>
+            Output file(full path)
+            <input name="output_path" placeholder="Example: /home/dir1/dir2/result_docxs" />
+        </label>
+
+        <button type="submit" value="encode">
+            Encode
+        </button>
+
+        <button type="submit" value="decode">
+            Decode
+        </button>
+
+    </form>
+
+    <div id="result">
+
+        <span id="result-header"></span>
+
+        <div id="response">
+            <span id="response_json"></span>
+            <span id="response_code"></span>
+            <span id="response_success"></span>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

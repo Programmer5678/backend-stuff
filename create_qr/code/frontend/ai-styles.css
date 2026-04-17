@@ -1,0 +1,97 @@
+/* Layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background: #f7f7f7;
+}
+
+/* Form container */
+form {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Label wrapper */
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Input */
+.form-input,
+input {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #4a90e2;
+}
+
+/* Buttons */
+button {
+    padding: 10px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Primary / Encode */
+button[value="encode"] {
+    background: #4a90e2;
+    color: white;
+}
+
+/* Secondary / Decode */
+button[value="decode"] {
+    background: #666;
+    color: white;
+}
+
+/* Result section */
+#result {
+    margin-top: 20px;
+    max-width: 500px;
+    padding: 12px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Header */
+#result-header {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* Response block */
+#response {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+/* Optional status styles */
+#response_success {
+    font-weight: bold;
+}
+
+#response_success:contains("SUCCESS") {
+    color: green;
+}
