@@ -48,8 +48,6 @@ def validate_weights_folder(weights_folder: str):
 
 
 
-
-
 def read_qr_text(file_path: Path) -> str:
     """
     Decode the first QR code in file_path and return its decoded text.
@@ -91,32 +89,6 @@ def decode_base45_text(decoded_text: str) -> bytes:
 
 
 
-# def read_qr_base45_bytes(file_path: Path) -> bytes:
-#     """
-#     Decode the first QR in file_path as Base45 and return the original bytes.
-#     Raises ValueError if no QR code or decoding fails.
-#     """
-    
-#     # Open the image file
-#     img = cv2.cvtColor(cv2.imread( str(file_path) ), cv2.COLOR_BGR2RGB)
-
-#     # Initialize QReader and decode the image
-#     # Path to your local weights
-#     weights_folder = os.path.join(os.getcwd(), 'weights_for_qrdet', '.model')
-#     validate_weights_folder(weights_folder)
-    
-#     qreader = QReader(weights_folder=weights_folder)
-    
-#     decoded_text = qreader.detect_and_decode(image=img)[0]
-
-#     if not decoded_text:
-#         raise ValueError(f"No QR code found in {file_path}")
-
-#     try:
-#         # Decode the Base45-encoded text
-#         return base45.b45decode(decoded_text)
-#     except Exception as e:
-#         raise ValueError(f"Base45 decoding failed for {file_path}: {e}. Decoded_text = {decoded_text}")
 
 
 def process_file(input_path: Path, out_f, base45_decode: bool) -> int:
@@ -135,7 +107,7 @@ def process_file(input_path: Path, out_f, base45_decode: bool) -> int:
     return len(data)
 
 
-def decode(input, output, base45):
+def decode(input, output, base45 = True):
 
     input_path = Path(input)
     output_path = Path(output)

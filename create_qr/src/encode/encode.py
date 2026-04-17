@@ -18,6 +18,9 @@ import shutil
 import qrcode
 import base45
 
+from src.encode.input_validate import validate_abs_path, validate_is_file, validate_parent_dir
+from .domain_errors import TooMuchDataQRDE
+
 # QR-40 **alphanumeric** capacities (characters)
 QR40_ALNUM_CAPACITY = {
     'L': 4296,
@@ -41,7 +44,18 @@ def chunk_bytes(data: bytes, chunk_size: int):
 
 def create_qr_from_text(text: str, index: int, out_folder: Path, ecc: str, box_size: int, border: int):
     """Create a single Version 40 QR containing the provided alphanumeric text."""
-    qr = qrcode.QRCode(
+    qr = qrObject(border, box_size, ecc)
+    qr.add_data(text)
+    make_qr(qr, index, ecc, text)
+    img = as_img(qr)
+
+    out_path = out_folder / f"qr_chunk_{index:03d}.png"
+    img.save(out_path)
+    print(f"Saved chunk {index:03d}: {len(text)} chars -> {out_path}")
+
+
+def qrObject(border, box_size, ecc):
+    return qrcode.QRCode(
         version=40,
         error_correction={
             'L': qrcode.constants.ERROR_CORRECT_L,
@@ -53,34 +67,22 @@ def create_qr_from_text(text: str, index: int, out_folder: Path, ecc: str, box_s
         border=border
     )
 
-    qr.add_data(text)
+
+def as_img(qr) :
+    return qr.make_image(fill_color="black", back_color="white")
+
+
+def make_qr(qr, index, ecc, text):
     try:
         qr.make(fit=False)  # force Version 40
     except qrcode.exceptions.DataOverflowError as e:
-        raise RuntimeError(
+        raise TooMuchDataQRDE(
             f"Chunk {index} (Base45 chars={len(text)}) overflowed Version 40 ECC {ecc}. "
             f"Original error: {e}"
         ) from e
 
-    img = qr.make_image(fill_color="black", back_color="white")
-    out_path = out_folder / f"qr_chunk_{index:03d}.png"
-    img.save(out_path)
-    print(f"Saved chunk {index:03d}: {len(text)} chars -> {out_path}")
 
-
-def encode(input, output, ecc, box_size, border):
-
-    input_path = Path(input)
-    out_folder = Path(output)
-
-    if not input_path.exists():
-        raise FileNotFoundError(f"Input not found: {input_path}")
-
-    # wipe output folder if it exists
-    if out_folder.exists() and out_folder.is_dir():
-        shutil.rmtree(out_folder)
-    out_folder.mkdir(parents=True, exist_ok=True)
-
+def get_chunks(ecc, input_path) :
     # Read input bytes
     data = input_path.read_bytes()
     capacity_chars = QR40_ALNUM_CAPACITY[ecc]
@@ -89,13 +91,41 @@ def encode(input, output, ecc, box_size, border):
     print(f"Input size: {len(data)} bytes")
     print(f"QR-40 alphanumeric capacity (ECC {ecc}): {capacity_chars} chars")
     estimated_b45_chars = (chunk_size_bytes * 3) // 2  # 2 bytes -> 3 chars
-    print(f"Chunking raw bytes into {chunk_size_bytes}-byte blocks for Base45 (~{estimated_b45_chars} Base45 chars per chunk)...")
+    print(
+        f"Chunking raw bytes into {chunk_size_bytes}-byte blocks for Base45 (~{estimated_b45_chars} Base45 chars per chunk)...")
 
     chunks = list(chunk_bytes(data, chunk_size_bytes))
     print(f"Total QR chunks to generate: {len(chunks)}")
+    return chunks
+
+
+def create_dir(out_folder):
+    # wipe output folder if it exists
+    if out_folder.exists() and out_folder.is_dir():
+        shutil.rmtree(out_folder)
+    out_folder.mkdir(parents=True, exist_ok=True)
+
+def encode_input_validation(input, output):
+    validate_abs_path(input)
+    validate_is_file(input)
+    validate_abs_path(output)
+    validate_parent_dir(output)
+
+def encode(input, output, ecc='Q', box_size=8, border=4):
+
+    encode_input_validation(input, output)
+
+    input_path = Path(input)
+    out_folder = Path(output)
+
+    create_dir(out_folder)
+
+    chunks = get_chunks(ecc, input_path)
 
     for idx, chunk_bytes_data in enumerate(chunks):
         b45_text = base45.b45encode(chunk_bytes_data)
         create_qr_from_text(b45_text, idx, out_folder, ecc, box_size, border)
 
     print(f"Done. {len(chunks)} QR code(s) written to {out_folder.resolve()}")
+
+
