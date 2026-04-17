@@ -23,6 +23,8 @@ import cv2
 from qreader import QReader
 from qrdet.qrdet import QRDetector
 
+from src.input_validate import validate_abs_path, validate_is_dir, validate_parent_dir, validate_exists
+from src.domain_errors import ReadQRFailDE
 
 def validate_weights_folder(weights_folder: str):
     """
@@ -56,7 +58,7 @@ def read_qr_text(file_path: Path) -> str:
     # Load image
     img_bgr = cv2.imread(str(file_path))
     if img_bgr is None:
-        raise ValueError(f"Failed to read image file {file_path}")
+        raise ReadQRFailDE(f"Failed to read image file {file_path}")
 
     img = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
 
@@ -69,7 +71,7 @@ def read_qr_text(file_path: Path) -> str:
     decoded_text = qreader.detect_and_decode(image=img)[0]
 
     if not decoded_text:
-        raise ValueError(f"No QR code found in {file_path}")
+        raise ReadQRFailDE(f"No QR code found in {file_path}")
 
     return decoded_text
 
@@ -91,41 +93,47 @@ def decode_base45_text(decoded_text: str) -> bytes:
 
 
 
-def process_file(input_path: Path, out_f, base45_decode: bool) -> int:
+def decode_file(input_path: Path, out_f, base45_decode: bool) -> int:
     """Read one image file, decode first QR and write its bytes into open file-like out_f.
        Returns number of bytes written (0 if none)."""
     try:
         decoded_text = read_qr_text(input_path)
         data = decode_base45_text(decoded_text) if base45_decode else decoded_text.encode('utf-8')
-        
+
     except Exception as e:
-        print(f"Skipping {input_path.name}: {e}")
-        return 0
+        raise type(e)(f"Failed to decode {input_path.name}: {e}")
     
     out_f.write(data)
     print(f"Wrote {len(data)} bytes from {input_path.name}")
     return len(data)
 
 
+
+def encode_input_validation(input, output):
+    validate_abs_path(input)
+    validate_is_dir(input)
+    validate_exists(input)
+    validate_abs_path(output)
+    validate_parent_dir(output)
+
 def decode(input, output, base45 = True):
+
+    encode_input_validation(input, output)
 
     input_path = Path(input)
     output_path = Path(output)
-
-    if not input_path.exists():
-        raise FileNotFoundError(f"Input does not exist: {input_path}")
 
     # Open output file for writing (overwrite)
     with open(output_path, 'wb') as out_f:
         total = 0
         if input_path.is_file():
-            total += process_file(input_path, out_f, base45)
+            total += decode_file(input_path, out_f, base45)
         else:
             # Directory: iterate regular files only, sorted by name
             entries = [p for p in sorted(input_path.iterdir()) if p.is_file()]
             if not entries:
                 print(f"No files found in directory: {input_path}")
             for p in entries:
-                total += process_file(p, out_f, base45)
+                total += decode_file(p, out_f, base45)
 
     print(f"Done. Total bytes written: {total}. Output file: {output_path.resolve()}")

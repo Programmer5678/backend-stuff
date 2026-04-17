@@ -18,8 +18,8 @@ import shutil
 import qrcode
 import base45
 
-from src.encode.input_validate import validate_abs_path, validate_is_file, validate_parent_dir
-from .domain_errors import TooMuchDataQRDE
+from src.input_validate import validate_abs_path, validate_is_file, validate_parent_dir, validate_exists
+
 
 # QR-40 **alphanumeric** capacities (characters)
 QR40_ALNUM_CAPACITY = {
@@ -71,15 +71,21 @@ def qrObject(border, box_size, ecc):
 def as_img(qr) :
     return qr.make_image(fill_color="black", back_color="white")
 
+def raise_chunk_too_large_exception(e, ecc, index, text):
+    raise Exception(
+        f"Chunk {index}, too long for qr code (Base45 chars={len(text)}) overflowed Version 40 ECC {ecc}. "
+        f"Original error: {e}"
+    ) from e
+
 
 def make_qr(qr, index, ecc, text):
+
+    CHUNK_TOO_LARGE_EXCEPTION = qrcode.exceptions.DataOverflowError
+
     try:
         qr.make(fit=False)  # force Version 40
-    except qrcode.exceptions.DataOverflowError as e:
-        raise TooMuchDataQRDE(
-            f"Chunk {index} (Base45 chars={len(text)}) overflowed Version 40 ECC {ecc}. "
-            f"Original error: {e}"
-        ) from e
+    except CHUNK_TOO_LARGE_EXCEPTION as e:
+        raise_chunk_too_large_exception(e, ecc, index, text)
 
 
 def get_chunks(ecc, input_path) :
@@ -108,6 +114,7 @@ def create_dir(out_folder):
 def encode_input_validation(input, output):
     validate_abs_path(input)
     validate_is_file(input)
+    validate_exists(input)
     validate_abs_path(output)
     validate_parent_dir(output)
 
