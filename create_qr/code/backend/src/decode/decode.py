@@ -16,7 +16,6 @@ Behavior:
 import glob
 import os
 from pathlib import Path
-from pyzbar.pyzbar import decode
 from PIL import Image
 import base45
 import cv2
@@ -68,10 +67,13 @@ def read_qr_text(file_path: Path) -> str:
 
     qreader = QReader(weights_folder=weights_folder)
 
-    decoded_text = qreader.detect_and_decode(image=img)[0]
+    try:
+        decoded_text = qreader.detect_and_decode(image=img)[0]
+        if not decoded_text:
+            raise Exception("decoded_text empty")
 
-    if not decoded_text:
-        raise ReadQRFailDE(f"No QR code found in {file_path}")
+    except Exception as e:
+        raise ReadQRFailDE(f"No QR code found in {file_path}: {e}")
 
     return decoded_text
 
