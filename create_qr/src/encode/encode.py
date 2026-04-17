@@ -18,7 +18,7 @@ import shutil
 import qrcode
 import base45
 
-from src.input_validate import validate_abs_path, validate_is_file, validate_parent_dir, validate_exists
+from src.input_validate.input_validate import validate_abs_path, validate_is_file, validate_parent_dir, validate_exists
 
 
 # QR-40 **alphanumeric** capacities (characters)

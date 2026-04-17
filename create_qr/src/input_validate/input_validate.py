@@ -1,5 +1,5 @@
 import os
-from src.domain_errors import InputValidationDE
+from src.input_validate.input_validation_de import InputValidationDE
 
 def validate_parent_dir(path):
     if not os.path.exists(os.path.dirname((path))):

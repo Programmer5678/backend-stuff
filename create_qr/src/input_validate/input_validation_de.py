@@ -5,5 +5,3 @@ class InputValidationDE (DomainError):
     expectation like dont exist , arent absolute etc. """
     pass
 
-class ReadQRFailDE( DomainError ):
-    pass

@@ -23,8 +23,8 @@ import cv2
 from qreader import QReader
 from qrdet.qrdet import QRDetector
 
-from src.input_validate import validate_abs_path, validate_is_dir, validate_parent_dir, validate_exists
-from src.domain_errors import ReadQRFailDE
+from src.input_validate.input_validate import validate_abs_path, validate_is_dir, validate_parent_dir, validate_exists
+from .read_qr_de import ReadQRFailDE
 
 def validate_weights_folder(weights_folder: str):
     """
